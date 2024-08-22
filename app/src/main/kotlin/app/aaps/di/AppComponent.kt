@@ -30,6 +30,7 @@ import info.nightscout.androidaps.plugins.pump.eopatch.dagger.EopatchModule
 import info.nightscout.androidaps.plugins.pump.medtronic.di.MedtronicModule
 import info.nightscout.androidaps.plugins.pump.omnipod.dash.di.OmnipodDashModule
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.di.OmnipodErosModule
+import info.nightscout.pump.apex.di.ApexModule
 import info.nightscout.pump.combo.di.ComboModule
 import info.nightscout.pump.combov2.di.ComboV2Module
 import info.nightscout.pump.common.di.PumpCommonModule
@@ -75,6 +76,7 @@ import javax.inject.Singleton
         DanaRModule::class,
         DanaRSModule::class,
         DiaconnG8Module::class,
+        ApexModule::class,
         EopatchModule::class,
         InsightModule::class,
         InsightDatabaseModule::class,
