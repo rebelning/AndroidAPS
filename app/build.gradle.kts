@@ -191,6 +191,7 @@ dependencies {
     implementation(project(":implementation"))
     implementation(project(":database:entities"))
     implementation(project(":database:impl"))
+    implementation(project(":pump:apex"))
     implementation(project(":pump:combo"))
     implementation(project(":pump:combov2"))
     implementation(project(":pump:dana"))
