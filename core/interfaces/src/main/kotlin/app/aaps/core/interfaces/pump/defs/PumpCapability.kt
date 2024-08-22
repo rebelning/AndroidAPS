@@ -27,6 +27,7 @@ enum class PumpCapability {
     OmnipodCapabilities(arrayOf(Bolus, TempBasal, BasalProfileSet, BasalRate30min)),
     YpsomedCapabilities(arrayOf(Bolus, ExtendedBolus, TempBasal, BasalProfileSet, Refill, ReplaceBattery, TDD, ManualTDDLoad)),  // BasalRates (separately grouped)
     DiaconnCapabilities(arrayOf(Bolus, ExtendedBolus, TempBasal, BasalProfileSet, Refill, ReplaceBattery, TDD, ManualTDDLoad)), //
+    ApexCapabilities(arrayOf(Bolus, ExtendedBolus, TempBasal, BasalProfileSet, Refill, ReplaceBattery, TDD, ManualTDDLoad)), //
     EopatchCapabilities(arrayOf(Bolus, ExtendedBolus, TempBasal, BasalProfileSet, BasalRate30min)),
     MedtrumCapabilities(arrayOf(Bolus, TempBasal, BasalProfileSet, BasalRate30min, TDD)), // Technically the pump supports ExtendedBolus, but not implemented (yet)
     BasalRate_Duration15minAllowed,

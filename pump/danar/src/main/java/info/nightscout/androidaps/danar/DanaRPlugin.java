@@ -363,4 +363,20 @@ public class DanaRPlugin extends AbstractDanaRPlugin {
     public PumpEnactResult setUserOptions() {
         return sExecutionService.setUserOptions();
     }
+
+    @NonNull @Override public PumpEnactResult setSquareWaveBolus(double insulin, int durationInMinutes, int durationBloodInMinutes) {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setDoubleWaveBolus(double insulin, int durationInMinutes, int durationBloodInMinutes) {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setSyncPumpTime() {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setPauseResumePump(int type) {
+        return null;
+    }
 }

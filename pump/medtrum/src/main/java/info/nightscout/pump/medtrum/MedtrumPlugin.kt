@@ -444,6 +444,22 @@ import kotlin.math.abs
         return PumpEnactResult(injector).success(false).enacted(false).comment("Medtrum driver does not support extended boluses")
     }
 
+    override fun setSquareWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setDoubleWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setSyncPumpTime(): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setPauseResumePump(type: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
     override fun cancelTempBasal(enforceNew: Boolean): PumpEnactResult {
         if (!isInitialized()) return PumpEnactResult(injector).success(false).enacted(false)
 

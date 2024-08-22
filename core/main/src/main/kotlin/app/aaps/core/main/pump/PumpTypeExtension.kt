@@ -13,6 +13,7 @@ fun PumpType.Companion.fromDbSource(s: UserEntry.Sources): PumpType.Source =
         UserEntry.Sources.DanaRS      -> PumpType.Source.DanaRS
         UserEntry.Sources.DanaI       -> PumpType.Source.DanaI
         UserEntry.Sources.DiaconnG8   -> PumpType.Source.DiaconnG8
+        UserEntry.Sources.Apex        -> PumpType.Source.Apex
         UserEntry.Sources.Insight     -> PumpType.Source.Insight
         UserEntry.Sources.Combo       -> PumpType.Source.Combo
         UserEntry.Sources.Medtronic   -> PumpType.Source.Medtronic
@@ -58,6 +59,7 @@ fun PumpType.Companion.fromDbPumpType(pt: InterfaceIDs.PumpType): PumpType =
         InterfaceIDs.PumpType.MDI                         -> PumpType.MDI
         InterfaceIDs.PumpType.USER                        -> PumpType.USER
         InterfaceIDs.PumpType.DIACONN_G8                  -> PumpType.DIACONN_G8
+        InterfaceIDs.PumpType.APEX                        -> PumpType.APEX
         InterfaceIDs.PumpType.EOPATCH2                    -> PumpType.EOFLOW_EOPATCH2
         InterfaceIDs.PumpType.MEDTRUM                     -> PumpType.MEDTRUM_NANO
         InterfaceIDs.PumpType.MEDTRUM_300U                -> PumpType.MEDTRUM_300U
@@ -74,6 +76,7 @@ fun PumpType.Source.toDbSource(): UserEntry.Sources =
         PumpType.Source.DanaRS      -> UserEntry.Sources.DanaRS
         PumpType.Source.DanaI       -> UserEntry.Sources.DanaI
         PumpType.Source.DiaconnG8   -> UserEntry.Sources.DiaconnG8
+        PumpType.Source.Apex        -> UserEntry.Sources.Apex
         PumpType.Source.Insight     -> UserEntry.Sources.Insight
         PumpType.Source.Combo       -> UserEntry.Sources.Combo
         PumpType.Source.Medtronic   -> UserEntry.Sources.Medtronic
@@ -120,6 +123,7 @@ fun PumpType.toDbPumpType(): InterfaceIDs.PumpType =
         PumpType.MDI                       -> InterfaceIDs.PumpType.MDI
         PumpType.USER                      -> InterfaceIDs.PumpType.USER
         PumpType.DIACONN_G8                -> InterfaceIDs.PumpType.DIACONN_G8
+        PumpType.APEX                      -> InterfaceIDs.PumpType.APEX
         PumpType.EOFLOW_EOPATCH2           -> InterfaceIDs.PumpType.EOPATCH2
         PumpType.MEDTRUM_NANO              -> InterfaceIDs.PumpType.MEDTRUM
         PumpType.MEDTRUM_300U              -> InterfaceIDs.PumpType.MEDTRUM_300U

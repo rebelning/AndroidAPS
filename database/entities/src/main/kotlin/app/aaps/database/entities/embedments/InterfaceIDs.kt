@@ -47,6 +47,7 @@ data class InterfaceIDs @Ignore constructor(
         YPSOPUMP,
         MDI,
         DIACONN_G8,
+        APEX,
         EOPATCH2,
         MEDTRUM,
         MEDTRUM_300U,

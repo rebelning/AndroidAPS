@@ -180,6 +180,17 @@ interface Pump {
     fun cancelTempBasal(enforceNew: Boolean): PumpEnactResult
 
     fun setExtendedBolus(insulin: Double, durationInMinutes: Int): PumpEnactResult
+
+    fun setSquareWaveBolus( insulin: Double,
+                            durationInMinutes: Int,
+                            durationBloodInMinutes: Int): PumpEnactResult
+    fun setDoubleWaveBolus( insulin: Double,
+                            durationInMinutes: Int,
+                            durationBloodInMinutes: Int): PumpEnactResult
+    fun setSyncPumpTime(): PumpEnactResult
+
+    fun setPauseResumePump(type: Int): PumpEnactResult
+
     fun cancelExtendedBolus(): PumpEnactResult
 
     /**

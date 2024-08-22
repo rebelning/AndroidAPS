@@ -1652,4 +1652,20 @@ public class LocalInsightPlugin extends PumpPluginBase implements Pump, Insight,
     @Override public void clearAllTables() {
         insightDatabase.clearAllTables();
     }
+
+    @NonNull @Override public PumpEnactResult setSquareWaveBolus(double insulin, int durationInMinutes, int durationBloodInMinutes) {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setDoubleWaveBolus(double insulin, int durationInMinutes, int durationBloodInMinutes) {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setSyncPumpTime() {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setPauseResumePump(int type) {
+        return null;
+    }
 }

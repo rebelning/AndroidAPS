@@ -531,4 +531,6 @@ public abstract class AbstractDanaRPlugin extends PumpPluginBase implements Pump
     @Override public void clearAllTables() {
         danaHistoryDatabase.clearAllTables();
     }
+
+
 }

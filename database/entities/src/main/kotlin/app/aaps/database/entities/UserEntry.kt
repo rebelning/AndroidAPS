@@ -169,6 +169,7 @@ data class UserEntry(
         DanaRS,
         DanaI,
         DiaconnG8,
+        Apex,
         Insight,
         Combo,
         Medtronic,

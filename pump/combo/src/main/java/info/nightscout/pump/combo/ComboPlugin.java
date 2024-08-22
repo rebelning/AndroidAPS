@@ -1396,6 +1396,22 @@ public class ComboPlugin extends PumpPluginBase implements Pump, PluginConstrain
         return false;
     }
 
+    @NonNull @Override public PumpEnactResult setSquareWaveBolus(double insulin, int durationInMinutes, int durationBloodInMinutes) {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setDoubleWaveBolus(double insulin, int durationInMinutes, int durationBloodInMinutes) {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setSyncPumpTime() {
+        return null;
+    }
+
+    @NonNull @Override public PumpEnactResult setPauseResumePump(int type) {
+        return null;
+    }
+
     private interface CommandExecution {
         CommandResult execute();
     }
