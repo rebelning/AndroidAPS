@@ -1,3 +1,6 @@
 [submodule "pump/apex"]
 	path = pump/apex
 	url = https://github.com/rebelning/apex.git
+[submodule "plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient"]
+	path = plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient
+	url = https://github.com/rebelning/wtclient.git
