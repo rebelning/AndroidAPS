@@ -20,12 +20,13 @@
     <!-- NSClient -->
     <string name="no_write_permission">NSCLIENT 没有写权限。可能是NS的 API 密钥输错了？</string>
     <string name="ns_client">NSClient</string>
-    <string name="wt_client">NSClient</string>
+    <string name="wt_client">WTClient</string>
     <string name="ns_client_short_name">NSCIient</string>
     <string name="wt_client_short_name">WTCIient</string>
     <string name="ns_client_url">URL网址：</string>
     <string name="restart">重新启动</string>
     <string name="ns_client_internal_title">NSClient</string>
+    <string name="wt_client_internal_title">WTClient</string>
     <string name="ns_client_url_title">Nightscout URL(网址)</string>
     <string name="ns_client_url_dialog_message">输入您的 Nightscout URL(网址)</string>
     <string name="ns_client_secret_title">NS API 密钥</string>
@@ -40,6 +41,7 @@
     <string name="full_sync">完全同步</string>
     <string name="full_sync_comment">完全同步数据? 这可能需要很长时间，在完成以前你将无法在NS中看到新数据。</string>
     <string name="ns_sync_options">同步</string>
+    <string name="wt_sync_options">同步</string>
     <string name="ns_upload_summary">将用户配置，大剂量，碳水化合物，临时基础率的数据上传到NS网站</string>
     <string name="ns_upload">上传数据到NS网站</string>
     <string name="ns_receive_profile_store">接收存储用户配置</string>

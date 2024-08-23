@@ -8,6 +8,11 @@
             android:name=".nsclient.services.NSClientService"
             android:enabled="true"
             android:exported="false" />
+
+        <service
+            android:name=".wtclient.services.WTClientService"
+            android:enabled="true"
+            android:exported="false" />
         <service
             android:name=".nsclientV3.services.NSClientV3Service"
             android:enabled="true"

@@ -31,6 +31,11 @@ import app.aaps.plugins.sync.tidepool.TidepoolFragment
 import app.aaps.plugins.sync.wear.WearFragment
 import app.aaps.plugins.sync.wear.activities.CwfInfosActivity
 import app.aaps.plugins.sync.wear.wearintegration.DataLayerListenerServiceMobile
+import app.aaps.plugins.sync.wtclient.services.WTClientService
+import app.aaps.plugins.sync.wtclient.workers.WTClientAddAckWorker
+import app.aaps.plugins.sync.wtclient.workers.WTClientAddUpdateWorker
+import app.aaps.plugins.sync.wtclient.workers.WTClientMbgWorker
+import app.aaps.plugins.sync.wtclient.workers.WTClientUpdateRemoveAckWorker
 import app.aaps.plugins.sync.xdrip.DataSyncSelectorXdripImpl
 import app.aaps.plugins.sync.xdrip.XdripFragment
 import app.aaps.plugins.sync.xdrip.XdripPlugin
@@ -52,13 +57,19 @@ import dagger.android.ContributesAndroidInjector
 abstract class SyncModule {
 
     @ContributesAndroidInjector abstract fun contributesNSClientFragment(): NSClientFragment
+    // @ContributesAndroidInjector abstract fun contributesWTClientFragment(): WTClientFragment
 
     @ContributesAndroidInjector abstract fun contributesNSClientService(): NSClientService
+    @ContributesAndroidInjector abstract fun contributesWTClientService(): WTClientService
     @ContributesAndroidInjector abstract fun contributesNSClientV3Service(): NSClientV3Service
     @ContributesAndroidInjector abstract fun contributesNSClientWorker(): NSClientAddUpdateWorker
+    @ContributesAndroidInjector abstract fun contributesWTClientWorker(): WTClientAddUpdateWorker
     @ContributesAndroidInjector abstract fun contributesNSClientAddAckWorker(): NSClientAddAckWorker
+    @ContributesAndroidInjector abstract fun contributesWTClientAddAckWorker(): WTClientAddAckWorker
     @ContributesAndroidInjector abstract fun contributesNSClientUpdateRemoveAckWorker(): NSClientUpdateRemoveAckWorker
+    @ContributesAndroidInjector abstract fun contributesWTClientUpdateRemoveAckWorker(): WTClientUpdateRemoveAckWorker
     @ContributesAndroidInjector abstract fun contributesNSClientMbgWorker(): NSClientMbgWorker
+    @ContributesAndroidInjector abstract fun contributesWTClientMbgWorker(): WTClientMbgWorker
 
     @ContributesAndroidInjector abstract fun contributesLoadStatusWorker(): LoadStatusWorker
     @ContributesAndroidInjector abstract fun contributesLoadLastModificationWorker(): LoadLastModificationWorker

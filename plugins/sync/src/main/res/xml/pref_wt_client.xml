@@ -4,8 +4,8 @@
     xmlns:validate="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
-        android:key="@string/key_ns_client_settings"
-        android:title="@string/ns_client_internal_title"
+        android:key="@string/key_wt_client_settings"
+        android:title="@string/wt_client_internal_title"
         app:initialExpandedChildrenCount="0">
 
         <app.aaps.core.validators.ValidatingEditTextPreference

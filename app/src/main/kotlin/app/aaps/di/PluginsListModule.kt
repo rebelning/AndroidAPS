@@ -52,6 +52,7 @@ import app.aaps.plugins.sync.nsclient.NSClientPlugin
 import app.aaps.plugins.sync.nsclientV3.NSClientV3Plugin
 import app.aaps.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import app.aaps.plugins.sync.tidepool.TidepoolPlugin
+import app.aaps.plugins.sync.wtclient.WTClientPlugin
 import app.aaps.plugins.sync.xdrip.XdripPlugin
 import app.aaps.pump.virtual.VirtualPumpPlugin
 import dagger.Binds
@@ -322,6 +323,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(350)
     abstract fun bindNSClientPlugin(plugin: NSClientPlugin): PluginBase
+
+    @Binds
+    @AllConfigs
+    @IntoMap
+    @IntKey(352)
+    abstract fun bindWTClientPlugin(plugin: WTClientPlugin): PluginBase
 
     @Binds
     @AllConfigs

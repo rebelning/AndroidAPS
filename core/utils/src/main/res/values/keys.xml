@@ -16,6 +16,8 @@
     <string name="key_low_mark" translatable="false">low_mark</string>
     <string name="key_high_mark" translatable="false">high_mark</string>
     <string name="key_ns_create_announcements_from_errors" translatable="false">ns_create_announcements_from_errors</string>
+    <string name="key_wt_create_announcements_from_errors" translatable="false">
+        wt_create_announcements_from_errors</string>
     <string name="key_btwatchdog" translatable="false">bt_watchdog</string>
     <string name="key_btwatchdog_lastbark" translatable="false">bt_watchdog_last</string>
     <string name="key_pump_unreachable_threshold_minutes" translatable="false">pump_unreachable_threshold</string>
@@ -47,6 +49,7 @@
     <string name="key_medtronic_settings" translatable="false">medtronic_settings</string>
     <string name="key_danars_settings" translatable="false">danars_settings</string>
     <string name="key_ns_client_settings" translatable="false">nsclientinternal_settings</string>
+    <string name="key_wt_client_settings" translatable="false">wtclientinternal_settings</string>
     <string name="key_insight_local_settings" translatable="false">insight_local_settings</string>
     <string name="key_data_choices_settings" translatable="false">data_choices_settings</string>
     <string name="key_dexcom_settings" translatable="false">dexcom_settings</string>
@@ -136,6 +139,8 @@
     <string name="key_snoozed_to" translatable="false">snoozedTo</string>
     <string name="key_ns_receive_cgm" translatable="false">ns_receive_cgm</string>
     <string name="key_ns_create_announcements_from_carbs_req" translatable="false">ns_create_announcements_from_carbs_req</string>
+    <string name="key_wt_create_announcements_from_carbs_req" translatable="false">
+        wt_create_announcements_from_carbs_req</string>
     <string name="key_do_ns_upload" translatable="false">dexcomg5_nsupload</string>
     <string name="key_master_password" translatable="false">master_password</string>
     <string name="key_settings_password" translatable="false">settings_password</string>

@@ -62,6 +62,7 @@
     <string name="ns_client_url">URL:</string>
     <string name="restart">Restart</string>
     <string name="ns_client_internal_title">NSClient</string>
+    <string name="wt_client_internal_title">WTClient</string>
     <string name="ns_client_url_title">Nightscout URL</string>
     <string name="ns_client_url_dialog_message">Enter Your Nightscout URL</string>
     <string name="ns_client_secret_title">NS API secret</string>
@@ -79,6 +80,7 @@
     <string name="full_sync">Full synchronization</string>
     <string name="full_sync_comment">Full synchronization? It may take many hours and until finish you\'ll not see new data in NS.</string>
     <string name="ns_sync_options">Synchronization</string>
+    <string name="wt_sync_options">Synchronization</string>
     <string name="key_ns_upload" translatable="false">ns_upload</string>
     <string name="ns_upload_summary">Profiles, boluses, carbs, temporary basals are uploaded to NS</string>
     <string name="ns_upload">Upload data to NS</string>
@@ -97,6 +99,7 @@
     <string name="ns_receive_carbs">Receive carbs</string>
     <string name="ns_receive_carbs_summary">Accept carbs entered through NS or NSClient</string>
     <string name="key_ns_receive_tbr_eb" translatable="false">ns_receive_tbr_eb</string>
+    <string name="key_wt_receive_tbr_eb" translatable="false">wt_receive_tbr_eb</string>
     <string name="ns_receive_therapy_events">Receive therapy events</string>
     <string name="ns_receive_therapy_events_summary">Accept therapy events (cannula, insulin, battery change etc) entered through NS or NSClient</string>
     <string name="ns_receive_cgm">Receive/backfill CGM data</string>
