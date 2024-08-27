@@ -159,6 +159,7 @@ data class UserEntry(
         Loop,               //From Loop plugin
         Maintenance,        //From Maintenance plugin
         NSClient,           //From NSClient plugin
+        WTClient,           //From WTClient plugin
         NSProfile,          //From NSProfile plugin
         Objectives,         //From Objectives plugin
         Pump,               //To update with one Source per pump

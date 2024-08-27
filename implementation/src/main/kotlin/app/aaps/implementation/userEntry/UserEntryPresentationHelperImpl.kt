@@ -80,6 +80,7 @@ class UserEntryPresentationHelperImpl @Inject constructor(
         Sources.Loop                -> R.drawable.ic_loop_closed_white
         Sources.Maintenance         -> app.aaps.core.ui.R.drawable.ic_maintenance
         Sources.NSClient            -> app.aaps.core.ui.R.drawable.ic_nightscout_syncs
+        Sources.WTClient            -> app.aaps.core.ui.R.drawable.ic_nightscout_syncs
         Sources.NSProfile           -> R.drawable.ic_nightscout_profile
         Sources.Objectives          -> app.aaps.core.ui.R.drawable.ic_graduation
         Sources.Pump                -> app.aaps.core.ui.R.drawable.ic_generic_icon

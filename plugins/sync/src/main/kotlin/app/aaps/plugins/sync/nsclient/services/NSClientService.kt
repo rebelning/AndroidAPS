@@ -87,7 +87,8 @@ class NSClientService : DaggerService() {
     @Inject lateinit var dataSyncSelectorV1: DataSyncSelectorV1
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var nsIncomingDataProcessor: NsIncomingDataProcessor
-    @Inject lateinit var storeDataForDb: StoreDataForDb
+    @Inject
+    lateinit var storeDataForDb: StoreDataForDb
 
     companion object {
 

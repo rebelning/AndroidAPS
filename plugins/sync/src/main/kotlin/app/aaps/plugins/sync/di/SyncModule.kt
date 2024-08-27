@@ -5,6 +5,7 @@ import androidx.work.WorkManager
 import app.aaps.core.interfaces.nsclient.NSSettingsStatus
 import app.aaps.core.interfaces.nsclient.ProcessedDeviceStatusData
 import app.aaps.core.interfaces.nsclient.StoreDataForDb
+import app.aaps.core.interfaces.nsclient.WTStoreDataForDb
 import app.aaps.core.interfaces.sync.DataSyncSelectorXdrip
 import app.aaps.core.interfaces.sync.XDripBroadcast
 import app.aaps.plugins.sync.garmin.LoopHub
@@ -31,6 +32,8 @@ import app.aaps.plugins.sync.tidepool.TidepoolFragment
 import app.aaps.plugins.sync.wear.WearFragment
 import app.aaps.plugins.sync.wear.activities.CwfInfosActivity
 import app.aaps.plugins.sync.wear.wearintegration.DataLayerListenerServiceMobile
+import app.aaps.plugins.sync.wtShared.WTClientFragment
+import app.aaps.plugins.sync.wtShared.WTStoreDataForDbImpl
 import app.aaps.plugins.sync.wtclient.services.WTClientService
 import app.aaps.plugins.sync.wtclient.workers.WTClientAddAckWorker
 import app.aaps.plugins.sync.wtclient.workers.WTClientAddUpdateWorker
@@ -45,6 +48,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import dagger.android.ContributesAndroidInjector
+import javax.inject.Qualifier
 
 @Module(
     includes = [
@@ -57,7 +61,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class SyncModule {
 
     @ContributesAndroidInjector abstract fun contributesNSClientFragment(): NSClientFragment
-    // @ContributesAndroidInjector abstract fun contributesWTClientFragment(): WTClientFragment
+    @ContributesAndroidInjector abstract fun contributesWTClientFragment(): WTClientFragment
 
     @ContributesAndroidInjector abstract fun contributesNSClientService(): NSClientService
     @ContributesAndroidInjector abstract fun contributesWTClientService(): WTClientService
@@ -102,6 +106,7 @@ abstract class SyncModule {
         @Binds fun bindNSSettingsStatus(nsSettingsStatusImpl: NSSettingsStatusImpl): NSSettingsStatus
         @Binds fun bindDataSyncSelectorXdripInterface(dataSyncSelectorXdripImpl: DataSyncSelectorXdripImpl): DataSyncSelectorXdrip
         @Binds fun bindStoreDataForDb(storeDataForDbImpl: StoreDataForDbImpl): StoreDataForDb
+        @Binds fun bindWTStoreDataForDb(storeDataForDbImpl: WTStoreDataForDbImpl): WTStoreDataForDb
         @Binds fun bindXDripBroadcastInterface(xDripBroadcastImpl: XdripPlugin): XDripBroadcast
         @Binds fun bindLoopHub(loopHub: LoopHubImpl): LoopHub
     }

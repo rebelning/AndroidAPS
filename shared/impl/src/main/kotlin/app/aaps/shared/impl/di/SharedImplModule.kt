@@ -16,7 +16,16 @@ import app.aaps.shared.impl.sharedPreferences.SPImplementation
 import app.aaps.shared.impl.utils.DateUtilImpl
 import dagger.Module
 import dagger.Provides
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+// @Qualifier
+// @Retention(AnnotationRetention.BINARY)
+// annotation class WTClientSourcePluginQualifier
+//
+// @Qualifier
+// @Retention(AnnotationRetention.BINARY)
+// annotation class NSClientSourcePluginQualifier
 
 @Module(
     includes = [

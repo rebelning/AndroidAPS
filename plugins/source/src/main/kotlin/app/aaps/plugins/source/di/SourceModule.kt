@@ -2,6 +2,7 @@ package app.aaps.plugins.source.di
 
 import app.aaps.core.interfaces.source.DexcomBoyda
 import app.aaps.core.interfaces.source.NSClientSource
+import app.aaps.core.interfaces.source.WTClientSource
 import app.aaps.core.interfaces.source.XDripSource
 import app.aaps.plugins.source.AidexPlugin
 import app.aaps.plugins.source.BGSourceFragment
@@ -12,11 +13,13 @@ import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.TomatoPlugin
+import app.aaps.plugins.source.WTClientSourcePlugin
 import app.aaps.plugins.source.XdripSourcePlugin
 import app.aaps.plugins.source.activities.RequestDexcomPermissionActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import javax.inject.Qualifier
 
 @Module(
     includes = [
@@ -44,6 +47,7 @@ abstract class SourceModule {
     interface Bindings {
 
         @Binds fun bindNSClientSource(nsClientSourcePlugin: NSClientSourcePlugin): NSClientSource
+        @Binds fun bindWTClientSource(wtClientSourcePlugin: WTClientSourcePlugin): WTClientSource
         @Binds fun bindDexcomBoyda(dexcomPlugin: DexcomPlugin): DexcomBoyda
         @Binds fun bindXDrip(xdripSourcePlugin: XdripSourcePlugin): XDripSource
     }

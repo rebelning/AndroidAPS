@@ -53,7 +53,8 @@ class NSClientV3Service : DaggerService() {
     @Inject lateinit var nsClientV3Plugin: NSClientV3Plugin
     @Inject lateinit var config: Config
     @Inject lateinit var nsIncomingDataProcessor: NsIncomingDataProcessor
-    @Inject lateinit var storeDataForDb: StoreDataForDb
+    @Inject
+    lateinit var storeDataForDb: StoreDataForDb
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var nsDeviceStatusHandler: NSDeviceStatusHandler
 

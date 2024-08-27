@@ -46,6 +46,7 @@ import app.aaps.plugins.source.NSClientSourcePlugin
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.RandomBgPlugin
 import app.aaps.plugins.source.TomatoPlugin
+import app.aaps.plugins.source.WTClientSourcePlugin
 import app.aaps.plugins.source.XdripSourcePlugin
 import app.aaps.plugins.sync.tizen.TizenPlugin
 import app.aaps.plugins.sync.nsclient.NSClientPlugin
@@ -401,6 +402,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(410)
     abstract fun bindNSClientSourcePlugin(plugin: NSClientSourcePlugin): PluginBase
+
+    @Binds
+    @AllConfigs
+    @IntoMap
+    @IntKey(415)
+    abstract fun bindWTClientSourcePlugin(plugin: WTClientSourcePlugin): PluginBase
 
     @Binds
     @AllConfigs

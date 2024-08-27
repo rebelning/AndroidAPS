@@ -124,6 +124,7 @@ data class GlucoseValue(
         COB_PREDICTION("COBPrediction"),
         UAM_PREDICTION("UAMPrediction"),
         ZT_PREDICTION("ZTPrediction"),
+        WT_NET("WT-Net"),
         ;
 
         fun isLibre(): Boolean = arrayListOf(
