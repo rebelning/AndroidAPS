@@ -6,7 +6,7 @@ import app.aaps.core.interfaces.configuration.Constants
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.notifications.Notification
-import app.aaps.core.interfaces.nsclient.StoreDataForDb
+import app.aaps.core.interfaces.nsclient.WTStoreDataForDb
 import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.profile.ProfileSource
@@ -14,10 +14,9 @@ import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventDismissNotification
 import app.aaps.core.interfaces.rx.events.EventNSClientNewLog
 import app.aaps.core.interfaces.sharedPreferences.SP
-import app.aaps.core.interfaces.source.NSClientSource
+import app.aaps.core.interfaces.source.WTClientSource
 import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.T
-import app.aaps.core.nssdk.localmodel.entry.NSSgvV3
 import app.aaps.core.nssdk.localmodel.food.NSFood
 import app.aaps.core.nssdk.localmodel.treatment.NSBolus
 import app.aaps.core.nssdk.localmodel.treatment.NSBolusWizard
@@ -57,12 +56,12 @@ import javax.inject.Singleton
 @Singleton
 class WtIncomingDataProcessor @Inject constructor(
     private val aapsLogger: AAPSLogger,
-    private val nsClientSource: NSClientSource,
+    private val nsClientSource: WTClientSource,
     private val sp: SP,
     private val rxBus: RxBus,
     private val dateUtil: DateUtil,
     private val activePlugin: ActivePlugin,
-    private val storeDataForDb: StoreDataForDb,
+    private val storeDataForDb: WTStoreDataForDb,
     private val config: Config,
     private val instantiator: Instantiator,
     private val profileSource: ProfileSource
@@ -91,7 +90,7 @@ class WtIncomingDataProcessor @Inject constructor(
         // Objective0
         sp.putBoolean(app.aaps.core.utils.R.string.key_objectives_bg_is_available_in_ns, true)
 
-        // if (!nsClientSource.isEnabled() && !sp.getBoolean(app.aaps.core.utils.R.string.key_ns_receive_cgm, false)) return false
+        if (!nsClientSource.isEnabled() && !sp.getBoolean(app.aaps.core.utils.R.string.key_ns_receive_cgm, false)) return false
 
         var latestDateInReceivedData: Long = 0
         aapsLogger.debug(LTag.WTCLIENT, "Received WT Data: $sgvs")

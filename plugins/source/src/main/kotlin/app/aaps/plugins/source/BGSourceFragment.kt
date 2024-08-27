@@ -138,6 +138,12 @@ class BGSourceFragment : DaggerFragment(), MenuProvider {
         override fun onBindViewHolder(holder: GlucoseValuesViewHolder, position: Int) {
             val glucoseValue = glucoseValues[position]
             holder.binding.ns.visibility = (glucoseValue.interfaceIDs.nightscoutId != null).toVisibilityKeepSpace()
+            if(glucoseValue.sourceSensor== GlucoseValue.SourceSensor.WT_NET){
+                holder.binding.ns.text= glucoseValue.sourceSensor.text
+            }else{
+                "NS".also { holder.binding.ns.text = it }
+            }
+
             holder.binding.invalid.visibility = (!glucoseValue.isValid).toVisibility()
             val newDay = position == 0 || !dateUtil.isSameDay(glucoseValue.timestamp, glucoseValues[position - 1].timestamp)
             holder.binding.date.visibility = newDay.toVisibility()

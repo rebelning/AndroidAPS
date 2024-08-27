@@ -84,7 +84,7 @@ class WTStoreDataForDbImpl @Inject constructor(
     private val uel: UserEntryLogger,
     private val dateUtil: DateUtil,
     private val config: Config,
-    private val nsClientSource: WTClientSource,
+    private val wtClientSource: WTClientSource,
     private val virtualPump: VirtualPump,
     private val uiInteraction: UiInteraction
 ) : WTStoreDataForDb {
@@ -139,23 +139,23 @@ class WTStoreDataForDbImpl @Inject constructor(
         if (glucoseValues.isNotEmpty())
             repository.runTransactionForResult(CgmSourceTransaction(glucoseValues, emptyList(), null))
                 .doOnError {
-                    aapsLogger.error(LTag.DATABASE, "Error while saving values from NSClient App", it)
+                    aapsLogger.error(LTag.DATABASE, "Error while saving values from WTClient App", it)
                 }
                 .blockingGet()
                 .also { result ->
                     glucoseValues.clear()
                     result.updated.forEach {
-                        nsClientSource.detectSource(it)
+                        wtClientSource.detectSource(it)
                         aapsLogger.debug(LTag.DATABASE, "Updated bg $it")
                         updated.inc(GlucoseValue::class.java.simpleName)
                     }
                     result.inserted.forEach {
-                        nsClientSource.detectSource(it)
+                        wtClientSource.detectSource(it)
                         aapsLogger.debug(LTag.DATABASE, "Inserted bg $it")
                         inserted.inc(GlucoseValue::class.java.simpleName)
                     }
                     result.updatedNsId.forEach {
-                        nsClientSource.detectSource(it)
+                        wtClientSource.detectSource(it)
                         aapsLogger.debug(LTag.DATABASE, "Updated nsId bg $it")
                         nsIdUpdated.inc(GlucoseValue::class.java.simpleName)
                     }

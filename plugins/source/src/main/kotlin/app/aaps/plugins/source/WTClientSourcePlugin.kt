@@ -44,7 +44,8 @@ class WTClientSourcePlugin @Inject constructor(
                 GlucoseValue.SourceSensor.DEXCOM_G6_NATIVE,
                 GlucoseValue.SourceSensor.DEXCOM_G5_NATIVE,
                 GlucoseValue.SourceSensor.DEXCOM_G6_NATIVE_XDRIP,
-                GlucoseValue.SourceSensor.DEXCOM_G5_NATIVE_XDRIP
+                GlucoseValue.SourceSensor.DEXCOM_G5_NATIVE_XDRIP,
+                GlucoseValue.SourceSensor.WT_NET
             ).any { it == glucoseValue.sourceSensor }
             lastBGTimeStamp = glucoseValue.timestamp
         }

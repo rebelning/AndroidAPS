@@ -101,7 +101,7 @@ class WTClientFragment : DaggerFragment(), MenuProvider, PluginFragment {
 
         binding.paused.isChecked = sp.getBoolean(R.string.key_ns_paused, false)
         binding.paused.setOnCheckedChangeListener { _, isChecked ->
-            uel.log(if (isChecked) UserEntry.Action.NS_PAUSED else UserEntry.Action.NS_RESUME, UserEntry.Sources.NSClient)
+            uel.log(if (isChecked) UserEntry.Action.NS_PAUSED else UserEntry.Action.NS_RESUME, UserEntry.Sources.WTClient)
             nsClientPlugin?.pause(isChecked)
         }
 
