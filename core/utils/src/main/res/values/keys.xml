@@ -163,5 +163,12 @@
     <string name="key_use_autosens" translatable="false">openapsama_useautosens</string>
     <string name="key_used_autosens_on_main_phone" translatable="false">used_autosens_on_main_phone</string>
     <string name="key_openapsma_max_basal" translatable="false">openapsma_max_basal</string>
+    <!--aaps    auth -->
+
+    <string name="key_pump_apex_name" translatable="false">key_pump_apexname</string>
+    <string name="key_pump_apex_address" translatable="false">key_pump_apexaddress</string>
+    <string name="key_aaps_auth_code" translatable="false">key_aaps_auth_code</string>
+    <string name="key_aaps_phone_number" translatable="false">key_aaps_phone_number</string>
+    <string name="key_aaps_expired_time" translatable="false">key_aaps_expired_time</string>
 
 </resources>

@@ -9,6 +9,8 @@ import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.implementations.ConfigImpl
 import app.aaps.implementations.InstantiatorImpl
 import app.aaps.implementations.UiInteractionImpl
+import app.aaps.plugins.auth.route.Navigator
+import app.aaps.route.AppNavigator
 import dagger.Binds
 import dagger.Lazy
 import dagger.Module
@@ -50,6 +52,7 @@ open class AppModule {
 
         @Binds fun bindActivityNames(activityNames: UiInteractionImpl): UiInteraction
         @Binds fun bindInstantiator(instantiatorImpl: InstantiatorImpl): Instantiator
+        @Binds fun bindNavigator(appNavigator: AppNavigator): Navigator
 
     }
 }
