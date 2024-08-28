@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="wt_client_bg">稳糖 BG</string>
+    <string name="wt_client_bg_short">稳糖 BG</string>
+    <string name="description_source_wt_client">Downloads BG data from 稳糖</string>
+
     <!-- NSClient -->
     <string name="ns_wifi_ssids">WiFi SSID</string>
     <string name="connection_settings_title">连接设置</string>
@@ -20,9 +24,9 @@
     <!-- NSClient -->
     <string name="no_write_permission">NSCLIENT 没有写权限。可能是NS的 API 密钥输错了？</string>
     <string name="ns_client">NSClient</string>
-    <string name="wt_client">WTClient</string>
+    <string name="wt_client">稳糖Client</string>
     <string name="ns_client_short_name">NSCIient</string>
-    <string name="wt_client_short_name">WTCIient</string>
+    <string name="wt_client_short_name">稳糖Client</string>
     <string name="ns_client_url">URL网址：</string>
     <string name="restart">重新启动</string>
     <string name="ns_client_internal_title">NSClient</string>
