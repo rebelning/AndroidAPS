@@ -7,3 +7,6 @@
 [submodule "AAPSKeystore"]
 	path = AAPSKeystore
 	url = https://github.com/rebelning/AAPSKeystore.git
+[submodule "plugins/aapsauth"]
+	path = plugins/aapsauth
+	url = https://github.com/rebelning/aapsauth.git
