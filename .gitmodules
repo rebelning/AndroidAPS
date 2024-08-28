@@ -4,3 +4,6 @@
 [submodule "plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient"]
 	path = plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient
 	url = https://github.com/rebelning/wtclient.git
+[submodule "AAPSKeystore"]
+	path = AAPSKeystore
+	url = https://github.com/rebelning/AAPSKeystore.git

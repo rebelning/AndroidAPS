@@ -1,6 +1,7 @@
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -17,7 +18,9 @@ repositories {
     mavenCentral()
     google()
 }
-
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
 fun generateGitBuild(): String {
     val stringBuilder: StringBuilder = StringBuilder()
     try {
@@ -99,6 +102,14 @@ android {
 
     namespace = "app.aaps"
     ndkVersion = Versions.ndkVersion
+    signingConfigs {
+        create("release") {
+            keyAlias = localProperties.getProperty("KEY_ALIAS")
+            keyPassword = localProperties.getProperty("KEY_PASSWORD")
+            storeFile = file(localProperties.getProperty("STORE_FILE"))
+            storePassword = localProperties.getProperty("STORE_PASSWORD")
+        }
+    }
 
     defaultConfig {
         minSdk = Versions.minSdk
@@ -147,7 +158,19 @@ android {
             manifestPlaceholders["appIconRound"] = "@mipmap/ic_blueowl"
         }
     }
-
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
     useLibrary("org.apache.http.legacy")
 
     //Deleting it causes a binding error
