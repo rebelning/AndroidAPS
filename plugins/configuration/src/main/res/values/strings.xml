@@ -117,6 +117,11 @@
     <string name="master_password_missing">Master password is not set!\n\nPlease set your Master password in Preferences (%1$s &#8594; %2$s)</string>
 
 
+    <string name="preferences_import_success">preferences import completed</string>
+    <string name="preferences_import_fail">preferences import fail</string>
+    <string name="preferences_auto_importing_title">preferences auto import</string>
+    <string name="preferences_importing">preferences importing</string>
+
     <!--    Maintenance-->
     <string name="maintenance">Maintenance</string>
     <string name="maintenance_shortname">MAINT</string>

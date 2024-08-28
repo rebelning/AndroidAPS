@@ -39,6 +39,7 @@ import app.aaps.core.interfaces.iob.GlucoseStatusProvider
 import app.aaps.core.interfaces.iob.IobCobCalculator
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.UserEntryLogger
+import app.aaps.core.interfaces.maintenance.ImportExportPrefs
 import app.aaps.core.interfaces.nsclient.NSSettingsStatus
 import app.aaps.core.interfaces.nsclient.ProcessedDeviceStatusData
 import app.aaps.core.interfaces.overview.OverviewMenus
@@ -56,6 +57,7 @@ import app.aaps.core.interfaces.rx.events.EventAcceptOpenLoopChange
 import app.aaps.core.interfaces.rx.events.EventBucketedDataCreated
 import app.aaps.core.interfaces.rx.events.EventEffectiveProfileSwitchChanged
 import app.aaps.core.interfaces.rx.events.EventExtendedBolusChange
+import app.aaps.core.interfaces.rx.events.EventImportPrefsStatus
 import app.aaps.core.interfaces.rx.events.EventInitializationChanged
 import app.aaps.core.interfaces.rx.events.EventMobileToWear
 import app.aaps.core.interfaces.rx.events.EventNewOpenLoopNotification
@@ -105,6 +107,10 @@ import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerFragment
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -148,7 +154,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var bgQualityCheck: BgQualityCheck
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var decimalFormatter: DecimalFormatter
-
+    @Inject lateinit var importExportPrefs: ImportExportPrefs
     private val disposable = CompositeDisposable()
 
     private var smallWidth = false
@@ -890,7 +896,44 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             binding.infoLayout.extendedLayout.visibility = (extendedBolus != null && !pump.isFakingTempsByExtendedBoluses).toVisibility()
         }
     }
+    ///
+    private fun isAutoImport(): Boolean {
+        return sp.getBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import, true)
+    }
 
+    private  fun importAPSPref()  {
+        if(isAutoImport()){
+            activity?.let { activity ->
+                // ImportPrefsDialog().show(parentFragmentManager, "importPrefs")
+                UIRunnable { if (isAdded) uiInteraction.runImportPrefsDialog(childFragmentManager) }
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val success = importExportPrefs.importAutoSharedPreferences(activity)
+                        aapsLogger.debug("importAPSPref is success--->$success")
+
+                        withContext(Dispatchers.Main) {
+                            // 更新 UI 的代码
+                            aapsLogger.debug("ImportAPSPref Update MAIN UI...")
+//                            rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_impossible),100, result = 100))
+                        }
+                    } catch (e: Exception) {
+                        // 处理异常情况
+                        aapsLogger.error("Error during importing preferences", e)
+
+                        withContext(Dispatchers.Main) {
+                            // 如果需要，也可以在这里更新 UI 以反映错误
+                            aapsLogger.debug("Error occurred during ImportAPSPref.")
+
+                            rxBus.send(EventImportPrefsStatus(rh.gs(app.aaps.core.ui.R.string.preferences_import_success), 10, result = -1))
+                        }
+                    }
+                }
+            }
+        }else{
+            aapsLogger.debug("Auto import is disabled.")
+        }
+
+    }
     private fun updateTime() {
         _binding ?: return
         binding.infoLayout.time.text = dateUtil.timeString(dateUtil.now())

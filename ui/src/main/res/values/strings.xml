@@ -174,5 +174,12 @@
     <string name="overview_editquickwizard_usepercentage">Percentage calculation</string>
     <string name="app_default">Application default</string>
     <string name="a11y_drag_and_drop_handle">drag and drop handle</string>
-
+<!--    -->
+    <string name="restartingapp">Exiting application to apply settings.</string>
+    <string name="setting_imported">Settings imported</string>
+    <string name="preferences_import_success">preferences import completed</string>
+    <string name="preferences_import_fail">preferences import fail</string>
+    <string name="preferences_auto_importing_title">preferences auto import</string>
+    <string name="preferences_importing">preferences importing</string>
+    <string name="close">Close</string>
 </resources>

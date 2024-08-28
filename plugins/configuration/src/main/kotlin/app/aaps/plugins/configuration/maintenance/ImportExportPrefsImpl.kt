@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.SystemClock
 import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,7 @@ import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventAppExit
 import app.aaps.core.interfaces.rx.events.EventDiaconnG8PumpLogReset
+import app.aaps.core.interfaces.rx.events.EventImportPrefsStatus
 import app.aaps.core.interfaces.rx.weardata.CwfData
 import app.aaps.core.interfaces.rx.weardata.CwfMetadataKey
 import app.aaps.core.interfaces.rx.weardata.ZipWatchfaceFormat
@@ -343,16 +345,37 @@ class ImportExportPrefsImpl @Inject constructor(
 
                     PrefImportSummaryDialog.showSummary(activity, importOk, importPossible, prefs, {
                         if (importPossible) {
+                            val authCode = sp.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
+                            val phoneNumber = sp.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
+                            val pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
+                            val pumpAddress = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_address, "")
+
                             sp.clear()
+
                             for ((key, value) in prefs.values) {
                                 if (value == "true" || value == "false") {
                                     sp.putBoolean(key, value.toBoolean())
                                 } else {
                                     sp.putString(key, value)
                                 }
-                            }
 
+                            }
+                            sp.putString(app.aaps.core.utils.R.string.key_aaps_auth_code, authCode)
+                            sp.putString(app.aaps.core.utils.R.string.key_aaps_phone_number, phoneNumber)
+                            sp.putString(app.aaps.core.utils.R.string.key_pump_apex_name, pumpCode)
+                            sp.putString(app.aaps.core.utils.R.string.key_pump_apex_address, pumpAddress)
+                            sp.putBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import, false)
                             restartAppAfterImport(activity)
+                            // sp.clear()
+                            // for ((key, value) in prefs.values) {
+                            //     if (value == "true" || value == "false") {
+                            //         sp.putBoolean(key, value.toBoolean())
+                            //     } else {
+                            //         sp.putString(key, value)
+                            //     }
+                            // }
+                            //
+                            // restartAppAfterImport(activity)
                         } else {
                             // for impossible imports it should not be called
                             ToastUtils.errorToast(activity, rh.gs(R.string.preferences_import_impossible))
@@ -369,6 +392,89 @@ class ImportExportPrefsImpl @Inject constructor(
                 ToastUtils.errorToast(activity, e.message)
             }
         }
+    }
+
+    override fun importAutoSharedPreferences(activity: FragmentActivity): Boolean {
+        val predefinedPassword = "123456" // 预设的密码
+        val prefName = "aps_pref_full.json"
+        ///
+        val format: PrefsFormat = encryptedPrefsFormat
+        ///
+        val importFile = prefFileList.loadConfigFileFromAssets(prefName)
+
+        try {
+            val prefsAttempted = format.loadPreferences(importFile.file, predefinedPassword)
+            prefsAttempted.metadata = prefFileList.checkMetadata(prefsAttempted.metadata)
+
+            val importOkAttempted = checkIfImportIsOk(prefsAttempted)
+
+            // 如果最终允许导入首选项
+            val importPossible = (importOkAttempted || config.isEngineeringMode()) && (prefsAttempted.values.isNotEmpty())
+
+            if (importPossible) {
+                val authCode = sp.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
+                val phoneNumber = sp.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
+                val pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
+                val pumpAddress = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_address, "")
+                sp.clear()
+                val length = prefsAttempted.values.size
+                var index = 0
+                for ((key, value) in prefsAttempted.values) {
+                    if (value == "true" || value == "false") {
+                        sp.putBoolean(key, value.toBoolean())
+                    } else {
+                        when (key) {
+                            "key_pump_apexaddress" -> {
+                                sp.putString(key, "")
+                            }
+
+                            "key_pump_apexname" -> {
+                                sp.putString(key, "")
+                            }
+
+                            "active_pump_change_timestamp" -> {
+                                sp.putString(key, "")
+                            }
+
+                            "active_pump_serial_number" -> {
+                                sp.putString(key, "")
+                            }
+
+                            else -> {
+                                sp.putString(key, value)
+                            }
+                        }
+
+                    }
+                    index += 1
+                    log.debug(LTag.CORE, "index--->$index  key--->$key --->$value")
+                    val percent = index.toDouble() / length.toDouble() * 100.0
+//                    log.debug(LTag.CORE,"percent--->$percent")
+                    rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_importing), percent.toInt(), result = 0))
+                    SystemClock.sleep(10)
+                }
+                sp.putString(app.aaps.core.utils.R.string.key_aaps_auth_code, authCode)
+                sp.putString(app.aaps.core.utils.R.string.key_aaps_phone_number, phoneNumber)
+                sp.putString(app.aaps.core.utils.R.string.key_pump_apex_name, pumpCode)
+                sp.putString(app.aaps.core.utils.R.string.key_pump_apex_address, pumpAddress)
+                sp.putBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import, false)
+                sp.apply {
+                    rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_success), 100, result = 100))
+                }
+                return true
+            } else {
+
+                log.error(LTag.CORE, "Import impossible")
+                rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_fail), 20, result = -1))
+                return false
+            }
+        } catch (e: Exception) {
+
+            log.error(LTag.CORE, "Error during import", e)
+            rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_fail), 20, result = -1))
+
+        }
+        return false
     }
 
     private fun checkIfImportIsOk(prefs: Prefs): Boolean {

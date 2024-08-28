@@ -544,4 +544,5 @@
     <string name="saturday_short">周六</string>
     <string name="sunday_short">周日</string>
     <!--    DecimalFormatterImpl -->
+    <string name="preferences_import_success">配置选项导入完成</string>
 </resources>

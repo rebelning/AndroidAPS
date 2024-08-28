@@ -656,5 +656,5 @@
     <!--    DecimalFormatterImpl -->
     <string name="format_insulin_units1">%1$.1f U</string>
     <string name="format_insulin_units">%1$.2f U</string>
-
+    <string name="preferences_import_success">preferences import completed</string>
 </resources>

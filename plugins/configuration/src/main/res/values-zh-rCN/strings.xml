@@ -93,6 +93,10 @@
     <string name="goto_main_try_again">请返回主屏幕，然后重试。</string>
     <string name="restartingapp">正在退出应用程序以应用设置。</string>
     <string name="ue_exported">用户条目已导出</string>
+    <string name="preferences_auto_importing_title">自动导入配置选项</string>
+    <string name="preferences_importing">配置选项正在导入中</string>
+    <string name="preferences_import_success">配置选项导入完成</string>
+    <string name="preferences_import_fail">配置选项导入失败</string>
     <!--    Maintenance-->
     <string name="maintenance">维护</string>
     <string name="maintenance_shortname">维护</string>

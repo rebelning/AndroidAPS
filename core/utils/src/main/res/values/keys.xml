@@ -170,5 +170,7 @@
     <string name="key_aaps_auth_code" translatable="false">key_aaps_auth_code</string>
     <string name="key_aaps_phone_number" translatable="false">key_aaps_phone_number</string>
     <string name="key_aaps_expired_time" translatable="false">key_aaps_expired_time</string>
+    <string name="key_aaps_is_auto_import" translatable="false">key_aaps_is_auto_import</string>
+
 
 </resources>

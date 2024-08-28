@@ -7,6 +7,7 @@ import app.aaps.core.interfaces.rx.weardata.CwfData
 interface ImportExportPrefs {
 
     fun importSharedPreferences(activity: FragmentActivity, importFile: PrefsFile)
+    fun importAutoSharedPreferences(activity: FragmentActivity):Boolean
     fun importSharedPreferences(activity: FragmentActivity)
     fun importSharedPreferences(fragment: Fragment)
     fun importCustomWatchface(activity: FragmentActivity)
