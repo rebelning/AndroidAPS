@@ -201,6 +201,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:validators"))
     implementation(project(":ui"))
+    implementation(project(":plugins:aapsauth"))
     implementation(project(":plugins:aps"))
     implementation(project(":plugins:automation"))
     implementation(project(":plugins:configuration"))

@@ -6,6 +6,7 @@ import app.aaps.core.validators.di.ValidatorsModule
 import app.aaps.database.impl.DatabaseModule
 import app.aaps.implementation.di.ImplementationModule
 import app.aaps.plugins.aps.di.ApsModule
+import app.aaps.plugins.auth.di.AuthModule
 import app.aaps.plugins.automation.di.AutomationModule
 import app.aaps.plugins.configuration.di.ConfigurationModule
 import app.aaps.plugins.constraints.di.PluginsConstraintsModule
@@ -66,6 +67,7 @@ import javax.inject.Singleton
         PluginsConstraintsModule::class,
         SourceModule::class,
         SyncModule::class,
+        AuthModule::class,
         WorkflowModule::class,
 
         // pumps
