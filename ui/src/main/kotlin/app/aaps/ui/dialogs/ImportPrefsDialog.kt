@@ -113,14 +113,14 @@ class ImportPrefsDialog : DaggerDialogFragment() {
     override fun onResume() {
         super.onResume()
         aapsLogger.debug(LTag.UI, "onResume")
-        if (percent == 100) {
+        val unit = if (percent == 100) {
             dismiss()
             return
         } else
-        dialog?.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+            dialog?.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
 
         disposable += rxBus
             .toObservable(EventImportPrefsStatus::class.java)
@@ -131,7 +131,10 @@ class ImportPrefsDialog : DaggerDialogFragment() {
                         LTag.UI,
                         "Status: " + event.status + " Percent: " + event.percent + "Result: " + event.result
                     )
-                    binding.status.text = event.status + " ${event.percent}%"
+                    binding.status.text = buildString {
+                        append(event.status)
+                        append(" ${event.percent}%")
+                    }
                     binding.progressbar.progress = event.percent
                     if (event.percent >= 100) {
                         SystemClock.sleep(100)

@@ -335,4 +335,6 @@
     <string name="description_persistent_notification">Shows an ongoing notification with a short overview of what your loop is doing</string>
     <string name="old_data">OLD DATA</string>
 
+    <string name="overview_pref_message_label">Import pump config</string>
+    <string name="overview_pref_auto_import">Automatically import configuration information. Your existing configuration will be overwritten. Do you want to proceed with the automatic import?</string>
 </resources>

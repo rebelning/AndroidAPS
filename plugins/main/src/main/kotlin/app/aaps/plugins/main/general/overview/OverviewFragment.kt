@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.text.SpannedString
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -156,7 +157,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var decimalFormatter: DecimalFormatter
     @Inject lateinit var importExportPrefs: ImportExportPrefs
     private val disposable = CompositeDisposable()
-
+    private var isAutoImport = false
     private var smallWidth = false
     private var smallHeight = false
     private lateinit var dm: DisplayMetrics
@@ -363,6 +364,35 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         processAps()
         updateProfile()
         updateTemporaryTarget()
+        ///auto import pref
+        if(!isAutoImport){
+            isAutoImport=true
+            when {
+                isAutoImport() -> {
+                    runOnUiThread{
+                         activity?.let { activity ->
+                            OKDialog.showConfirmation(
+                                activity = activity,
+                                rh.gs(R.string.overview_pref_message_label),
+                                SpannedString(rh.gs(R.string.overview_pref_auto_import)),
+                                ok = {
+                                    importAPSPref()
+                                },
+                                cancel = {
+                                    sp.putBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import,false)
+                                    sp.apply {  }
+                                }
+                            )
+
+                        }
+
+                    }
+
+                }
+            }
+
+
+        }
     }
 
     @Synchronized
@@ -905,7 +935,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         if(isAutoImport()){
             activity?.let { activity ->
                 // ImportPrefsDialog().show(parentFragmentManager, "importPrefs")
-                UIRunnable { if (isAdded) uiInteraction.runImportPrefsDialog(childFragmentManager) }
+                uiInteraction.runImportPrefsDialog(childFragmentManager)
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
                         val success = importExportPrefs.importAutoSharedPreferences(activity)
