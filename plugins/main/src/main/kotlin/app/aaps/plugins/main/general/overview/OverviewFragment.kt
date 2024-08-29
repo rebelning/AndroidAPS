@@ -940,18 +940,13 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                     try {
                         val success = importExportPrefs.importAutoSharedPreferences(activity)
                         aapsLogger.debug("importAPSPref is success--->$success")
-
                         withContext(Dispatchers.Main) {
-                            // 更新 UI 的代码
                             aapsLogger.debug("ImportAPSPref Update MAIN UI...")
 //                            rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_impossible),100, result = 100))
                         }
                     } catch (e: Exception) {
-                        // 处理异常情况
                         aapsLogger.error("Error during importing preferences", e)
-
                         withContext(Dispatchers.Main) {
-                            // 如果需要，也可以在这里更新 UI 以反映错误
                             aapsLogger.debug("Error occurred during ImportAPSPref.")
 
                             rxBus.send(EventImportPrefsStatus(rh.gs(app.aaps.core.ui.R.string.preferences_import_success), 10, result = -1))
