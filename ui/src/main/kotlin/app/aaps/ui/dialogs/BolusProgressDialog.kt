@@ -10,7 +10,9 @@ import android.view.WindowManager
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
+import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.pump.BolusProgressData
+import app.aaps.core.interfaces.pump.defs.PumpType
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.AapsSchedulers
@@ -35,7 +37,7 @@ class BolusProgressDialog : DaggerDialogFragment() {
     @Inject lateinit var commandQueue: CommandQueue
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var uel: UserEntryLogger
-
+    @Inject lateinit var activePlugin: ActivePlugin
     private val disposable = CompositeDisposable()
 
     private var running = true
@@ -84,6 +86,10 @@ class BolusProgressDialog : DaggerDialogFragment() {
             state = it.getString("state") ?: rh.gs(app.aaps.core.ui.R.string.waitingforpump)
         }
         binding.title.text = rh.gs(app.aaps.core.ui.R.string.goingtodeliver, amount)
+        //APEX PUMP
+        if(activePlugin.activePump.model()=== PumpType.APEX){
+            binding.stop.visibility=View.INVISIBLE
+        }
         binding.stop.setOnClickListener {
             aapsLogger.debug(LTag.UI, "Stop bolus delivery button pressed")
             BolusProgressData.stopPressed = true
