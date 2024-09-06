@@ -2,6 +2,7 @@ package app.aaps.implementation.queue.commands
 
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.pump.Apex
 import app.aaps.core.interfaces.pump.Dana
 import app.aaps.core.interfaces.pump.Diaconn
 import app.aaps.core.interfaces.pump.Medtrum
@@ -37,6 +38,12 @@ class CommandLoadEvents(
         if (pump is Medtrum) {
             val medtrumPump = pump as Medtrum
             val r = medtrumPump.loadEvents()
+            aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
+            callback?.result(r)?.run()
+        }
+        if (pump is Apex) {
+            val apexPump = pump as Apex
+            val r = apexPump.loadBolusHistory()
             aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
             callback?.result(r)?.run()
         }

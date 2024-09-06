@@ -2,6 +2,7 @@ package app.aaps.implementation.queue.commands
 
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.pump.Apex
 import app.aaps.core.interfaces.pump.Dana
 import app.aaps.core.interfaces.pump.Diaconn
 import app.aaps.core.interfaces.pump.PumpEnactResult
@@ -30,6 +31,12 @@ class CommandLoadHistory(
         if (pump is Diaconn) {
             val diaconnG8Pump = pump as Diaconn
             val r = diaconnG8Pump.loadHistory()
+            aapsLogger.debug(LTag.PUMPQUEUE, "Result success: " + r.success + " enacted: " + r.enacted)
+            callback?.result(r)?.run()
+        }
+        if (pump is Apex) {
+            val apexPump = pump as Apex
+            val r = apexPump.loadHistory(type)
             aapsLogger.debug(LTag.PUMPQUEUE, "Result success: " + r.success + " enacted: " + r.enacted)
             callback?.result(r)?.run()
         }

@@ -2,6 +2,7 @@ package app.aaps.implementation.queue.commands
 
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
+import app.aaps.core.interfaces.pump.Apex
 import app.aaps.core.interfaces.pump.Dana
 import app.aaps.core.interfaces.pump.Diaconn
 import app.aaps.core.interfaces.pump.Medtrum
@@ -33,6 +34,12 @@ class CommandSetUserSettings(
         }
 
         if (pump is Medtrum) {
+            val r = pump.setUserOptions()
+            aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
+            callback?.result(r)?.run()
+        }
+        //apex pump
+        if (pump is Apex) {
             val r = pump.setUserOptions()
             aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
             callback?.result(r)?.run()
