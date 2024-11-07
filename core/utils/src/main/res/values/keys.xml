@@ -86,7 +86,10 @@
     <string name="key_local_profile_last_change" translatable="false">local_profile_last_change</string>
     <string name="key_ns_receive_profile_store" translatable="false">ns_receive_profile_store</string>
     <string name="key_nsclientinternal_url" translatable="false">nsclientinternal_url</string>
+    <string name="key_wtclientinternal_url" translatable="false">wtclientinternal_url</string>
     <string name="key_nsclientinternal_api_secret" translatable="false">nsclientinternal_api_secret</string>
+    <string name="key_wtclientinternal_api_phone" translatable="false">
+        key_aaps_phone_number</string>
     <string name="key_ns_use_ws" translatable="false">ns_use_ws</string>
     <string name="key_ns_receive_insulin" translatable="false">ns_receive_insulin</string>
     <string name="key_ns_receive_carbs" translatable="false">ns_receive_carbs</string>

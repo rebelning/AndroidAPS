@@ -64,9 +64,12 @@
     <string name="ns_client_internal_title">NSClient</string>
     <string name="wt_client_internal_title">WTClient</string>
     <string name="ns_client_url_title">Nightscout URL</string>
+    <string name="wt_client_url_title">WTClient URL</string>
     <string name="ns_client_url_dialog_message">Enter Your Nightscout URL</string>
     <string name="ns_client_secret_title">NS API secret</string>
+    <string name="wt_client_phone_title">WT API Account</string>
     <string name="ns_client_secret_dialog_title">NS API secret</string>
+    <string name="wt_client_secret_dialog_title">NS API secret</string>
     <string name="ns_client_secret_dialog_message">Enter NS API secret (min 12 chars)</string>
     <string name="nsclient_token_title">NS access token</string>
     <string name="nsclient_token_dialog_title">NS access token</string>

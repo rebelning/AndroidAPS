@@ -22,7 +22,8 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:utils"))
     implementation(project(":core:validators"))
-
+    implementation(project(":plugins:aapsauth"))
+    implementation(project(":pump:apex"))
     testImplementation(project(":implementation"))
     testImplementation(project(":plugins:insulin"))
     testImplementation(project(":shared:tests"))

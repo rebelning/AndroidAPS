@@ -30,10 +30,12 @@
     <string name="ns_client_url">URL网址：</string>
     <string name="restart">重新启动</string>
     <string name="ns_client_internal_title">NSClient</string>
-    <string name="wt_client_internal_title">WTClient</string>
+    <string name="wt_client_internal_title">稳糖Client</string>
     <string name="ns_client_url_title">Nightscout URL(网址)</string>
+    <string name="wt_client_url_title">稳糖Client URL(网址)</string>
     <string name="ns_client_url_dialog_message">输入您的 Nightscout URL(网址)</string>
     <string name="ns_client_secret_title">NS API 密钥</string>
+    <string name="wt_client_phone_title">稳糖WT API 账号</string>
     <string name="ns_client_secret_dialog_title">NS API 密钥</string>
     <string name="ns_client_secret_dialog_message">输入 NS API 密钥 (最少12个字符)</string>
     <string name="deliver_now">立即输注</string>

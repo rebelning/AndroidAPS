@@ -96,6 +96,9 @@ import app.aaps.database.entities.UserEntry.Action
 import app.aaps.database.entities.UserEntry.Sources
 import app.aaps.database.entities.interfaces.end
 import app.aaps.database.impl.AppRepository
+import app.aaps.plugins.auth.api.AuthCallback
+import app.aaps.plugins.auth.api.AuthHelper
+import app.aaps.plugins.auth.api.AuthorizedUploader
 import app.aaps.plugins.main.R
 import app.aaps.plugins.main.databinding.OverviewFragmentBinding
 import app.aaps.plugins.main.general.overview.graphData.GraphData
@@ -106,6 +109,7 @@ import app.aaps.plugins.main.skins.SkinProvider
 import com.jjoe64.graphview.GraphView
 import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerFragment
+import info.nightscout.pump.apex.events.EventApexDeviceChange
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import kotlinx.coroutines.CoroutineScope
@@ -117,6 +121,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.min
+import kotlin.system.exitProcess
 
 class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickListener {
 
@@ -156,6 +161,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var decimalFormatter: DecimalFormatter
     @Inject lateinit var importExportPrefs: ImportExportPrefs
+    @Inject lateinit var authorizeduploader: AuthorizedUploader
     private val disposable = CompositeDisposable()
     private var isAutoImport = false
     private var smallWidth = false
@@ -336,6 +342,10 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             .observeOn(aapsSchedulers.io)
             .subscribe({ updateTemporaryBasal() }, fabricPrivacy::logException)
 
+        disposable += rxBus
+            .toObservable(EventApexDeviceChange::class.java)
+            .observeOn(aapsSchedulers.io)
+            .subscribe({ updateApexPump() }, fabricPrivacy::logException)
         refreshLoop = Runnable {
             refreshAll()
             handler.postDelayed(refreshLoop, 60 * 1000L)
@@ -1208,5 +1218,29 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     private fun updateNotification() {
         _binding ?: return
         binding.notifications.let { notificationStore.updateNotifications(it) }
+    }
+
+    private fun updateApexPump() {
+        aapsLogger.debug("updateApexPump....")
+        val authCode = sp.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
+        val phoneNumber = sp.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
+        activity?.let {
+            val  authHelper= AuthHelper(it, sp, authorizeduploader, aapsLogger, object : AuthCallback {
+                override fun onSuccess() {
+                }
+                override fun onFailure(errorInfo: String) {
+
+                    OKDialog.show(
+                        it,
+                        rh.gs(R.string.overview_auth_message_label),SpannedString("您的授权码已到期，请联系客服重新授权")
+                    ) {
+                        it.finish()
+                        System.runFinalization()
+                        exitProcess(0)
+                    }
+                }
+            })
+            authHelper.authorized(authCode, phoneNumber)
+        }
     }
 }

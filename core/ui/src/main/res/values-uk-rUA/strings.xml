@@ -38,5 +38,5 @@
     <!--    Weekday-->
     <!-- WeekdayPicker -->
     <!--    DecimalFormatterImpl -->
-    <string name="format_insulin_units">%1$.2f од</string>
+    <string name="format_insulin_units">%1$.3f од</string>
 </resources>
