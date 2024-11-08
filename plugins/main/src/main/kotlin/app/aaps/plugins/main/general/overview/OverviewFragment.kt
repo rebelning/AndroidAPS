@@ -355,6 +355,8 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         handler.post { refreshAll() }
         updatePumpStatus()
         updateCalcProgress()
+        ///
+        updateApexPump()
     }
 
     fun refreshAll() {
@@ -1230,9 +1232,17 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 }
                 override fun onFailure(errorInfo: String) {
 
+                    // OKDialog.show(
+                    //     it,
+                    //     rh.gs(R.string.overview_auth_message_label),SpannedString("您的授权码已到期，请联系客服重新授权")
+                    // ) {
+                    //     it.finish()
+                    //     System.runFinalization()
+                    //     exitProcess(0)
+                    // }
                     OKDialog.show(
                         it,
-                        rh.gs(R.string.overview_auth_message_label),SpannedString("您的授权码已到期，请联系客服重新授权")
+                        rh.gs(R.string.overview_auth_message_label),SpannedString(errorInfo)
                     ) {
                         it.finish()
                         System.runFinalization()
