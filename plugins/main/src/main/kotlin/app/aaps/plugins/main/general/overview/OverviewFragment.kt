@@ -9,6 +9,8 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.AnimationDrawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -356,7 +358,10 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         updatePumpStatus()
         updateCalcProgress()
         ///
-        updateApexPump()
+        activity?.takeIf { activityContext -> isNetworkConnected(activityContext) }
+            ?.let { updateApexPump() }
+
+
     }
 
     fun refreshAll() {
@@ -1223,34 +1228,53 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     }
 
     private fun updateApexPump() {
-        aapsLogger.debug("updateApexPump....")
+        aapsLogger.debug("Entering updateApexPump method...")
+
         val authCode = sp.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
         val phoneNumber = sp.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
-        activity?.let {
-            val  authHelper= AuthHelper(it, sp, authorizeduploader, aapsLogger, object : AuthCallback {
-                override fun onSuccess() {
-                }
-                override fun onFailure(errorInfo: String) {
 
-                    // OKDialog.show(
-                    //     it,
-                    //     rh.gs(R.string.overview_auth_message_label),SpannedString("您的授权码已到期，请联系客服重新授权")
-                    // ) {
-                    //     it.finish()
-                    //     System.runFinalization()
-                    //     exitProcess(0)
-                    // }
+        aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber")
+
+        activity?.let { activityContext ->
+            val authHelper = AuthHelper(activityContext, sp, authorizeduploader, aapsLogger, object : AuthCallback {
+                override fun onSuccess() {
+                    aapsLogger.debug("Authorization successful.")
+                }
+
+                override fun onFailure(errorInfo: String) {
+                    aapsLogger.debug("Authorization failed: $errorInfo")
+
                     OKDialog.show(
-                        it,
-                        rh.gs(R.string.overview_auth_message_label),SpannedString(errorInfo)
+                        activityContext,
+                        rh.gs(R.string.overview_auth_message_label),
+                        SpannedString(errorInfo)
                     ) {
-                        it.finish()
+                        aapsLogger.debug("Exiting app due to authorization failure.")
+                        activityContext.finish()
                         System.runFinalization()
                         exitProcess(0)
                     }
                 }
             })
+
+            aapsLogger.debug("Attempting to authorize with AuthHelper...")
             authHelper.authorized(authCode, phoneNumber)
+        } ?: run {
+            aapsLogger.debug("Activity context is null, cannot proceed with updateApexPump.")
+        }
+
+        aapsLogger.debug("Exiting updateApexPump method.")
+    }
+    private fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)     -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else                                                               -> false
         }
     }
 }
