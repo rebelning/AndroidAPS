@@ -1,6 +1,7 @@
 package app.aaps.di
 
 import android.content.Context
+import app.aaps.BuildConfig
 import app.aaps.MainApp
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.objects.Instantiator
@@ -29,6 +30,7 @@ open class AppModule {
     fun providesPlugins(
         config: Config,
         @PluginsListModule.AllConfigs allConfigs: Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>,
+        @PluginsListModule.PathedOTAPP pathedOTAPP: Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>,
         @PluginsListModule.PumpDriver pumpDrivers: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
         @PluginsListModule.NotNSClient notNsClient: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
         @PluginsListModule.APS aps: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
@@ -39,6 +41,10 @@ open class AppModule {
         if (config.PUMPDRIVERS) plugins += pumpDrivers.get()
         if (config.APS) plugins += aps.get()
         if (!config.NSCLIENT) plugins += notNsClient.get()
+        if (BuildConfig.ENABLE_WEAR_PLUGIN) {
+            println("Loading PathedOTAPP Plugin for wear flavor")
+            plugins += pathedOTAPP
+        }
         //if (config.isUnfinishedMode()) plugins += unfinished.get()
         return plugins.toList().sortedBy { it.first }.map { it.second }
     }

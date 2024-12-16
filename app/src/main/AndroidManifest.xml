@@ -108,6 +108,8 @@
                 <action android:name="com.china.poctech.data" />
                 <!-- Receiver from Tomato -->
                 <action android:name="com.fanqies.tomatofn.BgEstimate" />
+                <!-- Receiver from patched Ottai app -->
+                <action android:name="cn.diyaps.sharing.OT_APP" />
                 <!-- Receiver from GlucoRx Aidex -->
                 <action android:name="com.microtechmd.cgms.aidex.action.BgEstimate" />
             </intent-filter>

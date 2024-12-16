@@ -48,5 +48,8 @@
     <string name="dexcom_log_ns_sensor_change_summary">Create event \"Sensor Change\" in NS automatically on sensor start</string>
     <string name="direction">direction</string>
 
+    <!-- Patched Ottai App -->
+    <string name="patched_ottai_app">Patched Ottai App</string>
+    <string name="description_source_patched_ottai_app">Receive BG values from Ottai App.</string>
 
 </resources>

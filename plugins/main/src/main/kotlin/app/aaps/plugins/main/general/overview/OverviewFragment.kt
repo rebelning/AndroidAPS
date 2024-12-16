@@ -347,7 +347,11 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         disposable += rxBus
             .toObservable(EventApexDeviceChange::class.java)
             .observeOn(aapsSchedulers.io)
-            .subscribe({ updateApexPump() }, fabricPrivacy::logException)
+            .subscribe({
+                activity?.takeIf { activityContext -> isNetworkConnected(activityContext) }
+                ?.let {
+                    updateApexPump()
+                }}, fabricPrivacy::logException)
         refreshLoop = Runnable {
             refreshAll()
             handler.postDelayed(refreshLoop, 60 * 1000L)
@@ -359,7 +363,9 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         updateCalcProgress()
         ///
         activity?.takeIf { activityContext -> isNetworkConnected(activityContext) }
-            ?.let { updateApexPump() }
+            ?.let {
+                updateApexPump()
+            }
 
 
     }

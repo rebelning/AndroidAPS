@@ -1,5 +1,6 @@
 package app.aaps.di
 
+import app.aaps.BuildConfig
 import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.plugins.aps.autotune.AutotunePlugin
 import app.aaps.plugins.aps.loop.LoopPlugin
@@ -43,6 +44,7 @@ import app.aaps.plugins.source.GlunovoPlugin
 import app.aaps.plugins.source.IntelligoPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
+import app.aaps.plugins.source.PathedOTAppPlugin
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.RandomBgPlugin
 import app.aaps.plugins.source.TomatoPlugin
@@ -464,6 +466,14 @@ abstract class PluginsListModule {
     abstract fun bindRandomBgPlugin(plugin: RandomBgPlugin): PluginBase
 
     @Binds
+    @PathedOTAPP
+    @IntoMap
+    @IntKey(480)
+    abstract fun bindPatchedOTAppPlugin(plugin: PathedOTAppPlugin): PluginBase
+
+
+
+    @Binds
     @AllConfigs
     @IntoMap
     @IntKey(490)
@@ -495,6 +505,9 @@ abstract class PluginsListModule {
 
     @Qualifier
     annotation class AllConfigs
+
+    @Qualifier
+    annotation class PathedOTAPP
 
     @Qualifier
     annotation class PumpDriver
