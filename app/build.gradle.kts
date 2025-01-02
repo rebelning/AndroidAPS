@@ -120,7 +120,7 @@ android {
         buildConfigField("String", "REMOTE", "\"${generateGitRemote()}\"")
         buildConfigField("String", "HEAD", "\"${generateGitBuild()}\"")
         buildConfigField("String", "COMMITTED", "\"${allCommitted()}\"")
-        buildConfigField("boolean", "ENABLE_WEAR_PLUGIN", "false")
+        buildConfigField("boolean", "ENABLE_WEAR_PLUGIN", "true")
     }
 
     flavorDimensions.add("standard")

@@ -1249,7 +1249,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
                 override fun onFailure(errorInfo: String) {
                     aapsLogger.debug("Authorization failed: $errorInfo")
-
+                    sp.putLong(app.aaps.core.utils.R.string.key_aaps_expired_time,-1)
                     OKDialog.show(
                         activityContext,
                         rh.gs(R.string.overview_auth_message_label),
