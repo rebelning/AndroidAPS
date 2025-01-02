@@ -115,7 +115,7 @@ class MainApp : DaggerApplication() {
             registerLocalBroadcastReceiver()
 
             // trigger here to see the new version on app start after an update
-            versionCheckersUtils.triggerCheckVersion()
+            // versionCheckersUtils.triggerCheckVersion()
 
             // Register all tabs in app here
             pluginStore.plugins = plugins

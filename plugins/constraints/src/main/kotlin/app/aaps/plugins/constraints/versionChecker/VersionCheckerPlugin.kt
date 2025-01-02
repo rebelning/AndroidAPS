@@ -64,7 +64,7 @@ class VersionCheckerPlugin @Inject constructor(
 
     override fun isClosedLoopAllowed(value: Constraint<Boolean>): Constraint<Boolean> {
         // checkWarning()
-        versionCheckerUtils.triggerCheckVersion()
+        // versionCheckerUtils.triggerCheckVersion()
         if (lastCheckOlderThan(gracePeriod.veryOld.daysToMillis()))
             value.set(false, rh.gs(R.string.very_old_version), this)
         val endDate = sp.getLong(rh.gs(app.aaps.core.utils.R.string.key_app_expiration) + "_" + config.VERSION_NAME, 0)
