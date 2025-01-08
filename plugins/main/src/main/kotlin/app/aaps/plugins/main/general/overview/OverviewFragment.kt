@@ -100,7 +100,7 @@ import app.aaps.database.entities.interfaces.end
 import app.aaps.database.impl.AppRepository
 import app.aaps.plugins.auth.api.AuthCallback
 import app.aaps.plugins.auth.api.AuthHelper
-import app.aaps.plugins.auth.api.AuthorizedUploader
+import app.aaps.plugins.auth.api.AuthorizedRetrofit
 import app.aaps.plugins.main.R
 import app.aaps.plugins.main.databinding.OverviewFragmentBinding
 import app.aaps.plugins.main.general.overview.graphData.GraphData
@@ -163,7 +163,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var decimalFormatter: DecimalFormatter
     @Inject lateinit var importExportPrefs: ImportExportPrefs
-    @Inject lateinit var authorizeduploader: AuthorizedUploader
+    @Inject lateinit var authorizeduploader: AuthorizedRetrofit
     private val disposable = CompositeDisposable()
     private var isAutoImport = false
     private var smallWidth = false
