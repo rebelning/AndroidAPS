@@ -87,9 +87,9 @@ class BolusProgressDialog : DaggerDialogFragment() {
         }
         binding.title.text = rh.gs(app.aaps.core.ui.R.string.goingtodeliver, amount)
         //APEX PUMP
-        if(activePlugin.activePump.model()=== PumpType.APEX){
-            binding.stop.visibility=View.INVISIBLE
-        }
+        // if(activePlugin.activePump.model()=== PumpType.APEX){
+        //     binding.stop.visibility=View.INVISIBLE
+        // }
         binding.stop.setOnClickListener {
             aapsLogger.debug(LTag.UI, "Stop bolus delivery button pressed")
             BolusProgressData.stopPressed = true
@@ -126,8 +126,11 @@ class BolusProgressDialog : DaggerDialogFragment() {
             .observeOn(aapsSchedulers.main)
             .subscribe {
                 aapsLogger.debug(LTag.PUMP, "Running id $id. Close request id  ${it.id}")
-                if (it.id == null || it.id == id)
+                if (it.id == null || it.id == id){
                     if (running) dismiss()
+                    scheduleDismiss()
+                }
+
             }
         disposable += rxBus
             .toObservable(EventOverviewBolusProgress::class.java)
