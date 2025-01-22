@@ -120,13 +120,10 @@ android {
         buildConfigField("String", "REMOTE", "\"${generateGitRemote()}\"")
         buildConfigField("String", "HEAD", "\"${generateGitBuild()}\"")
         buildConfigField("String", "COMMITTED", "\"${allCommitted()}\"")
-<<<<<<< HEAD
         buildConfigField("boolean", "ENABLE_WEAR_PLUGIN", "false")
-=======
-
         // For Dagger injected instrumentation tests in app module
         testInstrumentationRunner = "app.aaps.runners.InjectedTestRunner"
->>>>>>> master
+
     }
 
     flavorDimensions.add("standard")
@@ -223,12 +220,12 @@ dependencies {
     implementation(project(":plugins:sync"))
     implementation(project(":implementation"))
     implementation(project(":database:impl"))
-<<<<<<< HEAD
+
     implementation(project(":pump:apex"))
     implementation(project(":pump:combo"))
-=======
+
     implementation(project(":database:persistence"))
->>>>>>> master
+
     implementation(project(":pump:combov2"))
     implementation(project(":pump:dana"))
     implementation(project(":pump:danars"))

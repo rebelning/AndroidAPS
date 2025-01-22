@@ -24,12 +24,9 @@ include ':plugins:sensitivity'
 include ':plugins:smoothing'
 include ':plugins:source'
 include ':plugins:sync'
-<<<<<<< HEAD
 include ':plugins:aapsauth'
 include ':pump:apex'
 include ':pump:combo'
-=======
->>>>>>> master
 include ':pump:combov2'
 include ':pump:combov2:comboctl'
 include ':pump:dana'
