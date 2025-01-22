@@ -1,9 +1,10 @@
 package app.aaps.di
 
 import app.aaps.MainApp
-import app.aaps.core.main.di.CoreModule
+import app.aaps.core.objects.di.CoreModule
 import app.aaps.core.validators.di.ValidatorsModule
-import app.aaps.database.impl.DatabaseModule
+import app.aaps.database.di.DatabaseModule
+import app.aaps.database.persistence.di.PersistenceModule
 import app.aaps.implementation.di.ImplementationModule
 import app.aaps.plugins.aps.di.ApsModule
 import app.aaps.plugins.auth.di.AuthModule
@@ -15,7 +16,22 @@ import app.aaps.plugins.main.di.PluginsModule
 import app.aaps.plugins.source.di.SourceModule
 import app.aaps.plugins.sync.di.OpenHumansModule
 import app.aaps.plugins.sync.di.SyncModule
+import app.aaps.pump.common.di.PumpCommonModule
+import app.aaps.pump.dana.di.DanaHistoryModule
+import app.aaps.pump.dana.di.DanaModule
+import app.aaps.pump.danar.di.DanaRModule
+import app.aaps.pump.danars.di.DanaRSModule
+import app.aaps.pump.diaconn.di.DiaconnG8Module
+import app.aaps.pump.eopatch.di.EopatchModule
+import app.aaps.pump.equil.di.EquilModule
+import app.aaps.pump.insight.di.InsightDatabaseModule
+import app.aaps.pump.insight.di.InsightModule
+import app.aaps.pump.medtronic.di.MedtronicModule
+import app.aaps.pump.medtrum.di.MedtrumModule
+import app.aaps.pump.omnipod.dash.di.OmnipodDashModule
+import app.aaps.pump.omnipod.eros.di.OmnipodErosModule
 import app.aaps.pump.virtual.di.VirtualPumpModule
+import app.aaps.shared.impl.di.LoggerModule
 import app.aaps.shared.impl.di.SharedImplModule
 import app.aaps.ui.di.UiModule
 import app.aaps.workflow.di.WorkflowModule
@@ -23,6 +39,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+<<<<<<< HEAD
 import info.nightscout.androidaps.danar.di.DanaRModule
 import info.nightscout.androidaps.insight.di.InsightDatabaseModule
 import info.nightscout.androidaps.insight.di.InsightModule
@@ -33,13 +50,10 @@ import info.nightscout.androidaps.plugins.pump.omnipod.dash.di.OmnipodDashModule
 import info.nightscout.androidaps.plugins.pump.omnipod.eros.di.OmnipodErosModule
 import info.nightscout.pump.apex.di.ApexModule
 import info.nightscout.pump.combo.di.ComboModule
+=======
+import app.aaps.pump.common.di.RileyLinkModule
+>>>>>>> master
 import info.nightscout.pump.combov2.di.ComboV2Module
-import info.nightscout.pump.common.di.PumpCommonModule
-import info.nightscout.pump.dana.di.DanaHistoryModule
-import info.nightscout.pump.dana.di.DanaModule
-import info.nightscout.pump.danars.di.DanaRSModule
-import info.nightscout.pump.diaconn.di.DiaconnG8Module
-import info.nightscout.pump.medtrum.di.MedtrumModule
 import javax.inject.Singleton
 
 @Singleton
@@ -50,6 +64,7 @@ import javax.inject.Singleton
         PluginsListModule::class,
         ActivitiesModule::class,
         ReceiversModule::class,
+        PersistenceModule::class,
 
         // Gradle modules
         AutomationModule::class,
@@ -62,6 +77,7 @@ import javax.inject.Singleton
         OpenHumansModule::class,
         PluginsModule::class,
         SharedImplModule::class,
+        LoggerModule::class,
         UiModule::class,
         ValidatorsModule::class,
         PluginsConstraintsModule::class,
@@ -71,7 +87,6 @@ import javax.inject.Singleton
         WorkflowModule::class,
 
         // pumps
-        ComboModule::class,
         ComboV2Module::class,
         DanaHistoryModule::class,
         DanaModule::class,
@@ -88,6 +103,7 @@ import javax.inject.Singleton
         PumpCommonModule::class,
         RileyLinkModule::class,
         MedtrumModule::class,
+        EquilModule::class,
         VirtualPumpModule::class
     ]
 )

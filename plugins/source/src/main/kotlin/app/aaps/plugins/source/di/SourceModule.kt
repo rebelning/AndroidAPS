@@ -4,15 +4,18 @@ import app.aaps.core.interfaces.source.DexcomBoyda
 import app.aaps.core.interfaces.source.NSClientSource
 import app.aaps.core.interfaces.source.WTClientSource
 import app.aaps.core.interfaces.source.XDripSource
-import app.aaps.plugins.source.AidexPlugin
 import app.aaps.plugins.source.BGSourceFragment
 import app.aaps.plugins.source.DexcomPlugin
-import app.aaps.plugins.source.EversensePlugin
 import app.aaps.plugins.source.GlimpPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
+<<<<<<< HEAD
 import app.aaps.plugins.source.PathedOTAppPlugin
+=======
+import app.aaps.plugins.source.OttaiPlugin
+>>>>>>> master
 import app.aaps.plugins.source.PoctechPlugin
+import app.aaps.plugins.source.SyaiTagPlugin
 import app.aaps.plugins.source.TomatoPlugin
 import app.aaps.plugins.source.WTClientSourcePlugin
 import app.aaps.plugins.source.XdripSourcePlugin
@@ -40,8 +43,8 @@ abstract class SourceModule {
     @ContributesAndroidInjector abstract fun contributesOTAppWorker(): PathedOTAppPlugin.PathedOTAppWorker
     @ContributesAndroidInjector abstract fun contributesPoctechWorker(): PoctechPlugin.PoctechWorker
     @ContributesAndroidInjector abstract fun contributesTomatoWorker(): TomatoPlugin.TomatoWorker
-    @ContributesAndroidInjector abstract fun contributesEversenseWorker(): EversensePlugin.EversenseWorker
-    @ContributesAndroidInjector abstract fun contributesAidexWorker(): AidexPlugin.AidexWorker
+    @ContributesAndroidInjector abstract fun contributesOttaiWorker(): OttaiPlugin.OttaiWorker
+    @ContributesAndroidInjector abstract fun contributesOTAppWorker(): SyaiTagPlugin.SyaiTagWorker
 
     @ContributesAndroidInjector abstract fun contributesRequestDexcomPermissionActivity(): RequestDexcomPermissionActivity
 

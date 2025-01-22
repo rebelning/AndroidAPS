@@ -31,6 +31,7 @@ import app.aaps.plugins.sync.nsclientV3.workers.LoadTreatmentsWorker
 import app.aaps.plugins.sync.tidepool.TidepoolFragment
 import app.aaps.plugins.sync.wear.WearFragment
 import app.aaps.plugins.sync.wear.activities.CwfInfosActivity
+import app.aaps.plugins.sync.wear.receivers.WearDataReceiver
 import app.aaps.plugins.sync.wear.wearintegration.DataLayerListenerServiceMobile
 import app.aaps.plugins.sync.wtShared.WTClientFragment
 import app.aaps.plugins.sync.wtShared.WTStoreDataForDbImpl
@@ -88,6 +89,7 @@ abstract class SyncModule {
     @ContributesAndroidInjector abstract fun contributesXdripFragment(): XdripFragment
     @ContributesAndroidInjector abstract fun contributesXdripDataSyncWorker(): XdripDataSyncWorker
     @ContributesAndroidInjector abstract fun contributesWearFragment(): WearFragment
+    @ContributesAndroidInjector abstract fun contributesWearDataReceiver(): WearDataReceiver
     @ContributesAndroidInjector abstract fun contributesWatchUpdaterService(): DataLayerListenerServiceMobile
     @ContributesAndroidInjector abstract fun contributesCustomWatchfaceInfosActivity(): CwfInfosActivity
 
