@@ -222,8 +222,7 @@ dependencies {
     implementation(project(":database:impl"))
 
     implementation(project(":pump:apex"))
-    implementation(project(":pump:combo"))
-
+    // implementation(project(":pump:combo"))
     implementation(project(":database:persistence"))
 
     implementation(project(":pump:combov2"))

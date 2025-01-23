@@ -8,12 +8,12 @@ import org.json.JSONObject
 
 interface ImportExportPrefs {
 
-<<<<<<< HEAD
+
     fun importSharedPreferences(activity: FragmentActivity, importFile: PrefsFile)
     fun importAutoSharedPreferences(activity: FragmentActivity):Boolean
-=======
+
     fun doImportSharedPreferences(activity: FragmentActivity)
->>>>>>> master
+
     fun importSharedPreferences(activity: FragmentActivity)
     fun importCustomWatchface(activity: FragmentActivity)
     fun importCustomWatchface(fragment: Fragment)

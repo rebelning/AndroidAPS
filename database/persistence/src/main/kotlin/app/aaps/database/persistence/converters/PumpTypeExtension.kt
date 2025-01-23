@@ -3,7 +3,7 @@ package app.aaps.database.persistence.converters
 import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.database.entities.embedments.InterfaceIDs
 
-<<<<<<< HEAD:core/main/src/main/kotlin/app/aaps/core/main/pump/PumpTypeExtension.kt
+
 fun PumpType.Companion.fromDbSource(s: UserEntry.Sources): PumpType.Source =
     when (s) {
         UserEntry.Sources.Dana        -> PumpType.Source.Dana
@@ -25,13 +25,13 @@ fun PumpType.Companion.fromDbSource(s: UserEntry.Sources): PumpType.Source =
         UserEntry.Sources.VirtualPump -> PumpType.Source.VirtualPump
         else                          -> PumpType.Source.Unknown
     }
-
-fun PumpType.Companion.fromDbPumpType(pt: InterfaceIDs.PumpType): PumpType =
-    when (pt) {
-=======
+//
+// fun PumpType.Companion.fromDbPumpType(pt: InterfaceIDs.PumpType): PumpType =
+//     when (pt) {
+// =======
 fun InterfaceIDs.PumpType.fromDb(): PumpType =
     when (this) {
->>>>>>> master:database/persistence/src/main/kotlin/app/aaps/database/persistence/converters/PumpTypeExtension.kt
+// >>>>>>> master:database/persistence/src/main/kotlin/app/aaps/database/persistence/converters/PumpTypeExtension.kt
         InterfaceIDs.PumpType.GENERIC_AAPS                -> PumpType.GENERIC_AAPS
         InterfaceIDs.PumpType.CELLNOVO                    -> PumpType.CELLNOVO
         InterfaceIDs.PumpType.ACCU_CHEK_COMBO             -> PumpType.ACCU_CHEK_COMBO
@@ -72,34 +72,34 @@ fun InterfaceIDs.PumpType.fromDb(): PumpType =
         InterfaceIDs.PumpType.EQUIL                       -> PumpType.EQUIL
     }
 
-<<<<<<< HEAD:core/main/src/main/kotlin/app/aaps/core/main/pump/PumpTypeExtension.kt
-fun PumpType.Source.toDbSource(): UserEntry.Sources =
-    when (this) {
-        PumpType.Source.Dana        -> UserEntry.Sources.Dana
-        PumpType.Source.DanaR       -> UserEntry.Sources.DanaR
-        PumpType.Source.DanaRC      -> UserEntry.Sources.DanaRC
-        PumpType.Source.DanaRv2     -> UserEntry.Sources.DanaRv2
-        PumpType.Source.DanaRS      -> UserEntry.Sources.DanaRS
-        PumpType.Source.DanaI       -> UserEntry.Sources.DanaI
-        PumpType.Source.DiaconnG8   -> UserEntry.Sources.DiaconnG8
-        PumpType.Source.Apex        -> UserEntry.Sources.Apex
-        PumpType.Source.Insight     -> UserEntry.Sources.Insight
-        PumpType.Source.Combo       -> UserEntry.Sources.Combo
-        PumpType.Source.Medtronic   -> UserEntry.Sources.Medtronic
-        PumpType.Source.Omnipod     -> UserEntry.Sources.Omnipod
-        PumpType.Source.OmnipodEros -> UserEntry.Sources.OmnipodEros
-        PumpType.Source.OmnipodDash -> UserEntry.Sources.OmnipodDash
-        PumpType.Source.EOPatch2    -> UserEntry.Sources.EOPatch2
-        PumpType.Source.Medtrum     -> UserEntry.Sources.Medtrum
-        PumpType.Source.MDI         -> UserEntry.Sources.MDI
-        PumpType.Source.VirtualPump -> UserEntry.Sources.VirtualPump
-        else                        -> UserEntry.Sources.Unknown
-    }
-
-fun PumpType.toDbPumpType(): InterfaceIDs.PumpType =
-=======
+// <<<<<<< HEAD:core/main/src/main/kotlin/app/aaps/core/main/pump/PumpTypeExtension.kt
+// fun PumpType.Source.toDbSource(): UserEntry.Sources =
+//     when (this) {
+//         PumpType.Source.Dana        -> UserEntry.Sources.Dana
+//         PumpType.Source.DanaR       -> UserEntry.Sources.DanaR
+//         PumpType.Source.DanaRC      -> UserEntry.Sources.DanaRC
+//         PumpType.Source.DanaRv2     -> UserEntry.Sources.DanaRv2
+//         PumpType.Source.DanaRS      -> UserEntry.Sources.DanaRS
+//         PumpType.Source.DanaI       -> UserEntry.Sources.DanaI
+//         PumpType.Source.DiaconnG8   -> UserEntry.Sources.DiaconnG8
+//         PumpType.Source.Apex        -> UserEntry.Sources.Apex
+//         PumpType.Source.Insight     -> UserEntry.Sources.Insight
+//         PumpType.Source.Combo       -> UserEntry.Sources.Combo
+//         PumpType.Source.Medtronic   -> UserEntry.Sources.Medtronic
+//         PumpType.Source.Omnipod     -> UserEntry.Sources.Omnipod
+//         PumpType.Source.OmnipodEros -> UserEntry.Sources.OmnipodEros
+//         PumpType.Source.OmnipodDash -> UserEntry.Sources.OmnipodDash
+//         PumpType.Source.EOPatch2    -> UserEntry.Sources.EOPatch2
+//         PumpType.Source.Medtrum     -> UserEntry.Sources.Medtrum
+//         PumpType.Source.MDI         -> UserEntry.Sources.MDI
+//         PumpType.Source.VirtualPump -> UserEntry.Sources.VirtualPump
+//         else                        -> UserEntry.Sources.Unknown
+//     }
+//
+// fun PumpType.toDbPumpType(): InterfaceIDs.PumpType =
+// =======
 fun PumpType.toDb(): InterfaceIDs.PumpType =
->>>>>>> master:database/persistence/src/main/kotlin/app/aaps/database/persistence/converters/PumpTypeExtension.kt
+// >>>>>>> master:database/persistence/src/main/kotlin/app/aaps/database/persistence/converters/PumpTypeExtension.kt
     when (this) {
         PumpType.GENERIC_AAPS              -> InterfaceIDs.PumpType.GENERIC_AAPS
         PumpType.CELLNOVO                  -> InterfaceIDs.PumpType.CELLNOVO

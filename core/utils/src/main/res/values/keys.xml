@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    Keys-->
-<<<<<<< HEAD
+
     <string name="key_units" translatable="false">units</string>
     <string name="key_loop_openmode_min_change" translatable="false">loop_openmode_min_change</string>
     <string name="key_absorption_maxtime" translatable="false">absorption_maxtime</string>
@@ -20,18 +20,16 @@
     <string name="key_wt_create_announcements_from_errors" translatable="false">
         wt_create_announcements_from_errors</string>
     <string name="key_btwatchdog" translatable="false">bt_watchdog</string>
-=======
->>>>>>> master
+
     <string name="key_btwatchdog_lastbark" translatable="false">bt_watchdog_last</string>
     <string name="key_quickwizard" translatable="false">QuickWizard</string>
     <string name="key_units_mgdl" translatable="false">units_mgdl</string>
     <string name="key_medtronic_settings" translatable="false">medtronic_settings</string>
-<<<<<<< HEAD
+
     <string name="key_danars_settings" translatable="false">danars_settings</string>
     <string name="key_ns_client_settings" translatable="false">nsclientinternal_settings</string>
     <string name="key_wt_client_settings" translatable="false">wtclientinternal_settings</string>
-=======
->>>>>>> master
+
     <string name="key_insight_local_settings" translatable="false">insight_local_settings</string>
     <string name="key_active_pump_change_timestamp" translatable="false">active_pump_change_timestamp</string>
     <string name="key_active_pump_type" translatable="false">active_pump_type</string>
@@ -41,7 +39,7 @@
     <string name="key_next_missed_reading_alarm" translatable="false">nextMissedReadingsAlarm</string>
     <string name="key_rangetodisplay" translatable="false">rangetodisplay</string>
     <string name="key_local_profile_last_change" translatable="false">local_profile_last_change</string>
-<<<<<<< HEAD
+
     <string name="key_ns_receive_profile_store" translatable="false">ns_receive_profile_store</string>
     <string name="key_nsclientinternal_url" translatable="false">nsclientinternal_url</string>
     <string name="key_wtclientinternal_url" translatable="false">wtclientinternal_url</string>
@@ -57,8 +55,7 @@
     <string name="key_ns_receive_profile_switch" translatable="false">ns_receive_profile_switch</string>
     <string name="key_ns_receive_offline_event" translatable="false">ns_receive_offline_event</string>
     <string name="key_ns_receive_temp_target" translatable="false">ns_receive_temp_target</string>
-=======
->>>>>>> master
+
     <string name="key_objectiveuseprofileswitch" translatable="false">ObjectivesProfileSwitchUsed</string>
     <string name="key_objectiveusetemptarget" translatable="false">ObjectivesTempTargetUsed</string>
     <string name="key_objectiveusedisconnect" translatable="false">ObjectivesDisconnectUsed</string>
@@ -72,7 +69,7 @@
     <string name="key_objectives_bg_is_available_in_ns" translatable="false">ObjectivesbgIsAvailableInNS</string>
     <string name="key_objectives_pump_status_is_available_in_ns" translatable="false">ObjectivespumpStatusIsAvailableInNS</string>
     <string name="key_snoozed_to" translatable="false">snoozedTo</string>
-<<<<<<< HEAD
+
     <string name="key_ns_receive_cgm" translatable="false">ns_receive_cgm</string>
     <string name="key_ns_create_announcements_from_carbs_req" translatable="false">ns_create_announcements_from_carbs_req</string>
     <string name="key_wt_create_announcements_from_carbs_req" translatable="false">
@@ -89,14 +86,13 @@
     <string name="key_application_protection" translatable="false">application_protection</string>
     <string name="key_bolus_protection" translatable="false">bolus_protection</string>
     <string name="key_protection_timeout" translatable="false">protection_timeout</string>
-=======
->>>>>>> master
+
     <string name="key_objectiveuseloop" translatable="false">ObjectivesLoopUsed</string>
     <string name="key_ObjectivesmanualEnacts" translatable="false">ObjectivesmanualEnacts</string>
     <string name="key_objectiveuseactions" translatable="false">ObjectivesActionsUsed</string>
     <string name="key_objectiveusescale" translatable="false">ObjectivesScaleUsed</string>
     <string name="key_used_autosens_on_main_phone" translatable="false">used_autosens_on_main_phone</string>
-<<<<<<< HEAD
+
     <string name="key_openapsma_max_basal" translatable="false">openapsma_max_basal</string>
     <!--aaps    auth -->
 
@@ -107,7 +103,6 @@
     <string name="key_aaps_expired_time" translatable="false">key_aaps_expired_time</string>
     <string name="key_aaps_is_auto_import" translatable="false">key_aaps_is_auto_import</string>
 
-=======
->>>>>>> master
+
 
 </resources>

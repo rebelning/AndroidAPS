@@ -149,7 +149,7 @@
     <string name="overview_edit_quickwizard_superbolus">Superbolus</string>
     <string name="overview_edit_quickwizard_percentage_too_high">Percentage too high!</string>
     <string name="a11y_drag_and_drop_handle">drag and drop handle</string>
-<<<<<<< HEAD
+
 <!--    -->
     <string name="restartingapp">Exiting application to apply settings.</string>
     <string name="setting_imported">Settings imported</string>
@@ -158,7 +158,7 @@
     <string name="preferences_auto_importing_title">preferences auto import</string>
     <string name="preferences_importing">preferences importing</string>
     <string name="close">Close</string>
-=======
+
     <string name="additional_ecarbs">Add eCarbs</string>
     <string name="overview_edit_quickwizard_useforcalculation">Use for calculation:</string>
     <string name="constraints_violation">Constraints violation</string>
@@ -172,5 +172,5 @@
         <item>Negative only</item>
     </string-array>
 
->>>>>>> master
+
 </resources>

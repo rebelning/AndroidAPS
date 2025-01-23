@@ -401,14 +401,15 @@ enum class PumpType(
         extendedBolusSettings = DoseSettings(0.025, 15, 15 * 32, 0.025),
         pumpTempBasalType = PumpTempBasalType.Absolute,
         tbrSettings = DoseSettings(0.025, 15, 15 * 32, 0.0, 15.0),
-        specialBasalDurations = PumpCapability.BasalRate_Duration30minAllowed,
+        // specialBasalDurations = PumpCapability.BasalRate_Duration30minAllowed,
+        specialBasalDurations= arrayOf(Capability.BasalRate_Duration30minAllowed),
         baseBasalMinValue = 0.1,
         baseBasalMaxValue = 3.0,
         baseBasalStep = 0.025,
         baseBasalSpecialSteps = null,
         pumpCapability = PumpCapability.ApexCapabilities,
         source = Source.Apex,
-        useHardwareLink = true
+        // useHardwareLink = true
     ),
 
     //EOPatch Pump

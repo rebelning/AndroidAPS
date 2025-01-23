@@ -16,12 +16,12 @@
     <string name="tomato_short">番茄</string>
     <string name="description_source_tomato">从番茄app(喵喵设备) 接收血糖值</string>
     <string name="bgsource_upload">血糖上传设置</string>
-<<<<<<< HEAD
+
     <!-- Patched OT App -->
     <string name="patched_ottai_app">欧态补丁版</string>
     <string name="description_source_patched_ottai_app">从欧态App接收血糖值。</string>
-=======
+
     <!-- Patched Ottai App -->
     <!-- Patched Syai Tag App -->
->>>>>>> master
+
 </resources>
