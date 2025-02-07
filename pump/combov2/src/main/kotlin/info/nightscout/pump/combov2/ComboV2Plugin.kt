@@ -133,18 +133,18 @@ class ComboV2Plugin @Inject constructor(
             .shortName(R.string.combov2_plugin_shortname)
             .description(R.string.combov2_plugin_description)
             .preferencesId(R.xml.pref_combov2),
-<<<<<<< HEAD
-        injector,
-        aapsLogger,
-        rh,
-        commandQueue
-    ),
-    Pump,
-    PluginConstraints, Parcelable {
-=======
+// <<<<<<< HEAD
+//         injector,
+//         aapsLogger,
+//         rh,
+//         commandQueue
+//     ),
+//     Pump,
+//     PluginConstraints, Parcelable {
+// =======
         aapsLogger, rh, commandQueue
     ), Pump, PluginConstraints {
->>>>>>> master
+// >>>>>>> master
 
     // Coroutine scope and the associated job. All coroutines
     // that are started in this plugin are part of this scope.
@@ -2496,21 +2496,21 @@ class ComboV2Plugin @Inject constructor(
             else                     -> false
         }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeByte(if (initializationChangedEventSent) 1 else 0)
-        parcel.writeLong(lastConnectionTimestamp)
-        parcel.writeByte(if (pumpErrorObserved) 1 else 0)
-        parcel.writeByte(if (disconnectRequestPending) 1 else 0)
-        parcel.writeByte(if (unpairing) 1 else 0)
-        parcel.writeByte(if (pumpIsSuspended) 1 else 0)
-        parcel.writeValue(lastActiveBasalProfileNumber)
-        parcel.writeValue(_reservoirLevel)
-        parcel.writeValue(_batteryLevel)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
+    // override fun writeToParcel(parcel: Parcel, flags: Int) {
+    //     parcel.writeByte(if (initializationChangedEventSent) 1 else 0)
+    //     parcel.writeLong(lastConnectionTimestamp)
+    //     parcel.writeByte(if (pumpErrorObserved) 1 else 0)
+    //     parcel.writeByte(if (disconnectRequestPending) 1 else 0)
+    //     parcel.writeByte(if (unpairing) 1 else 0)
+    //     parcel.writeByte(if (pumpIsSuspended) 1 else 0)
+    //     parcel.writeValue(lastActiveBasalProfileNumber)
+    //     parcel.writeValue(_reservoirLevel)
+    //     parcel.writeValue(_batteryLevel)
+    // }
+    //
+    // override fun describeContents(): Int {
+    //     return 0
+    // }
 
     companion object CREATOR : Parcelable.Creator<ComboV2Plugin> {
 

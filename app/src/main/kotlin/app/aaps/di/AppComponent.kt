@@ -19,7 +19,7 @@ import app.aaps.plugins.sync.di.SyncModule
 import app.aaps.pump.common.di.PumpCommonModule
 import app.aaps.pump.dana.di.DanaHistoryModule
 import app.aaps.pump.dana.di.DanaModule
-import app.aaps.pump.danar.di.DanaRModule
+
 import app.aaps.pump.danars.di.DanaRSModule
 import app.aaps.pump.diaconn.di.DiaconnG8Module
 import app.aaps.pump.eopatch.di.EopatchModule
@@ -39,20 +39,20 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-<<<<<<< HEAD
-import info.nightscout.androidaps.danar.di.DanaRModule
-import info.nightscout.androidaps.insight.di.InsightDatabaseModule
-import info.nightscout.androidaps.insight.di.InsightModule
-import info.nightscout.androidaps.plugins.pump.common.di.RileyLinkModule
-import info.nightscout.androidaps.plugins.pump.eopatch.dagger.EopatchModule
-import info.nightscout.androidaps.plugins.pump.medtronic.di.MedtronicModule
-import info.nightscout.androidaps.plugins.pump.omnipod.dash.di.OmnipodDashModule
-import info.nightscout.androidaps.plugins.pump.omnipod.eros.di.OmnipodErosModule
+
+// import info.nightscout.androidaps.danar.di.DanaRModule
+// import info.nightscout.androidaps.insight.di.InsightDatabaseModule
+// import info.nightscout.androidaps.insight.di.InsightModule
+// import info.nightscout.androidaps.plugins.pump.common.di.RileyLinkModule
+// import info.nightscout.androidaps.plugins.pump.eopatch.dagger.EopatchModule
+// import info.nightscout.androidaps.plugins.pump.medtronic.di.MedtronicModule
+// import info.nightscout.androidaps.plugins.pump.omnipod.dash.di.OmnipodDashModule
+// import info.nightscout.androidaps.plugins.pump.omnipod.eros.di.OmnipodErosModule
 import info.nightscout.pump.apex.di.ApexModule
-import info.nightscout.pump.combo.di.ComboModule
-=======
+// import info.nightscout.pump.combo.di.ComboModule
+
 import app.aaps.pump.common.di.RileyLinkModule
->>>>>>> master
+
 import info.nightscout.pump.combov2.di.ComboV2Module
 import javax.inject.Singleton
 
@@ -90,7 +90,7 @@ import javax.inject.Singleton
         ComboV2Module::class,
         DanaHistoryModule::class,
         DanaModule::class,
-        DanaRModule::class,
+        // DanaRModule::class,
         DanaRSModule::class,
         DiaconnG8Module::class,
         ApexModule::class,

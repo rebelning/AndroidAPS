@@ -54,44 +54,9 @@ import app.aaps.plugins.aps.autotune.AutotunePlugin
 import app.aaps.plugins.automation.AutomationPlugin
 import app.aaps.plugins.configuration.maintenance.MaintenancePlugin
 import app.aaps.plugins.main.general.smsCommunicator.SmsCommunicatorPlugin
-<<<<<<< HEAD
-import app.aaps.plugins.sync.garmin.GarminPlugin
-import app.aaps.plugins.sync.wear.WearPlugin
-import app.aaps.plugins.sensitivity.SensitivityAAPSPlugin
-import app.aaps.plugins.sensitivity.SensitivityOref1Plugin
-import app.aaps.plugins.sensitivity.SensitivityWeightedAveragePlugin
-import app.aaps.plugins.source.AidexPlugin
-import app.aaps.plugins.source.DexcomPlugin
-import app.aaps.plugins.source.EversensePlugin
-import app.aaps.plugins.source.GlimpPlugin
-import app.aaps.plugins.source.GlunovoPlugin
-import app.aaps.plugins.source.IntelligoPlugin
-import app.aaps.plugins.source.PoctechPlugin
-import app.aaps.plugins.source.TomatoPlugin
-import app.aaps.plugins.sync.nsclient.NSClientPlugin
-import app.aaps.plugins.sync.nsclientV3.NSClientV3Plugin
-import app.aaps.plugins.sync.openhumans.OpenHumansUploaderPlugin
-import app.aaps.plugins.sync.tidepool.TidepoolPlugin
-import app.aaps.plugins.sync.wtclient.WTClientPlugin
-import app.aaps.plugins.sync.xdrip.XdripPlugin
-import app.aaps.pump.virtual.VirtualPumpPlugin
-import dagger.android.support.AndroidSupportInjection
-import info.nightscout.androidaps.danaRKorean.DanaRKoreanPlugin
-import info.nightscout.androidaps.danaRv2.DanaRv2Plugin
-import info.nightscout.androidaps.danar.DanaRPlugin
-import info.nightscout.androidaps.plugins.pump.eopatch.EopatchPumpPlugin
-import info.nightscout.androidaps.plugins.pump.insight.LocalInsightPlugin
-import info.nightscout.androidaps.plugins.pump.medtronic.MedtronicPumpPlugin
-import info.nightscout.pump.apex.ApexPlugin
-import info.nightscout.pump.combo.ComboPlugin
-import info.nightscout.pump.combov2.ComboV2Plugin
-import info.nightscout.pump.diaconn.DiaconnG8Plugin
-import info.nightscout.pump.medtrum.MedtrumPlugin
-=======
 import app.aaps.plugins.main.skins.SkinProvider
 import dagger.android.support.AndroidSupportInjection
 import java.util.Vector
->>>>>>> master
 import javax.inject.Inject
 
 class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChangeListener {
@@ -111,54 +76,14 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
 
     @Inject lateinit var automationPlugin: AutomationPlugin
     @Inject lateinit var autotunePlugin: AutotunePlugin
-<<<<<<< HEAD
-    @Inject lateinit var danaRPlugin: DanaRPlugin
-    @Inject lateinit var danaRKoreanPlugin: DanaRKoreanPlugin
-    @Inject lateinit var danaRv2Plugin: DanaRv2Plugin
-    @Inject lateinit var danaRSPlugin: info.nightscout.pump.danars.DanaRSPlugin
-    @Inject lateinit var comboPlugin: ComboPlugin
-    @Inject lateinit var combov2Plugin: ComboV2Plugin
-    @Inject lateinit var insulinOrefFreePeakPlugin: InsulinOrefFreePeakPlugin
-    @Inject lateinit var loopPlugin: LoopPlugin
-    @Inject lateinit var localInsightPlugin: LocalInsightPlugin
-    @Inject lateinit var medtronicPumpPlugin: MedtronicPumpPlugin
-    @Inject lateinit var nsClientPlugin: NSClientPlugin
-    @Inject lateinit var wtClientPlugin: WTClientPlugin
-    @Inject lateinit var nsClientV3Plugin: NSClientV3Plugin
-    @Inject lateinit var openAPSAMAPlugin: OpenAPSAMAPlugin
-    @Inject lateinit var openAPSSMBPlugin: OpenAPSSMBPlugin
-    @Inject lateinit var openAPSSMBDynamicISFPlugin: OpenAPSSMBDynamicISFPlugin
-    @Inject lateinit var safetyPlugin: SafetyPlugin
-    @Inject lateinit var sensitivityAAPSPlugin: SensitivityAAPSPlugin
-    @Inject lateinit var sensitivityOref1Plugin: SensitivityOref1Plugin
-    @Inject lateinit var sensitivityWeightedAveragePlugin: SensitivityWeightedAveragePlugin
-    @Inject lateinit var dexcomPlugin: DexcomPlugin
-    @Inject lateinit var eversensePlugin: EversensePlugin
-    @Inject lateinit var glimpPlugin: GlimpPlugin
-    @Inject lateinit var poctechPlugin: PoctechPlugin
-    @Inject lateinit var tomatoPlugin: TomatoPlugin
-    @Inject lateinit var glunovoPlugin: GlunovoPlugin
-    @Inject lateinit var intelligoPlugin: IntelligoPlugin
-    @Inject lateinit var aidexPlugin: AidexPlugin
-=======
->>>>>>> master
     @Inject lateinit var smsCommunicatorPlugin: SmsCommunicatorPlugin
     @Inject lateinit var maintenancePlugin: MaintenancePlugin
     @Inject lateinit var skinProvider: SkinProvider
 
-<<<<<<< HEAD
-    @Inject lateinit var passwordCheck: PasswordCheck
-    @Inject lateinit var nsSettingStatus: NSSettingsStatus
-    @Inject lateinit var openHumansUploaderPlugin: OpenHumansUploaderPlugin
-    @Inject lateinit var diaconnG8Plugin: DiaconnG8Plugin
-    @Inject lateinit var apexPlugin: ApexPlugin
-    @Inject lateinit var garminPlugin: GarminPlugin
-=======
     companion object {
 
         const val FILTER = "filter"
     }
->>>>>>> master
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -209,55 +134,6 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
         } else if (customPreference == UiInteraction.Preferences.PROTECTION) {
             addProtectionScreen(rootKey)
         } else {
-<<<<<<< HEAD
-            addPreferencesFromResource(R.xml.pref_general, rootKey)
-            addPreferencesFromResource(app.aaps.plugins.main.R.xml.pref_overview, rootKey)
-            addPreferencesFromResourceIfEnabled(safetyPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(eversensePlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(dexcomPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(tomatoPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(glunovoPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(intelligoPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(poctechPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(aidexPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(glimpPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(loopPlugin, rootKey, config.APS)
-            addPreferencesFromResourceIfEnabled(openAPSAMAPlugin, rootKey, config.APS)
-            addPreferencesFromResourceIfEnabled(openAPSSMBPlugin, rootKey, config.APS)
-            addPreferencesFromResourceIfEnabled(openAPSSMBDynamicISFPlugin, rootKey, config.APS)
-            addPreferencesFromResourceIfEnabled(sensitivityAAPSPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(sensitivityWeightedAveragePlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(sensitivityOref1Plugin, rootKey)
-            addPreferencesFromResourceIfEnabled(danaRPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(danaRKoreanPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(danaRv2Plugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(danaRSPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(localInsightPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(comboPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(combov2Plugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(medtronicPumpPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(diaconnG8Plugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(apexPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(eopatchPumpPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(medtrumPlugin, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResource(R.xml.pref_pump, rootKey, config.PUMPDRIVERS)
-            addPreferencesFromResourceIfEnabled(virtualPumpPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(insulinOrefFreePeakPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(nsClientPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(wtClientPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(nsClientV3Plugin, rootKey)
-            addPreferencesFromResourceIfEnabled(tidepoolPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(smsCommunicatorPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(automationPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(autotunePlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(wearPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(statusLinePlugin, rootKey)
-            addPreferencesFromResource(R.xml.pref_alerts, rootKey)
-            addPreferencesFromResource(app.aaps.plugins.configuration.R.xml.pref_datachoices, rootKey)
-            addPreferencesFromResourceIfEnabled(maintenancePlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(openHumansUploaderPlugin, rootKey)
-            addPreferencesFromResourceIfEnabled(garminPlugin, rootKey)
-=======
             addGeneralScreen(rootKey)
             addProtectionScreen(rootKey)
             addPreferencesIfEnabled(activePlugin.activeOverview as PluginBase, rootKey)
@@ -280,7 +156,6 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
             initSummary(preferenceScreen, pluginName != null)
         } catch (_: Exception) {
             throw Exception("Error in onCreatePreferences pluginName=$pluginName customPreference=$customPreference rootKey=$rootKey filter=$filter")
->>>>>>> master
         }
         preprocessPreferences()
         if (filter != "") updateFilterVisibility(filter, preferenceScreen)

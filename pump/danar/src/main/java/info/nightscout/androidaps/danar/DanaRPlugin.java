@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import app.aaps.annotations.OpenForTesting;
+import app.aaps.core.data.pump.defs.PumpType;
 import app.aaps.core.interfaces.constraints.ConstraintsChecker;
 import app.aaps.core.interfaces.logging.AAPSLogger;
 import app.aaps.core.interfaces.logging.LTag;
@@ -20,7 +21,7 @@ import app.aaps.core.interfaces.profile.Profile;
 import app.aaps.core.interfaces.pump.DetailedBolusInfo;
 import app.aaps.core.interfaces.pump.PumpEnactResult;
 import app.aaps.core.interfaces.pump.PumpSync;
-import app.aaps.core.interfaces.pump.defs.PumpType;
+//import app.aaps.core.interfaces.pump.defs.PumpType;
 import app.aaps.core.interfaces.queue.CommandQueue;
 import app.aaps.core.interfaces.resources.ResourceHelper;
 import app.aaps.core.interfaces.rx.AapsSchedulers;
@@ -34,11 +35,14 @@ import app.aaps.core.interfaces.utils.DateUtil;
 import app.aaps.core.interfaces.utils.DecimalFormatter;
 import app.aaps.core.interfaces.utils.Round;
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy;
-import app.aaps.core.main.constraints.ConstraintObject;
+//import app.aaps.core.main.constraints.ConstraintObject;
+import app.aaps.pump.dana.DanaPump;
+import app.aaps.pump.dana.database.DanaHistoryDatabase;
+import app.aaps.pump.danar.services.DanaRExecutionService;
 import dagger.android.HasAndroidInjector;
-import info.nightscout.androidaps.danar.services.DanaRExecutionService;
-import info.nightscout.pump.dana.DanaPump;
-import info.nightscout.pump.dana.database.DanaHistoryDatabase;
+//import info.nightscout.androidaps.danar.services.DanaRExecutionService;
+//import info.nightscout.pump.dana.DanaPump;
+//import info.nightscout.pump.dana.database.DanaHistoryDatabase;
 
 @Singleton
 @OpenForTesting

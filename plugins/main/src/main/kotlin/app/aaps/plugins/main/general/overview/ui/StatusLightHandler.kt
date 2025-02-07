@@ -14,6 +14,7 @@ import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.Preferences
+import app.aaps.plugins.main.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -87,28 +88,26 @@ class StatusLightHandler @Inject constructor(
             val erosBatteryLinkAvailable = pump.model() == PumpType.OMNIPOD_EROS && pump.isUseRileyLinkBatteryLevel()
 
             if (pump.model().supportBatteryLevel || erosBatteryLinkAvailable) {
-<<<<<<< HEAD
+
                 if (pump.model() == PumpType.APEX) {
                     handleApexLevel(
-                        batteryLevel, R.string.key_statuslights_bat_critical,
-                        26.0, R.string.key_statuslights_bat_warning,
-                        51.0,
+                        batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning,
                         pump.batteryLevel,
-                        "%"
                     )
                 } else {
-                    handleLevel(
-                        batteryLevel, R.string.key_statuslights_bat_critical,
-                        26.0, R.string.key_statuslights_bat_warning,
-                        51.0,
-                        pump.batteryLevel.toDouble(),
-                        "%"
-                    )
+                    // handleLevel(
+                    //     batteryLevel, R.string.key_statuslights_bat_critical,
+                    //     26.0, R.string.key_statuslights_bat_warning,
+                    //     51.0,
+                    //     pump.batteryLevel.toDouble(),
+                    //     "%"
+                    // )
+                    handleLevel(batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning, pump.batteryLevel.toDouble(), "%")
                 }
 
-=======
-                handleLevel(batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning, pump.batteryLevel.toDouble(), "%")
->>>>>>> master
+
+                // handleLevel(batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning, pump.batteryLevel.toDouble(), "%")
+
             } else {
                 batteryLevel?.text = rh.gs(app.aaps.core.ui.R.string.value_unavailable_short)
                 batteryLevel?.setTextColor(rh.gac(batteryLevel.context, app.aaps.core.ui.R.attr.defaultTextColor))
@@ -137,9 +136,11 @@ class StatusLightHandler @Inject constructor(
         warnColors.setColorInverse(view, level, resWarn, resUrgent)
     }
 
-    private fun handleApexLevel(view: TextView?, criticalSetting: Int, criticalDefaultValue: Double, warnSetting: Int, warnDefaultValue: Double, level: Int, units: String) {
-        val resUrgent = sp.getDouble(criticalSetting, criticalDefaultValue)
-        val resWarn = sp.getDouble(warnSetting, warnDefaultValue)
+    private fun handleApexLevel(view: TextView?, criticalSetting: IntKey,warnSetting: IntKey, level: Int) {
+        // val resUrgent = sp.getDouble(criticalSetting, criticalDefaultValue)
+        // val resWarn = sp.getDouble(warnSetting, warnDefaultValue)
+        val resUrgent = preferences.get(criticalSetting)
+        val resWarn = preferences.get(warnSetting)
         var levelBattery = "(≥75%)"
         var levelBat = 100
         if (level == 4) {

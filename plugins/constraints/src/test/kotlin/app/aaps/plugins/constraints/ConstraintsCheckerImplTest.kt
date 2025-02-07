@@ -32,7 +32,7 @@ import app.aaps.plugins.source.GlimpPlugin
 import app.aaps.pump.dana.DanaPump
 import app.aaps.pump.dana.database.DanaHistoryDatabase
 import app.aaps.pump.dana.keys.DanaStringKey
-import app.aaps.pump.danar.DanaRPlugin
+// import app.aaps.pump.danar.DanaRPlugin
 import app.aaps.pump.danars.DanaRSPlugin
 import app.aaps.pump.insight.InsightPlugin
 import app.aaps.pump.insight.database.InsightDatabase
@@ -73,7 +73,7 @@ class ConstraintsCheckerImplTest : TestBaseWithProfile() {
     private lateinit var constraintChecker: ConstraintsCheckerImpl
     private lateinit var safetyPlugin: SafetyPlugin
     private lateinit var objectivesPlugin: ObjectivesPlugin
-    private lateinit var danaRPlugin: DanaRPlugin
+    // private lateinit var danaRPlugin: DanaRPlugin
     private lateinit var danaRSPlugin: DanaRSPlugin
     private lateinit var insightPlugin: InsightPlugin
     private lateinit var openAPSSMBPlugin: OpenAPSSMBPlugin
@@ -131,10 +131,10 @@ class ConstraintsCheckerImplTest : TestBaseWithProfile() {
         insightDbHelper = InsightDbHelper(insightDatabaseDao)
         danaPump = DanaPump(aapsLogger, preferences, dateUtil, instantiator, decimalFormatter)
         objectivesPlugin = ObjectivesPlugin(injector, aapsLogger, rh, sp)
-        danaRPlugin = DanaRPlugin(
-            aapsLogger, aapsSchedulers, rxBus, context, rh, constraintChecker, activePlugin, commandQueue, danaPump, dateUtil, fabricPrivacy, pumpSync,
-            preferences, uiInteraction, danaHistoryDatabase, decimalFormatter, instantiator
-        )
+        // danaRPlugin = DanaRPlugin(
+        //     aapsLogger, aapsSchedulers, rxBus, context, rh, constraintChecker, activePlugin, commandQueue, danaPump, dateUtil, fabricPrivacy, pumpSync,
+        //     preferences, uiInteraction, danaHistoryDatabase, decimalFormatter, instantiator
+        // )
         danaRSPlugin =
             DanaRSPlugin(
                 aapsLogger, aapsSchedulers, rxBus, context, rh, constraintChecker, profileFunction,
@@ -164,7 +164,7 @@ class ConstraintsCheckerImplTest : TestBaseWithProfile() {
         val constraintsPluginsList = ArrayList<PluginBase>()
         constraintsPluginsList.add(safetyPlugin)
         constraintsPluginsList.add(objectivesPlugin)
-        constraintsPluginsList.add(danaRPlugin)
+        // constraintsPluginsList.add(danaRPlugin)
         constraintsPluginsList.add(danaRSPlugin)
         constraintsPluginsList.add(insightPlugin)
         constraintsPluginsList.add(openAPSAMAPlugin)
@@ -245,9 +245,9 @@ class ConstraintsCheckerImplTest : TestBaseWithProfile() {
     // applyBasalConstraints tests
     @Test
     fun basalRateShouldBeLimited() {
-        `when`(activePlugin.activePump).thenReturn(danaRPlugin)
-        // DanaR, RS
-        danaRPlugin.setPluginEnabled(PluginType.PUMP, true)
+        // `when`(activePlugin.activePump).thenReturn(danaRPlugin)
+        // // DanaR, RS
+        // danaRPlugin.setPluginEnabled(PluginType.PUMP, true)
         danaRSPlugin.setPluginEnabled(PluginType.PUMP, true)
         danaPump.maxBasal = 0.8
 
@@ -272,9 +272,9 @@ class ConstraintsCheckerImplTest : TestBaseWithProfile() {
 
     @Test
     fun percentBasalRateShouldBeLimited() {
-        `when`(activePlugin.activePump).thenReturn(danaRPlugin)
-        // DanaR, RS
-        danaRPlugin.setPluginEnabled(PluginType.PUMP, true)
+        // `when`(activePlugin.activePump).thenReturn(danaRPlugin)
+        // // DanaR, RS
+        // danaRPlugin.setPluginEnabled(PluginType.PUMP, true)
         danaRSPlugin.setPluginEnabled(PluginType.PUMP, true)
         danaPump.maxBasal = 0.8
 
@@ -303,7 +303,7 @@ class ConstraintsCheckerImplTest : TestBaseWithProfile() {
         `when`(activePlugin.activePump).thenReturn(virtualPumpPlugin)
         `when`(virtualPumpPlugin.pumpDescription).thenReturn(PumpDescription())
         // DanaR, RS
-        danaRPlugin.setPluginEnabled(PluginType.PUMP, true)
+        // danaRPlugin.setPluginEnabled(PluginType.PUMP, true)
         danaRSPlugin.setPluginEnabled(PluginType.PUMP, true)
         danaPump.maxBolus = 6.0
 

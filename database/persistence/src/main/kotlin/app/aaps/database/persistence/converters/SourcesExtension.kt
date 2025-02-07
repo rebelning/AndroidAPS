@@ -54,6 +54,7 @@ fun UserEntry.Sources.fromDb(): Sources =
         UserEntry.Sources.DanaRS              -> Sources.DanaRS
         UserEntry.Sources.DanaI               -> Sources.DanaI
         UserEntry.Sources.DiaconnG8           -> Sources.DiaconnG8
+        UserEntry.Sources.Apex                -> Sources.Apex
         UserEntry.Sources.Insight             -> Sources.Insight
         UserEntry.Sources.Combo               -> Sources.Combo
         UserEntry.Sources.Medtronic           -> Sources.Medtronic
@@ -80,6 +81,7 @@ fun UserEntry.Sources.fromDb(): Sources =
         UserEntry.Sources.Unknown             -> Sources.Unknown
         UserEntry.Sources.Ottai               -> Sources.Ottai
         UserEntry.Sources.SyaiTag             -> Sources.SyaiTag
+        UserEntry.Sources.WTClient            -> Sources.WTClient
     }
 
 fun Sources.toDb(): UserEntry.Sources =
@@ -133,6 +135,7 @@ fun Sources.toDb(): UserEntry.Sources =
         Sources.DanaRS              -> UserEntry.Sources.DanaRS
         Sources.DanaI               -> UserEntry.Sources.DanaI
         Sources.DiaconnG8           -> UserEntry.Sources.DiaconnG8
+        Sources.Apex                -> UserEntry.Sources.Apex
         Sources.Insight             -> UserEntry.Sources.Insight
         Sources.Combo               -> UserEntry.Sources.Combo
         Sources.Medtronic           -> UserEntry.Sources.Medtronic
@@ -159,5 +162,6 @@ fun Sources.toDb(): UserEntry.Sources =
         Sources.Unknown             -> UserEntry.Sources.Unknown
         Sources.Ottai               -> UserEntry.Sources.Ottai
         Sources.SyaiTag             -> UserEntry.Sources.SyaiTag
+        Sources.WTClient            ->UserEntry.Sources.WTClient
     }
 

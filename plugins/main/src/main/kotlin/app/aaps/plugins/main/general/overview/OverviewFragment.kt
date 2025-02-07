@@ -10,20 +10,16 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.AnimationDrawable
-<<<<<<< HEAD
+
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
+
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.text.SpannedString
-import android.util.DisplayMetrics
-=======
-import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
->>>>>>> master
+
+
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -108,21 +104,15 @@ import app.aaps.core.objects.wizard.QuickWizard
 import app.aaps.core.ui.UIRunnable
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.ui.elements.SingleClickButton
-<<<<<<< HEAD
-import app.aaps.core.ui.toast.ToastUtils
-import app.aaps.core.utils.JsonHelper
-import app.aaps.database.entities.UserEntry.Action
-import app.aaps.database.entities.UserEntry.Sources
-import app.aaps.database.entities.interfaces.end
-import app.aaps.database.impl.AppRepository
+
 import app.aaps.plugins.auth.api.AuthCallback
 import app.aaps.plugins.auth.api.AuthHelper
 import app.aaps.plugins.auth.api.AuthorizedRetrofit
-=======
+
 import app.aaps.core.ui.extensions.runOnUiThread
 import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.core.ui.extensions.toVisibilityKeepSpace
->>>>>>> master
+
 import app.aaps.plugins.main.R
 import app.aaps.plugins.main.databinding.OverviewFragmentBinding
 import app.aaps.plugins.main.general.overview.graphData.GraphData
@@ -185,13 +175,13 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var bgQualityCheck: BgQualityCheck
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var decimalFormatter: DecimalFormatter
-<<<<<<< HEAD
+
     @Inject lateinit var importExportPrefs: ImportExportPrefs
     @Inject lateinit var authorizeduploader: AuthorizedRetrofit
-=======
+
     @Inject lateinit var commandQueue: CommandQueue
 
->>>>>>> master
+
     private val disposable = CompositeDisposable()
     private var isAutoImport = false
     private var smallWidth = false
@@ -648,7 +638,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             _binding ?: return@runOnUiThread
             if (showAcceptButton && pump.isInitialized() && !pump.isSuspended() && (loop as PluginBase).isEnabled()) {
                 binding.buttonsLayout.acceptTempButton.visibility = View.VISIBLE
-                binding.buttonsLayout.acceptTempButton.text = "${rh.gs(R.string.set_basal_question)}\n${lastRun.constraintsProcessed?.resultAsString()}"
+                binding.buttonsLayout.acceptTempButton.text = "${rh.gs(R.string.set_basal_question)}\n${lastRun?.constraintsProcessed?.resultAsString()}"
             } else {
                 binding.buttonsLayout.acceptTempButton.visibility = View.GONE
             }

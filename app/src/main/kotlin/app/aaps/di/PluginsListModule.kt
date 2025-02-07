@@ -41,11 +41,8 @@ import app.aaps.plugins.source.GlunovoPlugin
 import app.aaps.plugins.source.IntelligoPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
-<<<<<<< HEAD
-import app.aaps.plugins.source.PathedOTAppPlugin
-=======
+
 import app.aaps.plugins.source.OttaiPlugin
->>>>>>> master
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.RandomBgPlugin
 import app.aaps.plugins.source.SyaiTagPlugin
@@ -57,17 +54,16 @@ import app.aaps.plugins.sync.nsclient.NSClientPlugin
 import app.aaps.plugins.sync.nsclientV3.NSClientV3Plugin
 import app.aaps.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import app.aaps.plugins.sync.tidepool.TidepoolPlugin
-<<<<<<< HEAD
+
 import app.aaps.plugins.sync.wtclient.WTClientPlugin
-=======
+
 import app.aaps.plugins.sync.tizen.TizenPlugin
 import app.aaps.plugins.sync.wear.WearPlugin
->>>>>>> master
+
 import app.aaps.plugins.sync.xdrip.XdripPlugin
-import app.aaps.pump.danar.DanaRPlugin
-import app.aaps.pump.danarkorean.DanaRKoreanPlugin
+
 import app.aaps.pump.danars.DanaRSPlugin
-import app.aaps.pump.danarv2.DanaRv2Plugin
+
 import app.aaps.pump.diaconn.DiaconnG8Plugin
 import app.aaps.pump.eopatch.EopatchPumpPlugin
 import app.aaps.pump.equil.EquilPumpPlugin
@@ -81,19 +77,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntKey
 import dagger.multibindings.IntoMap
-<<<<<<< HEAD
-import info.nightscout.androidaps.danaRKorean.DanaRKoreanPlugin
-import info.nightscout.androidaps.danaRv2.DanaRv2Plugin
-import info.nightscout.androidaps.danar.DanaRPlugin
-import info.nightscout.androidaps.plugins.pump.eopatch.EopatchPumpPlugin
-import info.nightscout.androidaps.plugins.pump.insight.LocalInsightPlugin
-import info.nightscout.androidaps.plugins.pump.medtronic.MedtronicPumpPlugin
-import info.nightscout.androidaps.plugins.pump.omnipod.dash.OmnipodDashPumpPlugin
-import info.nightscout.androidaps.plugins.pump.omnipod.eros.OmnipodErosPumpPlugin
+
 import info.nightscout.pump.apex.ApexPlugin
-import info.nightscout.pump.combo.ComboPlugin
-=======
->>>>>>> master
+
 import info.nightscout.pump.combov2.ComboV2Plugin
 import javax.inject.Qualifier
 
@@ -173,23 +159,23 @@ abstract class PluginsListModule {
     @IntKey(85)
     abstract fun bindApexPlugin(plugin: ApexPlugin): PluginBase
 
-    @Binds
-    @PumpDriver
-    @IntoMap
-    @IntKey(90)
-    abstract fun bindDanaRPlugin(plugin: DanaRPlugin): PluginBase
-
-    @Binds
-    @PumpDriver
-    @IntoMap
-    @IntKey(100)
-    abstract fun bindDanaRKoreanPlugin(plugin: DanaRKoreanPlugin): PluginBase
-
-    @Binds
-    @PumpDriver
-    @IntoMap
-    @IntKey(110)
-    abstract fun bindDanaRv2Plugin(plugin: DanaRv2Plugin): PluginBase
+    // @Binds
+    // @PumpDriver
+    // @IntoMap
+    // @IntKey(90)
+    // abstract fun bindDanaRPlugin(plugin: DanaRPlugin): PluginBase
+    //
+    // @Binds
+    // @PumpDriver
+    // @IntoMap
+    // @IntKey(100)
+    // abstract fun bindDanaRKoreanPlugin(plugin: DanaRKoreanPlugin): PluginBase
+    //
+    // @Binds
+    // @PumpDriver
+    // @IntoMap
+    // @IntKey(110)
+    // abstract fun bindDanaRv2Plugin(plugin: DanaRv2Plugin): PluginBase
 
     @Binds
     @PumpDriver
@@ -491,11 +477,11 @@ abstract class PluginsListModule {
     @IntKey(475)
     abstract fun bindRandomBgPlugin(plugin: RandomBgPlugin): PluginBase
 
-    @Binds
-    @PathedOTAPP
-    @IntoMap
-    @IntKey(480)
-    abstract fun bindPatchedOTAppPlugin(plugin: PathedOTAppPlugin): PluginBase
+    // @Binds
+    // @PathedOTAPP
+    // @IntoMap
+    // @IntKey(480)
+    // abstract fun bindPatchedOTAppPlugin(plugin: PathedOTAppPlugin): PluginBase
 
 
 
@@ -532,8 +518,8 @@ abstract class PluginsListModule {
     @Qualifier
     annotation class AllConfigs
 
-    @Qualifier
-    annotation class PathedOTAPP
+    // @Qualifier
+    // annotation class PathedOTAPP
 
     @Qualifier
     annotation class PumpDriver

@@ -1,12 +1,12 @@
 package app.aaps.di
 
 import android.content.Context
-<<<<<<< HEAD
-import app.aaps.BuildConfig
-=======
+// <<<<<<< HEAD
+// import app.aaps.BuildConfig
+// =======
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
->>>>>>> master
+// >>>>>>> master
 import app.aaps.MainApp
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.objects.Instantiator
@@ -37,7 +37,7 @@ open class AppModule {
     fun providesPlugins(
         config: Config,
         @PluginsListModule.AllConfigs allConfigs: Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>,
-        @PluginsListModule.PathedOTAPP pathedOTAPP: Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>,
+        // @PluginsListModule.PathedOTAPP pathedOTAPP: Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>,
         @PluginsListModule.PumpDriver pumpDrivers: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
         @PluginsListModule.NotNSClient notNsClient: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
         @PluginsListModule.APS aps: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
@@ -47,15 +47,15 @@ open class AppModule {
         val plugins = allConfigs.toMutableMap()
         if (config.PUMPDRIVERS) plugins += pumpDrivers.get()
         if (config.APS) plugins += aps.get()
-<<<<<<< HEAD
-        if (!config.NSCLIENT) plugins += notNsClient.get()
-        if (BuildConfig.ENABLE_WEAR_PLUGIN) {
-            println("Loading PathedOTAPP Plugin for wear flavor")
-            plugins += pathedOTAPP
-        }
-=======
+// <<<<<<< HEAD
         if (!config.AAPSCLIENT) plugins += notNsClient.get()
->>>>>>> master
+        // if (BuildConfig.ENABLE_WEAR_PLUGIN) {
+        //     println("Loading PathedOTAPP Plugin for wear flavor")
+        //     plugins += pathedOTAPP
+        // }
+// =======
+//         if (!config.AAPSCLIENT) plugins += notNsClient.get()
+// >>>>>>> master
         //if (config.isUnfinishedMode()) plugins += unfinished.get()
         return plugins.toList().sortedBy { it.first }.map { it.second }
     }

@@ -111,7 +111,9 @@ class FileListProviderImpl @Inject constructor(
         // 创建和返回 PrefsFile 对象
         val baseDir = context.filesDir // 或其他适当的基础目录
 
-        return PrefsFile(filename, file, baseDir, metadata)
+        return PrefsFile(filename,  baseDir.absolutePath, metadata)
+        // return PrefsFile(filename, file, baseDir, metadata)
+
     }
 
     private fun copyFileFromAssetsToInternalStorage(assetPath: String): File {

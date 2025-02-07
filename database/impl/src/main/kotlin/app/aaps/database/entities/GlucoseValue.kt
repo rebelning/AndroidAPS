@@ -114,6 +114,7 @@ data class GlucoseValue(
         COB_PREDICTION,
         UAM_PREDICTION,
         ZT_PREDICTION,
+        WT_NET,
         ;
     }
 }

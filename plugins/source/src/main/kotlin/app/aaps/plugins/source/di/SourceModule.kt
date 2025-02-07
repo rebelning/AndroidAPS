@@ -9,11 +9,11 @@ import app.aaps.plugins.source.DexcomPlugin
 import app.aaps.plugins.source.GlimpPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
-<<<<<<< HEAD
-import app.aaps.plugins.source.PathedOTAppPlugin
-=======
+// <<<<<<< HEAD
+// import app.aaps.plugins.source.PathedOTAppPlugin
+// =======
 import app.aaps.plugins.source.OttaiPlugin
->>>>>>> master
+// >>>>>>> master
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.SyaiTagPlugin
 import app.aaps.plugins.source.TomatoPlugin
@@ -23,7 +23,7 @@ import app.aaps.plugins.source.activities.RequestDexcomPermissionActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import javax.inject.Qualifier
+
 
 @Module(
     includes = [
@@ -40,7 +40,7 @@ abstract class SourceModule {
     @ContributesAndroidInjector abstract fun contributesDexcomWorker(): DexcomPlugin.DexcomWorker
     @ContributesAndroidInjector abstract fun contributesMM640gWorker(): MM640gPlugin.MM640gWorker
     @ContributesAndroidInjector abstract fun contributesGlimpWorker(): GlimpPlugin.GlimpWorker
-    @ContributesAndroidInjector abstract fun contributesOTAppWorker(): PathedOTAppPlugin.PathedOTAppWorker
+    // @ContributesAndroidInjector abstract fun contributesOTAppWorker(): PathedOTAppPlugin.PathedOTAppWorker
     @ContributesAndroidInjector abstract fun contributesPoctechWorker(): PoctechPlugin.PoctechWorker
     @ContributesAndroidInjector abstract fun contributesTomatoWorker(): TomatoPlugin.TomatoWorker
     @ContributesAndroidInjector abstract fun contributesOttaiWorker(): OttaiPlugin.OttaiWorker

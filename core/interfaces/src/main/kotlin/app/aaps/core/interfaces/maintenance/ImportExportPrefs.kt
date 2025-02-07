@@ -9,7 +9,7 @@ import org.json.JSONObject
 interface ImportExportPrefs {
 
 
-    fun importSharedPreferences(activity: FragmentActivity, importFile: PrefsFile)
+    // fun importSharedPreferences(activity: FragmentActivity, importFile: PrefsFile)
     fun importAutoSharedPreferences(activity: FragmentActivity):Boolean
 
     fun doImportSharedPreferences(activity: FragmentActivity)
@@ -29,4 +29,5 @@ interface ImportExportPrefs {
      * Store for selected file from UI
      */
     var selectedImportFile: PrefsFile?
+
 }

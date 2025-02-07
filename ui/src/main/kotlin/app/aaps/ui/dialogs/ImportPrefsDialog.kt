@@ -18,7 +18,8 @@ import app.aaps.core.interfaces.rx.events.EventImportPrefsStatus
 import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.ui.dialogs.OKDialog
-import app.aaps.database.entities.UserEntry
+// import app.aaps.database.entities.UserEntry
+
 import app.aaps.ui.R
 import app.aaps.ui.databinding.DialogImportPrefsBinding
 
@@ -99,7 +100,7 @@ class ImportPrefsDialog : DaggerDialogFragment() {
 //        rxBus.send(EventDiaconnG8PumpLogReset())
 //         sp.putBoolean(R.string.key_setupwizard_processed, true)
         OKDialog.show(context, rh.gs(R.string.setting_imported), rh.gs(R.string.restartingapp)) {
-            uel.log(UserEntry.Action.IMPORT_SETTINGS, UserEntry.Sources.Maintenance)
+            // uel.log(UserEntry.Action.IMPORT_SETTINGS, UserEntry.Sources.Maintenance)
             aapsLogger.debug(LTag.CORE, "Exiting")
             rxBus.send(EventAppExit())
             if (context is AppCompatActivity) {

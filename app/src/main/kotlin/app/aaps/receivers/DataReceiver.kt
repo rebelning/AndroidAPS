@@ -18,11 +18,9 @@ import app.aaps.plugins.main.general.smsCommunicator.SmsCommunicatorPlugin
 import app.aaps.plugins.source.DexcomPlugin
 import app.aaps.plugins.source.GlimpPlugin
 import app.aaps.plugins.source.MM640gPlugin
-<<<<<<< HEAD
-import app.aaps.plugins.source.PathedOTAppPlugin
-=======
+
 import app.aaps.plugins.source.OttaiPlugin
->>>>>>> master
+
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.SyaiTagPlugin
 import app.aaps.plugins.source.TomatoPlugin
@@ -59,13 +57,13 @@ open class DataReceiver : DaggerBroadcastReceiver() {
                         it.copyString("myTrend", bundle)
                         it.copyLong("myTimestamp", bundle)
                     }.build()).build()
-
-            Intents.OTAPP_BG                       ->
-                OneTimeWorkRequest.Builder(PathedOTAppPlugin.PathedOTAppWorker::class.java)
-                    .setInputData(Data.Builder().also {
-                        it.copyString("collection", bundle)
-                        it.copyString("data", bundle)
-                    }.build()).build()
+            //
+            // Intents.OTAPP_BG                       ->
+            //     OneTimeWorkRequest.Builder(PathedOTAppPlugin.PathedOTAppWorker::class.java)
+            //         .setInputData(Data.Builder().also {
+            //             it.copyString("collection", bundle)
+            //             it.copyString("data", bundle)
+            //         }.build()).build()
 
             Intents.TOMATO_BG                         ->
                 @Suppress("SpellCheckingInspection")

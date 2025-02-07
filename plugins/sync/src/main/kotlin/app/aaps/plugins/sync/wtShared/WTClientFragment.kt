@@ -33,7 +33,7 @@ import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.utils.HtmlHelper
-import app.aaps.database.entities.UserEntry
+// import app.aaps.database.entities.UserEntry
 import app.aaps.plugins.sync.R
 import app.aaps.plugins.sync.databinding.NsClientLogItemBinding
 import app.aaps.plugins.sync.databinding.WtClientFragmentBinding
@@ -101,7 +101,7 @@ class WTClientFragment : DaggerFragment(), MenuProvider, PluginFragment {
 
         binding.paused.isChecked = sp.getBoolean(R.string.key_ns_paused, false)
         binding.paused.setOnCheckedChangeListener { _, isChecked ->
-            uel.log(if (isChecked) UserEntry.Action.NS_PAUSED else UserEntry.Action.NS_RESUME, UserEntry.Sources.WTClient)
+            // uel.log(if (isChecked) UserEntry.Action.NS_PAUSED else UserEntry.Action.NS_RESUME, UserEntry.Sources.WTClient)
             nsClientPlugin?.pause(isChecked)
         }
 
@@ -169,7 +169,7 @@ class WTClientFragment : DaggerFragment(), MenuProvider, PluginFragment {
                                             }
                                         }
                                     )
-                                uel.log(UserEntry.Action.CLEANUP_DATABASES, UserEntry.Sources.WTClient)
+                                // uel.log(UserEntry.Action.CLEANUP_DATABASES, UserEntry.Sources.WTClient)
                             }, Runnable {
                                 handler.post {
                                     nsClientPlugin?.resetToFullSync()

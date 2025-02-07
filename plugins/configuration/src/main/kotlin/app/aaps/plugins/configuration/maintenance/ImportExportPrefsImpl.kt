@@ -454,7 +454,8 @@ class ImportExportPrefsImpl @Inject constructor(
         val importFile = prefFileList.loadConfigFileFromAssets(prefName)
 
         try {
-            val prefsAttempted = format.loadPreferences(importFile.file, predefinedPassword)
+            // val prefsAttempted = format.loadPreferences(importFile.file, predefinedPassword)
+            val prefsAttempted = format.loadPreferences(importFile.content, predefinedPassword)
             prefsAttempted.metadata = prefFileList.checkMetadata(prefsAttempted.metadata)
 
             val importOkAttempted = checkIfImportIsOk(prefsAttempted)

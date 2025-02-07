@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.aaps.core.data.model.GV
+import app.aaps.core.data.model.SourceSensor
 import app.aaps.core.data.time.T
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
@@ -129,17 +130,17 @@ class BGSourceFragment : DaggerFragment(), MenuProvider {
 
         override fun onBindViewHolder(holder: GlucoseValuesViewHolder, position: Int) {
             val glucoseValue = glucoseValues[position]
-<<<<<<< HEAD
-            holder.binding.ns.visibility = (glucoseValue.interfaceIDs.nightscoutId != null).toVisibilityKeepSpace()
-            if(glucoseValue.sourceSensor== GlucoseValue.SourceSensor.WT_NET){
+// <<<<<<< HEAD
+//             holder.binding.ns.visibility = (glucoseValue.interfaceIDs.nightscoutId != null).toVisibilityKeepSpace()
+            if(glucoseValue.sourceSensor== SourceSensor.WT_NET){
                 holder.binding.ns.text= glucoseValue.sourceSensor.text
             }else{
                 "NS".also { holder.binding.ns.text = it }
             }
 
-=======
+// =======
             holder.binding.ns.visibility = (glucoseValue.ids.nightscoutId != null).toVisibilityKeepSpace()
->>>>>>> master
+// >>>>>>> master
             holder.binding.invalid.visibility = (!glucoseValue.isValid).toVisibility()
             val newDay = position == 0 || !dateUtil.isSameDay(glucoseValue.timestamp, glucoseValues[position - 1].timestamp)
             holder.binding.date.visibility = newDay.toVisibility()
