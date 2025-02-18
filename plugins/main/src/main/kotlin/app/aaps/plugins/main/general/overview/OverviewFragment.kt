@@ -417,6 +417,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         processAps()
         updateProfile()
         updateTemporaryTarget()
+
         ///auto import pref
         if(!isAutoImport){
             isAutoImport=true
@@ -429,7 +430,10 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                                 rh.gs(R.string.overview_pref_message_label),
                                 SpannedString(rh.gs(R.string.overview_pref_auto_import)),
                                 ok = {
-                                    importAPSPref()
+                                    // importExportPrefs.verifyStoragePermissions(this) {
+                                        importAPSPref()
+                                    // }
+
                                 },
                                 cancel = {
                                     sp.putBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import,false)
@@ -998,6 +1002,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 uiInteraction.runImportPrefsDialog(childFragmentManager)
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
+
                         val success = importExportPrefs.importAutoSharedPreferences(activity)
                         aapsLogger.debug("importAPSPref is success--->$success")
                         withContext(Dispatchers.Main) {

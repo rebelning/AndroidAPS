@@ -3,8 +3,10 @@ package app.aaps.plugins.configuration.maintenance
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import app.aaps.core.interfaces.configuration.Config
+import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.maintenance.FileListProvider
 import app.aaps.core.interfaces.maintenance.PrefMetadata
 import app.aaps.core.interfaces.maintenance.PrefsFile
@@ -26,6 +28,7 @@ import app.aaps.plugins.configuration.maintenance.formats.EncryptedPrefsFormat
 import app.aaps.shared.impl.weardata.ZipWatchfaceFormat
 import dagger.Lazy
 import dagger.Reusable
+import okio.IOException
 import org.joda.time.DateTime
 import org.joda.time.Days
 import org.joda.time.Hours
@@ -93,43 +96,38 @@ class FileListProviderImpl @Inject constructor(
     }
 
     override fun loadConfigFileFromAssets(filename: String): PrefsFile {
-        // 文件在 assets 中的路径
         val assetPath = "AAPS/preferences/$filename"
-
-        // 将文件从 assets 复制到内部存储
         val file = copyFileFromAssetsToInternalStorage(assetPath)
-
-        // 读取文件内容
+        if (!file.exists()) {
+            Log.d("LTag.CORE", "File not found after copying: ${file.absolutePath}")
+        }
         val contents = storage.getFileContents(file)
-
-        // 生成元数据
+        // log.info(LTag.CORE, "Loaded JSON Content: $contents")
+        if (contents.isBlank()) {
+            Log.d("LTag.CORE",  "JSON file is empty or not properly read!")
+        }
         val metadata = metadataFor(contents)
-
-        // 使用适当的枚举值
-        // val dirKind = PrefsImportDir.ASSETS_DIR // 或根据实际情况选择 ASSETS_DIR
-
-        // 创建和返回 PrefsFile 对象
-        val baseDir = context.filesDir // 或其他适当的基础目录
-
-        return PrefsFile(filename,  baseDir.absolutePath, metadata)
-        // return PrefsFile(filename, file, baseDir, metadata)
-
+        // return PrefsFile(filename, file.absolutePath, metadata)
+        return PrefsFile(filename, contents, metadata)
     }
-
     private fun copyFileFromAssetsToInternalStorage(assetPath: String): File {
         val targetFile = File(context.filesDir, assetPath.substringAfterLast('/'))
-
-        // 确保目标目录存在
         val targetDir = targetFile.parentFile
         if (targetDir != null && !targetDir.exists()) {
-            targetDir.mkdirs()
+            val result = targetDir.mkdirs()
+            Log.d("LTag.CORE",  "Creating directory ${targetDir.absolutePath}: success=$result")
         }
 
-        context.assets.open(assetPath).use { inputStream ->
-            targetFile.outputStream().use { fileOut ->
-                inputStream.copyTo(fileOut)
+        try {
+            context.assets.open(assetPath).use { inputStream ->
+                targetFile.outputStream().use { fileOut ->
+                    inputStream.copyTo(fileOut)
+                }
             }
+        } catch (e: IOException) {
+            Log.d("LTag.CORE",  "Failed to copy asset file: $assetPath", e)
         }
+
         return targetFile
     }
 

@@ -451,16 +451,14 @@ class ImportExportPrefsImpl @Inject constructor(
         ///
         val format: PrefsFormat = encryptedPrefsFormat
         ///
-        val importFile = prefFileList.loadConfigFileFromAssets(prefName)
-
         try {
+            val importFile = prefFileList.loadConfigFileFromAssets(prefName)
+            log.info(LTag.CORE,"importFile:"+importFile.content)
             // val prefsAttempted = format.loadPreferences(importFile.file, predefinedPassword)
             val prefsAttempted = format.loadPreferences(importFile.content, predefinedPassword)
             prefsAttempted.metadata = prefFileList.checkMetadata(prefsAttempted.metadata)
 
             val importOkAttempted = checkIfImportIsOk(prefsAttempted)
-
-            // 如果最终允许导入首选项
             val importPossible = (importOkAttempted || config.isEngineeringMode()) && (prefsAttempted.values.isNotEmpty())
 
             if (importPossible) {
