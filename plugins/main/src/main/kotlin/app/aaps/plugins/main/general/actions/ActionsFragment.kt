@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
 import app.aaps.core.interfaces.aps.Loop
@@ -236,8 +237,8 @@ class ActionsFragment : DaggerFragment() {
                 pump.isInitialized() &&
                 !pump.isSuspended() &&
                 !loop.isDisconnected).toVisibility()
-
-        if (!pump.pumpDescription.isExtendedBolusCapable || !pump.isInitialized() || pump.isSuspended() || loop.isDisconnected || pump.isFakingTempsByExtendedBoluses || config.AAPSCLIENT) {
+// if (!pump.pumpDescription.isExtendedBolusCapable || !pump.isInitialized() || pump.isSuspended() || loop.isDisconnected || pump.isFakingTempsByExtendedBoluses || config.AAPSCLIENT) {
+        if (!pump.pumpDescription.isExtendedBolusCapable || !pump.isInitialized() || pump.isSuspended() || pump.model() == PumpType.APEX || loop.isDisconnected || pump.isFakingTempsByExtendedBoluses || config.AAPSCLIENT) {
             binding.extendedBolus.visibility = View.GONE
             binding.extendedBolusCancel.visibility = View.GONE
         } else {
