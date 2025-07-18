@@ -63,6 +63,7 @@ fun InterfaceIDs.PumpType.fromDb(): PumpType =
         InterfaceIDs.PumpType.MDI                         -> PumpType.MDI
         InterfaceIDs.PumpType.USER                        -> PumpType.USER
         InterfaceIDs.PumpType.DIACONN_G8                  -> PumpType.DIACONN_G8
+        InterfaceIDs.PumpType.EMBECTA                     -> PumpType.EMBECTA
         InterfaceIDs.PumpType.APEX                        -> PumpType.APEX
         InterfaceIDs.PumpType.EOPATCH2                    -> PumpType.EOFLOW_EOPATCH2
         InterfaceIDs.PumpType.MEDTRUM                     -> PumpType.MEDTRUM_NANO
@@ -132,6 +133,7 @@ fun PumpType.toDb(): InterfaceIDs.PumpType =
         PumpType.MDI                       -> InterfaceIDs.PumpType.MDI
         PumpType.USER                      -> InterfaceIDs.PumpType.USER
         PumpType.DIACONN_G8                -> InterfaceIDs.PumpType.DIACONN_G8
+        PumpType.EMBECTA                   -> InterfaceIDs.PumpType.EMBECTA
         PumpType.APEX                      -> InterfaceIDs.PumpType.APEX
         PumpType.EOFLOW_EOPATCH2           -> InterfaceIDs.PumpType.EOPATCH2
         PumpType.MEDTRUM_NANO              -> InterfaceIDs.PumpType.MEDTRUM

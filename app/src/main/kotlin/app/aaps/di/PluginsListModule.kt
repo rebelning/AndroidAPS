@@ -65,6 +65,7 @@ import app.aaps.plugins.sync.xdrip.XdripPlugin
 import app.aaps.pump.danars.DanaRSPlugin
 
 import app.aaps.pump.diaconn.DiaconnG8Plugin
+import app.aaps.pump.embecta.EmbectaPlugin
 import app.aaps.pump.eopatch.EopatchPumpPlugin
 import app.aaps.pump.equil.EquilPumpPlugin
 import app.aaps.pump.insight.InsightPlugin
@@ -158,6 +159,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(85)
     abstract fun bindApexPlugin(plugin: ApexPlugin): PluginBase
+
+    @Binds
+    @PumpDriver
+    @IntoMap
+    @IntKey(90)
+    abstract fun bindEmbectaPlugin(plugin: EmbectaPlugin): PluginBase
 
     // @Binds
     // @PumpDriver

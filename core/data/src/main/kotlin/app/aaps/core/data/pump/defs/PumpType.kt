@@ -411,6 +411,23 @@ enum class PumpType(
         source = Source.Apex,
         // useHardwareLink = true
     ),
+    EMBECTA(
+        description = "Embecta",
+        manufacturer = ManufacturerType.G2e,
+        model = "Embecta",
+        bolusSize = 0.01,
+        specialBolusSize = null,
+        extendedBolusSettings = DoseSettings(0.05, 10, 5 * 60, 0.05),
+        pumpTempBasalType = PumpTempBasalType.Absolute,
+        tbrSettings = DoseSettings(0.01, 30, 24 * 60, 0.0, 15.0),
+        specialBasalDurations = arrayOf(Capability.BasalRate_Duration30minAllowed),
+        baseBasalMinValue = 0.05,
+        baseBasalMaxValue = 3.0,
+        baseBasalStep = 0.01,
+        baseBasalSpecialSteps = null,
+        pumpCapability = PumpCapability.EmbectaCapabilities,
+        source = Source.Embecta
+    ),
 
     //EOPatch Pump
     EOFLOW_EOPATCH2(
@@ -521,6 +538,7 @@ enum class PumpType(
         DanaI,
         DiaconnG8,
         Apex,
+        Embecta,
         Insight,
         Combo,
         Medtronic,
