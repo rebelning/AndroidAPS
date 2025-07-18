@@ -10,3 +10,6 @@
 [submodule "plugins/aapsauth"]
 	path = plugins/aapsauth
 	url = https://github.com/rebelning/aapsauth.git
+[submodule "pump/embecta"]
+	path = pump/embecta
+	url = https://github.com/rebelning/embecta.git
