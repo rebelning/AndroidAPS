@@ -421,7 +421,7 @@ enum class PumpType(
         pumpTempBasalType = PumpTempBasalType.Absolute,
         tbrSettings = DoseSettings(0.01, 30, 24 * 60, 0.0, 15.0),
         specialBasalDurations = arrayOf(Capability.BasalRate_Duration30minAllowed),
-        baseBasalMinValue = 0.05,
+        baseBasalMinValue = 0.01,
         baseBasalMaxValue = 3.0,
         baseBasalStep = 0.01,
         baseBasalSpecialSteps = null,

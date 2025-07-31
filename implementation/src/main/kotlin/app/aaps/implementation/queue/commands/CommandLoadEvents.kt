@@ -7,6 +7,7 @@ import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.pump.Apex
 import app.aaps.core.interfaces.pump.Dana
 import app.aaps.core.interfaces.pump.Diaconn
+import app.aaps.core.interfaces.pump.Embecta
 import app.aaps.core.interfaces.pump.Medtrum
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.Command
@@ -56,6 +57,13 @@ class CommandLoadEvents(
         if (pump is Apex) {
             val apexPump = pump as Apex
             val r = apexPump.loadBolusHistory()
+            aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
+            callback?.result(r)?.run()
+        }
+
+        if (pump is Embecta) {
+            val embectaPump = pump as Embecta
+            val r = embectaPump.loadBolusHistory()
             aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
             callback?.result(r)?.run()
         }

@@ -7,6 +7,7 @@ import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.pump.Apex
 import app.aaps.core.interfaces.pump.Dana
 import app.aaps.core.interfaces.pump.Diaconn
+import app.aaps.core.interfaces.pump.Embecta
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.Command
 import app.aaps.core.interfaces.resources.ResourceHelper
@@ -42,6 +43,13 @@ class CommandLoadHistory(
         if (pump is Diaconn) {
             val diaconnG8Pump = pump as Diaconn
             val r = diaconnG8Pump.loadHistory()
+            aapsLogger.debug(LTag.PUMPQUEUE, "Result success: " + r.success + " enacted: " + r.enacted)
+            callback?.result(r)?.run()
+        }
+
+        if (pump is Embecta) {
+            val embectaPump = pump as Embecta
+            val r = embectaPump.loadHistory(type)
             aapsLogger.debug(LTag.PUMPQUEUE, "Result success: " + r.success + " enacted: " + r.enacted)
             callback?.result(r)?.run()
         }
