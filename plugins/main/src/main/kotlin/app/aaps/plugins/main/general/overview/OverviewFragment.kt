@@ -58,6 +58,8 @@ import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.protection.ProtectionCheck
+import app.aaps.core.interfaces.pump.Apex
+import app.aaps.core.interfaces.pump.Embecta
 import app.aaps.core.interfaces.pump.defs.determineCorrectBolusStepSize
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
@@ -1352,7 +1354,14 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val authCode = sp.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
         val phoneNumber = sp.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
 
-        aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber")
+        var pumpCode =""
+        val pump = activePlugin.activePump
+        if(pump is Embecta){
+            pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_embecta_name, "")
+        }else if(pump is Apex){
+            pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
+        }
+        aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber, pumpCode=$pumpCode")
 
         activity?.let { activityContext ->
             val authHelper = AuthHelper(activityContext, sp, authorizeduploader, aapsLogger, object : AuthCallback {
@@ -1363,12 +1372,16 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
                 override fun onFailure(errorInfo: String) {
                     aapsLogger.debug("Authorization failed: $errorInfo")
                     sp.putLong(app.aaps.core.utils.R.string.key_aaps_expired_time,-1)
+                    sp.putString(app.aaps.core.utils.R.string.key_aaps_auth_code,"")
+                    sp.apply {  }
                     OKDialog.show(
                         activityContext,
                         rh.gs(R.string.overview_auth_message_label),
                         SpannedString(errorInfo)
                     ) {
                         aapsLogger.debug("Exiting app due to authorization failure.")
+
+
                         activityContext.finish()
                         System.runFinalization()
                         exitProcess(0)
@@ -1377,7 +1390,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             })
 
             aapsLogger.debug("Attempting to authorize with AuthHelper...")
-            authHelper.authorized(authCode, phoneNumber)
+            authHelper.authorized(authCode, phoneNumber,pumpCode=pumpCode)
         } ?: run {
             aapsLogger.debug("Activity context is null, cannot proceed with updateApexPump.")
         }
