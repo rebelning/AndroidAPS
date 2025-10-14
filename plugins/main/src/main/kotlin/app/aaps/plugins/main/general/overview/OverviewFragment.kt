@@ -1361,6 +1361,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         }else if(pump is Apex){
             pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
         }
+        // pumpCode="APEX31320061"
         aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber, pumpCode=$pumpCode")
 
         activity?.let { activityContext ->
