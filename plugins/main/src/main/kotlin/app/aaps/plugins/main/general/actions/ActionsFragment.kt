@@ -238,7 +238,7 @@ class ActionsFragment : DaggerFragment() {
                 !pump.isSuspended() &&
                 !loop.isDisconnected).toVisibility()
 // if (!pump.pumpDescription.isExtendedBolusCapable || !pump.isInitialized() || pump.isSuspended() || loop.isDisconnected || pump.isFakingTempsByExtendedBoluses || config.AAPSCLIENT) {
-        if (!pump.pumpDescription.isExtendedBolusCapable || !pump.isInitialized() || pump.isSuspended() || pump.model() == PumpType.APEX || loop.isDisconnected || pump.isFakingTempsByExtendedBoluses || config.AAPSCLIENT) {
+        if (!pump.pumpDescription.isExtendedBolusCapable || !pump.isInitialized() || pump.isSuspended() || pump.model() == PumpType.APEX || pump.model() == PumpType.EMBECTA  || loop.isDisconnected || pump.isFakingTempsByExtendedBoluses || config.AAPSCLIENT) {
             binding.extendedBolus.visibility = View.GONE
             binding.extendedBolusCancel.visibility = View.GONE
         } else {

@@ -9,7 +9,7 @@ object Versions {
 
     // const val appVersion = "3.3.1.3"
     const val appVersion = "4.3.1.3"
-    const val versionCode = 1571
+    const val versionCode = 1572
 
     const val ndkVersion = "21.1.6352462"
 
