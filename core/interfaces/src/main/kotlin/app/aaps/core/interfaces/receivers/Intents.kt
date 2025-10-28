@@ -37,8 +37,7 @@ interface Intents {
         const val NS_EMULATOR = "com.eveningoutpost.dexdrip.NS_EMULATOR"
         const val ACTION_REMOTE_CALIBRATION = "com.eveningoutpost.dexdrip.NewCalibration"
         const val GLIMP_BG = "it.ct.glicemia.ACTION_GLUCOSE_MEASURED"
-        // Patched Ottai App -> AAPS
-        const val OTAPP_BG = "cn.diyaps.sharing.OT_APP"
+
         const val DEXCOM_BG = "com.dexcom.cgm.EXTERNAL_BROADCAST"
         const val DEXCOM_G7_BG = "com.dexcom.g7.EXTERNAL_BROADCAST"
         const val POCTECH_BG = "com.china.poctech.data"
@@ -47,7 +46,9 @@ interface Intents {
         // Broadcast status
         const val AAPS_BROADCAST = "info.nightscout.androidaps.status"
         // Patched Ottai App -> AAPS
-        const val OTTAI_APP = "info.nightscout.androidaps.action.OTTAI_APP"
+        // const val OTTAI_APP = "info.nightscout.androidaps.action.OTTAI_APP"
+        // Patched Ottai App -> AAPS
+        const val OTTAI_APP = "cn.diyaps.sharing.OT_APP"
         // Patched Syai Tag App -> AAPS
         const val SYAI_TAG_APP = "info.nightscout.androidaps.action.SYAI_TAG_APP"
     }
