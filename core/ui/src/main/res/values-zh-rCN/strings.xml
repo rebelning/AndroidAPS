@@ -420,6 +420,7 @@
     <string name="connecting">正在连接</string>
     <string name="clicked_connect_to_pump" comment="26 characters max for translation">单击连接到泵</string>
     <string name="reservoir_value">%1$.0f / %2$d U</string>
+    <string name="reservoir_1_value">%1$.0f U</string>
     <string name="daily_units">每日单位数</string>
     <string name="pump_icon">泵图标</string>
     <string name="view_profile">查看配置文件</string>
