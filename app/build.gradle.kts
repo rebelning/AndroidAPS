@@ -223,6 +223,7 @@ dependencies {
 
     implementation(project(":pump:apex"))
     implementation(project(":pump:embecta"))
+    implementation(project(":pump:lenomed"))
     // implementation(project(":pump:combo"))
     implementation(project(":database:persistence"))
 
