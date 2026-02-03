@@ -101,6 +101,9 @@
 <!--embecta-->
     <string name="key_pump_embecta_name" translatable="false">key_pump_apexname</string>
     <string name="key_pump_embecta_address" translatable="false">key_pump_apexaddress</string>
+<!--lenomed-->
+    <string name="key_pump_lenomed_name" translatable="false">key_pump_lenomedname</string>
+    <string name="key_pump_lenomed_address" translatable="false">key_pump_lenomedaddress</string>
     <string name="key_aaps_auth_code" translatable="false">key_aaps_auth_code</string>
     <string name="key_aaps_phone_number" translatable="false">key_aaps_phone_number</string>
     <string name="key_aaps_expired_time" translatable="false">key_aaps_expired_time</string>

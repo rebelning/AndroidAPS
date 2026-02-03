@@ -53,6 +53,7 @@ import info.nightscout.pump.apex.di.ApexModule
 
 import app.aaps.pump.common.di.RileyLinkModule
 import app.aaps.pump.embecta.di.EmbectaModule
+import app.aaps.pump.lenomed.di.LenomedModule
 
 import info.nightscout.pump.combov2.di.ComboV2Module
 import javax.inject.Singleton
@@ -95,6 +96,7 @@ import javax.inject.Singleton
         DanaRSModule::class,
         DiaconnG8Module::class,
         EmbectaModule::class,
+        LenomedModule::class,
         ApexModule::class,
         EopatchModule::class,
         InsightModule::class,

@@ -47,6 +47,7 @@ data class InterfaceIDs @Ignore constructor(
         YPSOPUMP,
         MDI,
         DIACONN_G8,
+        LENOMED,
         EMBECTA,
         APEX,
         EOPATCH2,

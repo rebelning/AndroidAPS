@@ -69,6 +69,7 @@ import app.aaps.pump.embecta.EmbectaPlugin
 import app.aaps.pump.eopatch.EopatchPumpPlugin
 import app.aaps.pump.equil.EquilPumpPlugin
 import app.aaps.pump.insight.InsightPlugin
+import app.aaps.pump.lenomed.LenomedPlugin
 import app.aaps.pump.medtronic.MedtronicPumpPlugin
 import app.aaps.pump.medtrum.MedtrumPlugin
 import app.aaps.pump.omnipod.dash.OmnipodDashPumpPlugin
@@ -165,6 +166,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(90)
     abstract fun bindEmbectaPlugin(plugin: EmbectaPlugin): PluginBase
+
+    @Binds
+    @PumpDriver
+    @IntoMap
+    @IntKey(100)
+    abstract fun bindLenomedPlugin(plugin: LenomedPlugin): PluginBase
 
     // @Binds
     // @PumpDriver
