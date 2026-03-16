@@ -13,3 +13,6 @@
 [submodule "pump/embecta"]
 	path = pump/embecta
 	url = https://github.com/rebelning/embecta.git
+[submodule "pump/lenomed"]                                                                                                                                                 
+        path = pump/lenomed                                                                                                                                                
+        url = https://github.com/rebelning/lenomed.git
