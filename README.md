@@ -123,3 +123,12 @@ Auto-merging ui/src/main/res/values-zh-rCN/strings.xml
 Auto-merging ui/src/main/res/values/strings.xml
 CONFLICT (content): Merge conflict in ui/src/main/res/values/strings.xml
 Automatic merge failed; fix conflicts and then commit the result.
+
+2026/03/16
+git submodule status --recursive
+0b8d90ae1fa95d3c988d54944a4c4dbdcb78ab00 AAPSKeystore (0b8d90a)
+98ee616b52d62314017de07ca07818a67b6b3767 plugins/aapsauth (heads/dev)
+ba8133c35d05ec1895d0377d97d327fd06da7a3c plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient (heads/dev)
+fc44d18d34e2efa089cd230f5d0907157b1218ab pump/apex (heads/dev)
+f0ff3fba4135911d01b14600e3f2b87aa6238e00 pump/embecta (heads/main)
+-b69ccfa7250eb78c2833d56fcc2ab0f80e75d260 pump/lenomed
