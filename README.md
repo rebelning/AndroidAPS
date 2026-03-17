@@ -20,3 +20,10 @@ DEV:
 
 ### git update
 - git submodule update --init --recursive
+
+git submodule status --recursive
+0b8d90ae1fa95d3c988d54944a4c4dbdcb78ab00 AAPSKeystore (0b8d90a)
+15bc7627f5b1c208144dcec8d41c42190070b53f plugins/aapsauth (heads/3.2.0.4)
+0f2b15b0268bcff383274bec350d7692c04c9f11 plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient (heads/3.2.0.4)
+ed92c0e1d8c3fca8e8b072466fceb6bbdcaa6913 pump/apex (heads/3.2.0.4)
+dae0ee6875f4b0c4832ecc6b95788d5e9cf89f35 pump/embecta (heads/dev/3.2.0.4)
