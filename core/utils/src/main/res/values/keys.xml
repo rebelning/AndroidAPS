@@ -170,6 +170,9 @@
 
     <string name="key_pump_apex_name" translatable="false">key_pump_apexname</string>
     <string name="key_pump_apex_address" translatable="false">key_pump_apexaddress</string>
+<!--    embecta-->
+    <string name="key_pump_embecta_name" translatable="false">key_pump_embectaname</string>
+    <string name="key_pump_embecta_address" translatable="false">key_pump_embectaaddress</string>
     <string name="key_aaps_auth_code" translatable="false">key_aaps_auth_code</string>
     <string name="key_aaps_phone_number" translatable="false">key_aaps_phone_number</string>
     <string name="key_aaps_expired_time" translatable="false">key_aaps_expired_time</string>

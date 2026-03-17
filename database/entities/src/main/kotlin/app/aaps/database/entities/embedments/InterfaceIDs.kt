@@ -48,6 +48,7 @@ data class InterfaceIDs @Ignore constructor(
         MDI,
         DIACONN_G8,
         APEX,
+        EMBECTA,
         EOPATCH2,
         MEDTRUM,
         MEDTRUM_300U,

@@ -50,6 +50,7 @@
     <string name="goingtodeliver">将要输注 %1$.2f U</string>
     <string name="waitingforpump">正在等待泵</string>
     <string name="formatsignedinsulinunits">%1$+.2f U</string>
+    <string name="reservoir_1_value">%1$.0f U</string>
     <string name="format_carbs">%1$d 克</string>
     <string name="format_hours">%1$.2f 小时</string>
     <string name="format_mins">%1$d 分钟</string>
