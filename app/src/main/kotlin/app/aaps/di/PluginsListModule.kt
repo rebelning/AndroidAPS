@@ -57,6 +57,7 @@ import app.aaps.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import app.aaps.plugins.sync.tidepool.TidepoolPlugin
 import app.aaps.plugins.sync.wtclient.WTClientPlugin
 import app.aaps.plugins.sync.xdrip.XdripPlugin
+import app.aaps.pump.embecta.EmbectaPlugin
 import app.aaps.pump.virtual.VirtualPumpPlugin
 import dagger.Binds
 import dagger.Module
@@ -152,6 +153,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(85)
     abstract fun bindApexPlugin(plugin: ApexPlugin): PluginBase
+
+    @Binds
+    @PumpDriver
+    @IntoMap
+    @IntKey(87)
+    abstract fun bindEmbectaPlugin(plugin: EmbectaPlugin): PluginBase
 
     @Binds
     @PumpDriver

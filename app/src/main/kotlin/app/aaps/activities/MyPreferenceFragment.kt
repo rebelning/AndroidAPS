@@ -62,6 +62,7 @@ import app.aaps.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import app.aaps.plugins.sync.tidepool.TidepoolPlugin
 import app.aaps.plugins.sync.wtclient.WTClientPlugin
 import app.aaps.plugins.sync.xdrip.XdripPlugin
+import app.aaps.pump.embecta.EmbectaPlugin
 import app.aaps.pump.virtual.VirtualPumpPlugin
 import dagger.android.support.AndroidSupportInjection
 import info.nightscout.androidaps.danaRKorean.DanaRKoreanPlugin
@@ -133,6 +134,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
     @Inject lateinit var openHumansUploaderPlugin: OpenHumansUploaderPlugin
     @Inject lateinit var diaconnG8Plugin: DiaconnG8Plugin
     @Inject lateinit var apexPlugin: ApexPlugin
+    @Inject lateinit var embectaPlugin: EmbectaPlugin
     @Inject lateinit var garminPlugin: GarminPlugin
 
     override fun onAttach(context: Context) {
@@ -219,6 +221,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
             addPreferencesFromResourceIfEnabled(medtronicPumpPlugin, rootKey, config.PUMPDRIVERS)
             addPreferencesFromResourceIfEnabled(diaconnG8Plugin, rootKey, config.PUMPDRIVERS)
             addPreferencesFromResourceIfEnabled(apexPlugin, rootKey, config.PUMPDRIVERS)
+            addPreferencesFromResourceIfEnabled(embectaPlugin, rootKey, config.PUMPDRIVERS)
             addPreferencesFromResourceIfEnabled(eopatchPumpPlugin, rootKey, config.PUMPDRIVERS)
             addPreferencesFromResourceIfEnabled(medtrumPlugin, rootKey, config.PUMPDRIVERS)
             addPreferencesFromResource(R.xml.pref_pump, rootKey, config.PUMPDRIVERS)

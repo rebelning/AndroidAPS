@@ -92,6 +92,7 @@ class UserEntryPresentationHelperImpl @Inject constructor(
         Sources.DanaI               -> app.aaps.core.ui.R.drawable.ic_danai_128
         Sources.DiaconnG8           -> app.aaps.core.ui.R.drawable.ic_diaconn_g8
         Sources.Apex                -> app.aaps.core.ui.R.drawable.ic_apex
+        Sources.Embecta             -> app.aaps.core.ui.R.drawable.ic_emebcta
         Sources.Insight             -> app.aaps.core.ui.R.drawable.ic_insight_128
         Sources.Combo               -> app.aaps.core.ui.R.drawable.ic_combo_128
         Sources.Medtronic           -> app.aaps.core.ui.R.drawable.ic_veo_128
