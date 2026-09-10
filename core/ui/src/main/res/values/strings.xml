@@ -640,7 +640,7 @@
 
     <string name="format_insulin_units">%1$.3f U</string>
     <string name="preferences_import_success">preferences import completed</string>
-
+    <string name="insulin_dialog_close">Dismiss</string>
 <!--    <string name="format_insulin_units">%1$.2f U</string>-->
     <string name="percent_rate_duration">Rate: %1$.2f%% (%2$.2f U/h) Duration: %3$d min</string>
     <string name="rate_percent_duration">Rate: %1$.2f U/h (%2$.2f%%) Duration: %3$d min</string>

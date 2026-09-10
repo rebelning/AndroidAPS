@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
 import app.aaps.core.interfaces.logging.AAPSLogger
@@ -87,18 +89,28 @@ class BolusProgressDialog : DaggerDialogFragment() {
         }
         binding.title.text = rh.gs(app.aaps.core.ui.R.string.goingtodeliver, amount)
         //APEX PUMP
-        // if(activePlugin.activePump.model()=== PumpType.APEX){
-        //     binding.stop.visibility=View.INVISIBLE
-        // }
+        if(activePlugin.activePump.model() == PumpType.LENOMED){
+            // binding.stop.visibility=View.INVISIBLE
+            binding.progressbar.visibility=View.INVISIBLE
+            binding.progressbarCircle.visibility=View.VISIBLE
+            binding.stop.text= rh.gs(app.aaps.core.ui.R.string.insulin_dialog_close, amount)
+        }else{
+            binding.progressbarCircle.visibility=View.GONE
+        }
+
         binding.stop.setOnClickListener {
             aapsLogger.debug(LTag.UI, "Stop bolus delivery button pressed")
             BolusProgressData.stopPressed = true
             binding.stopPressed.visibility = View.VISIBLE
             binding.stop.visibility = View.INVISIBLE
             uel.log(Action.CANCEL_BOLUS, Sources.Overview, state)
-            commandQueue.cancelAllBoluses(id)
+            if (activePlugin.activePump.model() !== PumpType.LENOMED) {
+                commandQueue.cancelAllBoluses(id)
+            }
+
         }
         binding.progressbar.max = 100
+
         binding.status.text = state
         BolusProgressData.stopPressed = false
     }

@@ -8,6 +8,7 @@ import app.aaps.core.interfaces.pump.Apex
 import app.aaps.core.interfaces.pump.Dana
 import app.aaps.core.interfaces.pump.Diaconn
 import app.aaps.core.interfaces.pump.Embecta
+import app.aaps.core.interfaces.pump.Lenomed
 import app.aaps.core.interfaces.pump.Medtrum
 import app.aaps.core.interfaces.queue.Callback
 import app.aaps.core.interfaces.queue.Command
@@ -64,6 +65,13 @@ class CommandLoadEvents(
         if (pump is Embecta) {
             val embectaPump = pump as Embecta
             val r = embectaPump.loadBolusHistory()
+            aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
+            callback?.result(r)?.run()
+        }
+
+        if (pump is Lenomed) {
+            val LenomedPump = pump as Lenomed
+            val r = LenomedPump.loadBolusHistory()
             aapsLogger.debug(LTag.PUMPQUEUE, "Result success: ${r.success} enacted: ${r.enacted}")
             callback?.result(r)?.run()
         }

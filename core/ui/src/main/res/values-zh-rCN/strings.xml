@@ -504,7 +504,7 @@
     <string name="sunday_short">周日</string>
     <!--    DecimalFormatterImpl -->
     <string name="preferences_import_success">配置选项导入完成</string>
-
+    <string name="insulin_dialog_close">关闭</string>
     <string name="cgm_sensor_insert">CGM 传感器插入</string>
     <string name="pump_battery_change">泵电池更换</string>
     <string name="temporary_target">临时目标</string>
