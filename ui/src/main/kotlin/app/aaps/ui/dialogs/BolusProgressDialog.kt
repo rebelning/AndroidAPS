@@ -23,6 +23,7 @@ import app.aaps.core.interfaces.rx.AapsSchedulers
 import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventDismissBolusProgressIfRunning
 import app.aaps.core.interfaces.rx.events.EventOverviewBolusProgress
+import app.aaps.core.interfaces.rx.events.EventOverviewBolusStopDeliveryEnabled
 import app.aaps.core.interfaces.rx.events.EventPumpStatusChanged
 import app.aaps.core.ui.activities.TranslatedDaggerAppCompatActivity
 import app.aaps.ui.databinding.DialogBolusprogressBinding
@@ -43,21 +44,7 @@ class BolusProgressDialog : DaggerDialogFragment() {
     private val disposable = CompositeDisposable()
 
     private var running = true
-    private var amount = 0.0
-    private var id: Long = 0L
-    private var state: String? = null
     private var helpActivity: TranslatedDaggerAppCompatActivity? = null
-
-    fun setId(id: Long): BolusProgressDialog {
-        this.id = id
-        return this
-    }
-
-    fun setInsulin(amount: Double): BolusProgressDialog {
-        this.amount = amount
-        BolusProgressData.bolusEnded = false
-        return this
-    }
 
     fun setHelperActivity(activity: TranslatedDaggerAppCompatActivity): BolusProgressDialog {
         helpActivity = activity
@@ -82,36 +69,26 @@ class BolusProgressDialog : DaggerDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        savedInstanceState?.let {
-            amount = it.getDouble("amount")
-            id = it.getLong("id")
-            state = it.getString("state") ?: rh.gs(app.aaps.core.ui.R.string.waitingforpump)
+        binding.title.text = rh.gs(app.aaps.core.ui.R.string.goingtodeliver, BolusProgressData.insulin)
+        if (activePlugin.activePump.model() == PumpType.LENOMED) {
+            binding.progressbar.visibility = View.INVISIBLE
+            binding.progressbarCircle.visibility = View.VISIBLE
+            binding.stop.text = rh.gs(app.aaps.core.ui.R.string.insulin_dialog_close, BolusProgressData.insulin)
+        } else {
+            binding.progressbarCircle.visibility = View.GONE
         }
-        binding.title.text = rh.gs(app.aaps.core.ui.R.string.goingtodeliver, amount)
-        //APEX PUMP
-        if(activePlugin.activePump.model() == PumpType.LENOMED){
-            // binding.stop.visibility=View.INVISIBLE
-            binding.progressbar.visibility=View.INVISIBLE
-            binding.progressbarCircle.visibility=View.VISIBLE
-            binding.stop.text= rh.gs(app.aaps.core.ui.R.string.insulin_dialog_close, amount)
-        }else{
-            binding.progressbarCircle.visibility=View.GONE
-        }
-
         binding.stop.setOnClickListener {
             aapsLogger.debug(LTag.UI, "Stop bolus delivery button pressed")
             BolusProgressData.stopPressed = true
             binding.stopPressed.visibility = View.VISIBLE
             binding.stop.visibility = View.INVISIBLE
-            uel.log(Action.CANCEL_BOLUS, Sources.Overview, state)
-            if (activePlugin.activePump.model() !== PumpType.LENOMED) {
-                commandQueue.cancelAllBoluses(id)
-            }
-
+            uel.log(Action.CANCEL_BOLUS, Sources.Overview, BolusProgressData.status)
+            if (activePlugin.activePump.model() != PumpType.LENOMED)
+                commandQueue.cancelAllBoluses(BolusProgressData.id)
         }
         binding.progressbar.max = 100
-
-        binding.status.text = state
+        binding.status.text = BolusProgressData.status
+        binding.progressbar.progress = BolusProgressData.percent
         BolusProgressData.stopPressed = false
     }
 
@@ -137,8 +114,8 @@ class BolusProgressDialog : DaggerDialogFragment() {
             .toObservable(EventDismissBolusProgressIfRunning::class.java)
             .observeOn(aapsSchedulers.main)
             .subscribe {
-                aapsLogger.debug(LTag.PUMP, "Running id $id. Close request id  ${it.id}")
-                if (it.id == null || it.id == id){
+                aapsLogger.debug(LTag.PUMP, "Running id ${BolusProgressData.id}. Close request id ${it.id}")
+                if (it.id == null || it.id == BolusProgressData.id) {
                     if (running) dismiss()
                     scheduleDismiss()
                 }
@@ -148,16 +125,20 @@ class BolusProgressDialog : DaggerDialogFragment() {
             .toObservable(EventOverviewBolusProgress::class.java)
             .observeOn(aapsSchedulers.main)
             .subscribe {
-                if (it.t?.id == id) {
-                    aapsLogger.debug(LTag.UI, "Status: ${it.status} Percent: ${it.percent}")
-                    binding.status.text = it.status
-                    binding.progressbar.progress = it.percent
-                    if (it.percent == 100) {
-                        binding.stop.visibility = View.INVISIBLE
-                        scheduleDismiss()
-                    }
-                    state = it.status
+                aapsLogger.debug(LTag.UI, "Status: ${BolusProgressData.status} Percent: ${BolusProgressData.percent}")
+                binding.status.text = BolusProgressData.status
+                binding.progressbar.progress = BolusProgressData.percent
+                if (BolusProgressData.percent == 100) {
+                    binding.stop.visibility = View.INVISIBLE
+                    scheduleDismiss()
                 }
+            }
+        disposable += rxBus
+            .toObservable(EventOverviewBolusStopDeliveryEnabled::class.java)
+            .observeOn(aapsSchedulers.main)
+            .subscribe {
+                aapsLogger.debug(LTag.UI, "StopDeliveryButton enabled=${it.isEnabled}")
+                binding.stop.isEnabled = it.isEnabled
             }
     }
 
@@ -181,13 +162,6 @@ class BolusProgressDialog : DaggerDialogFragment() {
         aapsLogger.debug(LTag.UI, "onPause")
         running = false
         disposable.clear()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("state", state)
-        outState.putDouble("amount", amount)
-        outState.putLong("id", id)
     }
 
     override fun onDestroyView() {

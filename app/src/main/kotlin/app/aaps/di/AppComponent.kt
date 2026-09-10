@@ -17,6 +17,7 @@ import app.aaps.plugins.source.di.SourceModule
 import app.aaps.plugins.sync.di.OpenHumansModule
 import app.aaps.plugins.sync.di.SyncModule
 import app.aaps.pump.common.di.PumpCommonModule
+import app.aaps.pump.common.di.RileyLinkModule
 import app.aaps.pump.dana.di.DanaHistoryModule
 import app.aaps.pump.dana.di.DanaModule
 
@@ -39,22 +40,9 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
-
-// import info.nightscout.androidaps.danar.di.DanaRModule
-// import info.nightscout.androidaps.insight.di.InsightDatabaseModule
-// import info.nightscout.androidaps.insight.di.InsightModule
-// import info.nightscout.androidaps.plugins.pump.common.di.RileyLinkModule
-// import info.nightscout.androidaps.plugins.pump.eopatch.dagger.EopatchModule
-// import info.nightscout.androidaps.plugins.pump.medtronic.di.MedtronicModule
-// import info.nightscout.androidaps.plugins.pump.omnipod.dash.di.OmnipodDashModule
-// import info.nightscout.androidaps.plugins.pump.omnipod.eros.di.OmnipodErosModule
 import info.nightscout.pump.apex.di.ApexModule
-// import info.nightscout.pump.combo.di.ComboModule
-
-import app.aaps.pump.common.di.RileyLinkModule
 import app.aaps.pump.embecta.di.EmbectaModule
 import app.aaps.pump.lenomed.di.LenomedModule
-
 import info.nightscout.pump.combov2.di.ComboV2Module
 import javax.inject.Singleton
 

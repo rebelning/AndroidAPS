@@ -9,13 +9,10 @@ import app.aaps.plugins.source.DexcomPlugin
 import app.aaps.plugins.source.GlimpPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
-// <<<<<<< HEAD
-// import app.aaps.plugins.source.PathedOTAppPlugin
-// =======
-import app.aaps.plugins.source.OttaiPlugin
-// >>>>>>> master
+import app.aaps.plugins.source.PatchedSiAppPlugin
+import app.aaps.plugins.source.PatchedSinoAppPlugin
 import app.aaps.plugins.source.PoctechPlugin
-import app.aaps.plugins.source.SyaiTagPlugin
+import app.aaps.plugins.source.SyaiPlugin
 import app.aaps.plugins.source.TomatoPlugin
 import app.aaps.plugins.source.WTClientSourcePlugin
 import app.aaps.plugins.source.XdripSourcePlugin
@@ -43,8 +40,9 @@ abstract class SourceModule {
     // @ContributesAndroidInjector abstract fun contributesOTAppWorker(): PathedOTAppPlugin.PathedOTAppWorker
     @ContributesAndroidInjector abstract fun contributesPoctechWorker(): PoctechPlugin.PoctechWorker
     @ContributesAndroidInjector abstract fun contributesTomatoWorker(): TomatoPlugin.TomatoWorker
-    @ContributesAndroidInjector abstract fun contributesOttaiWorker(): OttaiPlugin.OttaiWorker
-    @ContributesAndroidInjector abstract fun contributesOTAppWorker(): SyaiTagPlugin.SyaiTagWorker
+    @ContributesAndroidInjector abstract fun contributesSyaiWorker(): SyaiPlugin.SyaiWorker
+    @ContributesAndroidInjector abstract fun contributesSiAppWorker(): PatchedSiAppPlugin.PatchedSiAppWorker
+    @ContributesAndroidInjector abstract fun contributesSinoAppWorker(): PatchedSinoAppPlugin.PatchedSinoAppWorker
 
     @ContributesAndroidInjector abstract fun contributesRequestDexcomPermissionActivity(): RequestDexcomPermissionActivity
 

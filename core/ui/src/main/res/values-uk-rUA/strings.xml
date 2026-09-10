@@ -40,4 +40,5 @@
     <!-- WeekdayPicker -->
     <!--    DecimalFormatterImpl -->
     <string name="format_insulin_units">%1$.3f од</string>
+    <!--    Playback-->
 </resources>
