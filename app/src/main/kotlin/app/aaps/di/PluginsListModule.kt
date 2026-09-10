@@ -1,5 +1,6 @@
 package app.aaps.di
 
+import app.aaps.BuildConfig
 import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.plugins.aps.autotune.AutotunePlugin
 import app.aaps.plugins.aps.loop.LoopPlugin
@@ -40,28 +41,35 @@ import app.aaps.plugins.source.GlunovoPlugin
 import app.aaps.plugins.source.IntelligoPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
+
 import app.aaps.plugins.source.OttaiPlugin
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.RandomBgPlugin
 import app.aaps.plugins.source.SyaiTagPlugin
 import app.aaps.plugins.source.TomatoPlugin
+import app.aaps.plugins.source.WTClientSourcePlugin
 import app.aaps.plugins.source.XdripSourcePlugin
 import app.aaps.plugins.sync.garmin.GarminPlugin
 import app.aaps.plugins.sync.nsclient.NSClientPlugin
 import app.aaps.plugins.sync.nsclientV3.NSClientV3Plugin
 import app.aaps.plugins.sync.openhumans.OpenHumansUploaderPlugin
 import app.aaps.plugins.sync.tidepool.TidepoolPlugin
+
+import app.aaps.plugins.sync.wtclient.WTClientPlugin
+
 import app.aaps.plugins.sync.tizen.TizenPlugin
 import app.aaps.plugins.sync.wear.WearPlugin
+
 import app.aaps.plugins.sync.xdrip.XdripPlugin
-import app.aaps.pump.danar.DanaRPlugin
-import app.aaps.pump.danarkorean.DanaRKoreanPlugin
+
 import app.aaps.pump.danars.DanaRSPlugin
-import app.aaps.pump.danarv2.DanaRv2Plugin
+
 import app.aaps.pump.diaconn.DiaconnG8Plugin
+import app.aaps.pump.embecta.EmbectaPlugin
 import app.aaps.pump.eopatch.EopatchPumpPlugin
 import app.aaps.pump.equil.EquilPumpPlugin
 import app.aaps.pump.insight.InsightPlugin
+import app.aaps.pump.lenomed.LenomedPlugin
 import app.aaps.pump.medtronic.MedtronicPumpPlugin
 import app.aaps.pump.medtrum.MedtrumPlugin
 import app.aaps.pump.omnipod.dash.OmnipodDashPumpPlugin
@@ -71,6 +79,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntKey
 import dagger.multibindings.IntoMap
+
+import info.nightscout.pump.apex.ApexPlugin
+
 import info.nightscout.pump.combov2.ComboV2Plugin
 import javax.inject.Qualifier
 
@@ -147,20 +158,38 @@ abstract class PluginsListModule {
     @Binds
     @PumpDriver
     @IntoMap
+    @IntKey(85)
+    abstract fun bindApexPlugin(plugin: ApexPlugin): PluginBase
+
+    @Binds
+    @PumpDriver
+    @IntoMap
     @IntKey(90)
-    abstract fun bindDanaRPlugin(plugin: DanaRPlugin): PluginBase
+    abstract fun bindEmbectaPlugin(plugin: EmbectaPlugin): PluginBase
 
     @Binds
     @PumpDriver
     @IntoMap
     @IntKey(100)
-    abstract fun bindDanaRKoreanPlugin(plugin: DanaRKoreanPlugin): PluginBase
+    abstract fun bindLenomedPlugin(plugin: LenomedPlugin): PluginBase
 
-    @Binds
-    @PumpDriver
-    @IntoMap
-    @IntKey(110)
-    abstract fun bindDanaRv2Plugin(plugin: DanaRv2Plugin): PluginBase
+    // @Binds
+    // @PumpDriver
+    // @IntoMap
+    // @IntKey(90)
+    // abstract fun bindDanaRPlugin(plugin: DanaRPlugin): PluginBase
+    //
+    // @Binds
+    // @PumpDriver
+    // @IntoMap
+    // @IntKey(100)
+    // abstract fun bindDanaRKoreanPlugin(plugin: DanaRKoreanPlugin): PluginBase
+    //
+    // @Binds
+    // @PumpDriver
+    // @IntoMap
+    // @IntKey(110)
+    // abstract fun bindDanaRv2Plugin(plugin: DanaRv2Plugin): PluginBase
 
     @Binds
     @PumpDriver
@@ -321,6 +350,12 @@ abstract class PluginsListModule {
     @Binds
     @AllConfigs
     @IntoMap
+    @IntKey(352)
+    abstract fun bindWTClientPlugin(plugin: WTClientPlugin): PluginBase
+
+    @Binds
+    @AllConfigs
+    @IntoMap
     @IntKey(355)
     abstract fun bindNSClientV3Plugin(plugin: NSClientV3Plugin): PluginBase
 
@@ -393,6 +428,12 @@ abstract class PluginsListModule {
     @Binds
     @AllConfigs
     @IntoMap
+    @IntKey(415)
+    abstract fun bindWTClientSourcePlugin(plugin: WTClientSourcePlugin): PluginBase
+
+    @Binds
+    @AllConfigs
+    @IntoMap
     @IntKey(420)
     abstract fun bindMM640gPlugin(plugin: MM640gPlugin): PluginBase
 
@@ -450,6 +491,14 @@ abstract class PluginsListModule {
     @IntKey(475)
     abstract fun bindRandomBgPlugin(plugin: RandomBgPlugin): PluginBase
 
+    // @Binds
+    // @PathedOTAPP
+    // @IntoMap
+    // @IntKey(480)
+    // abstract fun bindPatchedOTAppPlugin(plugin: PathedOTAppPlugin): PluginBase
+
+
+
     @Binds
     @AllConfigs
     @IntoMap
@@ -482,6 +531,9 @@ abstract class PluginsListModule {
 
     @Qualifier
     annotation class AllConfigs
+
+    // @Qualifier
+    // annotation class PathedOTAPP
 
     @Qualifier
     annotation class PumpDriver

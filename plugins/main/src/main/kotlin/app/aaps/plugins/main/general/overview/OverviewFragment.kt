@@ -10,9 +10,16 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.AnimationDrawable
+
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.text.SpannedString
+
+
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +47,7 @@ import app.aaps.core.interfaces.iob.IobCobCalculator
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
+import app.aaps.core.interfaces.maintenance.ImportExportPrefs
 import app.aaps.core.interfaces.nsclient.NSSettingsStatus
 import app.aaps.core.interfaces.nsclient.ProcessedDeviceStatusData
 import app.aaps.core.interfaces.overview.LastBgData
@@ -50,6 +58,8 @@ import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.protection.ProtectionCheck
+import app.aaps.core.interfaces.pump.Apex
+import app.aaps.core.interfaces.pump.Embecta
 import app.aaps.core.interfaces.pump.defs.determineCorrectBolusStepSize
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
@@ -59,6 +69,7 @@ import app.aaps.core.interfaces.rx.events.EventAcceptOpenLoopChange
 import app.aaps.core.interfaces.rx.events.EventBucketedDataCreated
 import app.aaps.core.interfaces.rx.events.EventEffectiveProfileSwitchChanged
 import app.aaps.core.interfaces.rx.events.EventExtendedBolusChange
+import app.aaps.core.interfaces.rx.events.EventImportPrefsStatus
 import app.aaps.core.interfaces.rx.events.EventInitializationChanged
 import app.aaps.core.interfaces.rx.events.EventMobileToWear
 import app.aaps.core.interfaces.rx.events.EventNewOpenLoopNotification
@@ -95,9 +106,15 @@ import app.aaps.core.objects.wizard.QuickWizard
 import app.aaps.core.ui.UIRunnable
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.ui.elements.SingleClickButton
+
+import app.aaps.plugins.auth.api.AuthCallback
+import app.aaps.plugins.auth.api.AuthHelper
+import app.aaps.plugins.auth.api.AuthorizedRetrofit
+
 import app.aaps.core.ui.extensions.runOnUiThread
 import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.core.ui.extensions.toVisibilityKeepSpace
+
 import app.aaps.plugins.main.R
 import app.aaps.plugins.main.databinding.OverviewFragmentBinding
 import app.aaps.plugins.main.general.overview.graphData.GraphData
@@ -108,13 +125,19 @@ import app.aaps.plugins.main.skins.SkinProvider
 import com.jjoe64.graphview.GraphView
 import dagger.android.HasAndroidInjector
 import dagger.android.support.DaggerFragment
+import info.nightscout.pump.apex.events.EventApexDeviceChange
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.min
+import kotlin.system.exitProcess
 
 class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickListener {
 
@@ -154,10 +177,15 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var bgQualityCheck: BgQualityCheck
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var decimalFormatter: DecimalFormatter
+
+    @Inject lateinit var importExportPrefs: ImportExportPrefs
+    @Inject lateinit var authorizeduploader: AuthorizedRetrofit
+
     @Inject lateinit var commandQueue: CommandQueue
 
-    private val disposable = CompositeDisposable()
 
+    private val disposable = CompositeDisposable()
+    private var isAutoImport = false
     private var smallWidth = false
     private var smallHeight = false
     private var axisWidth: Int = 0
@@ -348,6 +376,14 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             .observeOn(aapsSchedulers.io)
             .subscribe({ updateTemporaryBasal() }, fabricPrivacy::logException)
 
+        disposable += rxBus
+            .toObservable(EventApexDeviceChange::class.java)
+            .observeOn(aapsSchedulers.io)
+            .subscribe({
+                activity?.takeIf { activityContext -> isNetworkConnected(activityContext) }
+                ?.let {
+                    updateApexPump()
+                }}, fabricPrivacy::logException)
         refreshLoop = Runnable {
             refreshAll()
             handler.postDelayed(refreshLoop, 60 * 1000L)
@@ -357,6 +393,13 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         handler.post { refreshAll() }
         updatePumpStatus()
         updateCalcProgress()
+        ///
+        activity?.takeIf { activityContext -> isNetworkConnected(activityContext) }
+            ?.let {
+                updateApexPump()
+            }
+
+
     }
 
     fun refreshAll() {
@@ -376,6 +419,39 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         processAps()
         updateProfile()
         updateTemporaryTarget()
+
+        ///auto import pref
+        if(!isAutoImport){
+            isAutoImport=true
+            when {
+                isAutoImport() -> {
+                    runOnUiThread{
+                         activity?.let { activity ->
+                            OKDialog.showConfirmation(
+                                activity = activity,
+                                rh.gs(R.string.overview_pref_message_label),
+                                SpannedString(rh.gs(R.string.overview_pref_auto_import)),
+                                ok = {
+                                    // importExportPrefs.verifyStoragePermissions(this) {
+                                        importAPSPref()
+                                    // }
+
+                                },
+                                cancel = {
+                                    sp.putBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import,false)
+                                    sp.apply {  }
+                                }
+                            )
+
+                        }
+
+                    }
+
+                }
+            }
+
+
+        }
     }
 
     @Synchronized
@@ -568,7 +644,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             _binding ?: return@runOnUiThread
             if (showAcceptButton && pump.isInitialized() && !pump.isSuspended() && (loop as PluginBase).isEnabled()) {
                 binding.buttonsLayout.acceptTempButton.visibility = View.VISIBLE
-                binding.buttonsLayout.acceptTempButton.text = "${rh.gs(R.string.set_basal_question)}\n${lastRun.constraintsProcessed?.resultAsString()}"
+                binding.buttonsLayout.acceptTempButton.text = "${rh.gs(R.string.set_basal_question)}\n${lastRun?.constraintsProcessed?.resultAsString()}"
             } else {
                 binding.buttonsLayout.acceptTempButton.visibility = View.GONE
             }
@@ -916,7 +992,40 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             binding.infoLayout.extendedLayout.visibility = (extendedBolus != null && !pump.isFakingTempsByExtendedBoluses).toVisibility()
         }
     }
+    ///
+    private fun isAutoImport(): Boolean {
+        return sp.getBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import, true)
+    }
 
+    private  fun importAPSPref()  {
+        if(isAutoImport()){
+            activity?.let { activity ->
+                // ImportPrefsDialog().show(parentFragmentManager, "importPrefs")
+                uiInteraction.runImportPrefsDialog(childFragmentManager)
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+
+                        val success = importExportPrefs.importAutoSharedPreferences(activity)
+                        aapsLogger.debug("importAPSPref is success--->$success")
+                        withContext(Dispatchers.Main) {
+                            aapsLogger.debug("ImportAPSPref Update MAIN UI...")
+//                            rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_impossible),100, result = 100))
+                        }
+                    } catch (e: Exception) {
+                        aapsLogger.error("Error during importing preferences", e)
+                        withContext(Dispatchers.Main) {
+                            aapsLogger.debug("Error occurred during ImportAPSPref.")
+
+                            rxBus.send(EventImportPrefsStatus(rh.gs(app.aaps.core.ui.R.string.preferences_import_success), 10, result = -1))
+                        }
+                    }
+                }
+            }
+        }else{
+            aapsLogger.debug("Auto import is disabled.")
+        }
+
+    }
     private fun updateTime() {
         _binding ?: return
         binding.graphsLayout.scaleButton.text = overviewMenus.scaleString(overviewData.rangeToDisplay)
@@ -1237,5 +1346,68 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     private fun updateNotification() {
         _binding ?: return
         binding.notifications.let { notificationStore.updateNotifications(it) }
+    }
+
+    private fun updateApexPump() {
+        aapsLogger.debug("Entering updateApexPump method...")
+
+        val authCode = sp.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
+        val phoneNumber = sp.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
+
+        var pumpCode =""
+        val pump = activePlugin.activePump
+        if(pump is Embecta){
+            pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_embecta_name, "")
+        }else if(pump is Apex){
+            pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
+        }
+        // pumpCode="APEX31320061"
+        aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber, pumpCode=$pumpCode")
+
+        activity?.let { activityContext ->
+            val authHelper = AuthHelper(activityContext, sp, authorizeduploader, aapsLogger, object : AuthCallback {
+                override fun onSuccess() {
+                    aapsLogger.debug("Authorization successful.")
+                }
+
+                override fun onFailure(errorInfo: String) {
+                    aapsLogger.debug("Authorization failed: $errorInfo")
+                    sp.putLong(app.aaps.core.utils.R.string.key_aaps_expired_time,-1)
+                    sp.putString(app.aaps.core.utils.R.string.key_aaps_auth_code,"")
+                    sp.apply {  }
+                    OKDialog.show(
+                        activityContext,
+                        rh.gs(R.string.overview_auth_message_label),
+                        SpannedString(errorInfo)
+                    ) {
+                        aapsLogger.debug("Exiting app due to authorization failure.")
+
+
+                        activityContext.finish()
+                        System.runFinalization()
+                        exitProcess(0)
+                    }
+                }
+            })
+
+            aapsLogger.debug("Attempting to authorize with AuthHelper...")
+            authHelper.authorized(authCode, phoneNumber,pumpCode=pumpCode)
+        } ?: run {
+            aapsLogger.debug("Activity context is null, cannot proceed with updateApexPump.")
+        }
+
+        aapsLogger.debug("Exiting updateApexPump method.")
+    }
+    private fun isNetworkConnected(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)     -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else                                                               -> false
+        }
     }
 }

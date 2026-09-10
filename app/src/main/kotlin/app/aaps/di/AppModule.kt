@@ -1,8 +1,12 @@
 package app.aaps.di
 
 import android.content.Context
+// <<<<<<< HEAD
+// import app.aaps.BuildConfig
+// =======
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+// >>>>>>> master
 import app.aaps.MainApp
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.objects.Instantiator
@@ -11,6 +15,8 @@ import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.implementation.instantiator.InstantiatorImpl
 import app.aaps.implementations.ConfigImpl
 import app.aaps.implementations.UiInteractionImpl
+import app.aaps.plugins.auth.route.Navigator
+import app.aaps.route.AppNavigator
 import dagger.Binds
 import dagger.Lazy
 import dagger.Module
@@ -31,6 +37,7 @@ open class AppModule {
     fun providesPlugins(
         config: Config,
         @PluginsListModule.AllConfigs allConfigs: Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>,
+        // @PluginsListModule.PathedOTAPP pathedOTAPP: Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>,
         @PluginsListModule.PumpDriver pumpDrivers: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
         @PluginsListModule.NotNSClient notNsClient: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
         @PluginsListModule.APS aps: Lazy<Map<@JvmSuppressWildcards Int, @JvmSuppressWildcards PluginBase>>,
@@ -40,7 +47,15 @@ open class AppModule {
         val plugins = allConfigs.toMutableMap()
         if (config.PUMPDRIVERS) plugins += pumpDrivers.get()
         if (config.APS) plugins += aps.get()
+// <<<<<<< HEAD
         if (!config.AAPSCLIENT) plugins += notNsClient.get()
+        // if (BuildConfig.ENABLE_WEAR_PLUGIN) {
+        //     println("Loading PathedOTAPP Plugin for wear flavor")
+        //     plugins += pathedOTAPP
+        // }
+// =======
+//         if (!config.AAPSCLIENT) plugins += notNsClient.get()
+// >>>>>>> master
         //if (config.isUnfinishedMode()) plugins += unfinished.get()
         return plugins.toList().sortedBy { it.first }.map { it.second }
     }
@@ -62,6 +77,7 @@ open class AppModule {
 
         @Binds fun bindActivityNames(activityNames: UiInteractionImpl): UiInteraction
         @Binds fun bindInstantiator(instantiatorImpl: InstantiatorImpl): Instantiator
+        @Binds fun bindNavigator(appNavigator: AppNavigator): Navigator
 
     }
 }

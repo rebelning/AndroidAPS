@@ -64,6 +64,22 @@ class TestPumpPlugin(val rh: ResourceHelper) : Pump {
         PumpEnactResultObject(rh).success(true)
 
     override fun setExtendedBolus(insulin: Double, durationInMinutes: Int): PumpEnactResult = PumpEnactResultObject(rh).success(true)
+    override fun setSquareWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setDoubleWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setSyncPumpTime(): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setPauseResumePump(type: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
     override fun cancelTempBasal(enforceNew: Boolean): PumpEnactResult = PumpEnactResultObject(rh).success(true)
     override fun cancelExtendedBolus(): PumpEnactResult = PumpEnactResultObject(rh).success(true)
     override fun getJSONStatus(profile: Profile, profileName: String, version: String): JSONObject = JSONObject()

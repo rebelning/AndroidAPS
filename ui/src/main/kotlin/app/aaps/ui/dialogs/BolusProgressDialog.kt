@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
+import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.data.ue.Action
 import app.aaps.core.data.ue.Sources
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.logging.UserEntryLogger
+import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.pump.BolusProgressData
+// import app.aaps.core.interfaces.pump.defs.PumpType
 import app.aaps.core.interfaces.queue.CommandQueue
 import app.aaps.core.interfaces.resources.ResourceHelper
 import app.aaps.core.interfaces.rx.AapsSchedulers
@@ -35,7 +39,7 @@ class BolusProgressDialog : DaggerDialogFragment() {
     @Inject lateinit var commandQueue: CommandQueue
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var uel: UserEntryLogger
-
+    @Inject lateinit var activePlugin: ActivePlugin
     private val disposable = CompositeDisposable()
 
     private var running = true
@@ -84,15 +88,29 @@ class BolusProgressDialog : DaggerDialogFragment() {
             state = it.getString("state") ?: rh.gs(app.aaps.core.ui.R.string.waitingforpump)
         }
         binding.title.text = rh.gs(app.aaps.core.ui.R.string.goingtodeliver, amount)
+        //APEX PUMP
+        if(activePlugin.activePump.model() == PumpType.LENOMED){
+            // binding.stop.visibility=View.INVISIBLE
+            binding.progressbar.visibility=View.INVISIBLE
+            binding.progressbarCircle.visibility=View.VISIBLE
+            binding.stop.text= rh.gs(app.aaps.core.ui.R.string.insulin_dialog_close, amount)
+        }else{
+            binding.progressbarCircle.visibility=View.GONE
+        }
+
         binding.stop.setOnClickListener {
             aapsLogger.debug(LTag.UI, "Stop bolus delivery button pressed")
             BolusProgressData.stopPressed = true
             binding.stopPressed.visibility = View.VISIBLE
             binding.stop.visibility = View.INVISIBLE
             uel.log(Action.CANCEL_BOLUS, Sources.Overview, state)
-            commandQueue.cancelAllBoluses(id)
+            if (activePlugin.activePump.model() !== PumpType.LENOMED) {
+                commandQueue.cancelAllBoluses(id)
+            }
+
         }
         binding.progressbar.max = 100
+
         binding.status.text = state
         BolusProgressData.stopPressed = false
     }
@@ -120,8 +138,11 @@ class BolusProgressDialog : DaggerDialogFragment() {
             .observeOn(aapsSchedulers.main)
             .subscribe {
                 aapsLogger.debug(LTag.PUMP, "Running id $id. Close request id  ${it.id}")
-                if (it.id == null || it.id == id)
+                if (it.id == null || it.id == id){
                     if (running) dismiss()
+                    scheduleDismiss()
+                }
+
             }
         disposable += rxBus
             .toObservable(EventOverviewBolusProgress::class.java)

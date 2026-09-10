@@ -181,14 +181,14 @@ class SWDefinition @Inject constructor(
             .visibility {
                 !Settings.canDrawOverlays(activity) ||
                     androidPermission.permissionNotGranted(activity, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) ||
-                    androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) ||
-                    preferences.getIfExists(StringKey.AapsDirectoryUri) == null
+                    androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) //||
+                    // preferences.getIfExists(StringKey.AapsDirectoryUri) == null
             }
             .validator {
                 Settings.canDrawOverlays(activity) &&
                     !androidPermission.permissionNotGranted(activity, Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS) &&
-                    !androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) &&
-                    preferences.getIfExists(StringKey.AapsDirectoryUri) != null
+                    !androidPermission.permissionNotGranted(activity, Manifest.permission.READ_EXTERNAL_STORAGE) //&&
+                    // preferences.getIfExists(StringKey.AapsDirectoryUri) != null
             }
 
     private val screenPermissionBt

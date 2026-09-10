@@ -326,4 +326,7 @@
     <string name="steps_shortname">STEPS</string>
     <string name="simple_mode_enabled">Simple mode enabled</string>
 
+    <string name="overview_pref_message_label">Import pump config</string>
+    <string name="overview_pref_auto_import">Automatically import configuration information. Your existing configuration will be overwritten. Do you want to proceed with the automatic import?</string>
+    <string name="overview_auth_message_label">Authorization prompt</string>
 </resources>

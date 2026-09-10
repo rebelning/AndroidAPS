@@ -40,6 +40,7 @@ enum class Sources {
     Loop,               //From Loop plugin
     Maintenance,        //From Maintenance plugin
     NSClient,           //From NSClient plugin
+    WTClient,           //From NSClient plugin
     NSProfile,          //From NSProfile plugin
     Objectives,         //From Objectives plugin
     Pump,               //To update with one Source per pump
@@ -50,6 +51,7 @@ enum class Sources {
     DanaRS,
     DanaI,
     DiaconnG8,
+    Apex,
     Insight,
     Combo,
     Medtronic,

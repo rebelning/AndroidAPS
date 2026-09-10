@@ -2,21 +2,28 @@ package app.aaps.plugins.source.di
 
 import app.aaps.core.interfaces.source.DexcomBoyda
 import app.aaps.core.interfaces.source.NSClientSource
+import app.aaps.core.interfaces.source.WTClientSource
 import app.aaps.core.interfaces.source.XDripSource
 import app.aaps.plugins.source.BGSourceFragment
 import app.aaps.plugins.source.DexcomPlugin
 import app.aaps.plugins.source.GlimpPlugin
 import app.aaps.plugins.source.MM640gPlugin
 import app.aaps.plugins.source.NSClientSourcePlugin
+// <<<<<<< HEAD
+// import app.aaps.plugins.source.PathedOTAppPlugin
+// =======
 import app.aaps.plugins.source.OttaiPlugin
+// >>>>>>> master
 import app.aaps.plugins.source.PoctechPlugin
 import app.aaps.plugins.source.SyaiTagPlugin
 import app.aaps.plugins.source.TomatoPlugin
+import app.aaps.plugins.source.WTClientSourcePlugin
 import app.aaps.plugins.source.XdripSourcePlugin
 import app.aaps.plugins.source.activities.RequestDexcomPermissionActivity
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+
 
 @Module(
     includes = [
@@ -33,6 +40,7 @@ abstract class SourceModule {
     @ContributesAndroidInjector abstract fun contributesDexcomWorker(): DexcomPlugin.DexcomWorker
     @ContributesAndroidInjector abstract fun contributesMM640gWorker(): MM640gPlugin.MM640gWorker
     @ContributesAndroidInjector abstract fun contributesGlimpWorker(): GlimpPlugin.GlimpWorker
+    // @ContributesAndroidInjector abstract fun contributesOTAppWorker(): PathedOTAppPlugin.PathedOTAppWorker
     @ContributesAndroidInjector abstract fun contributesPoctechWorker(): PoctechPlugin.PoctechWorker
     @ContributesAndroidInjector abstract fun contributesTomatoWorker(): TomatoPlugin.TomatoWorker
     @ContributesAndroidInjector abstract fun contributesOttaiWorker(): OttaiPlugin.OttaiWorker
@@ -44,6 +52,7 @@ abstract class SourceModule {
     interface Bindings {
 
         @Binds fun bindNSClientSource(nsClientSourcePlugin: NSClientSourcePlugin): NSClientSource
+        @Binds fun bindWTClientSource(wtClientSourcePlugin: WTClientSourcePlugin): WTClientSource
         @Binds fun bindDexcomBoyda(dexcomPlugin: DexcomPlugin): DexcomBoyda
         @Binds fun bindXDrip(xdripSourcePlugin: XdripSourcePlugin): XDripSource
     }

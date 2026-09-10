@@ -2,6 +2,8 @@ package info.nightscout.pump.combov2
 
 import android.content.Context
 import android.content.Intent
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -131,8 +133,18 @@ class ComboV2Plugin @Inject constructor(
             .shortName(R.string.combov2_plugin_shortname)
             .description(R.string.combov2_plugin_description)
             .preferencesId(R.xml.pref_combov2),
+// <<<<<<< HEAD
+//         injector,
+//         aapsLogger,
+//         rh,
+//         commandQueue
+//     ),
+//     Pump,
+//     PluginConstraints, Parcelable {
+// =======
         aapsLogger, rh, commandQueue
     ), Pump, PluginConstraints {
+// >>>>>>> master
 
     // Coroutine scope and the associated job. All coroutines
     // that are started in this plugin are part of this scope.
@@ -1341,6 +1353,22 @@ class ComboV2Plugin @Inject constructor(
     override fun setExtendedBolus(insulin: Double, durationInMinutes: Int): PumpEnactResult =
         createFailurePumpEnactResult(R.string.combov2_extended_bolus_not_supported)
 
+    override fun setSquareWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setDoubleWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setSyncPumpTime(): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setPauseResumePump(type: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
     override fun cancelExtendedBolus(): PumpEnactResult =
         createFailurePumpEnactResult(R.string.combov2_extended_bolus_not_supported)
 
@@ -1846,6 +1874,33 @@ class ComboV2Plugin @Inject constructor(
     // contains the current frame.
     private var _displayFrameUIFlow = MutableSharedFlow<DisplayFrame?>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val displayFrameUIFlow = _displayFrameUIFlow.asSharedFlow()
+
+    constructor(parcel: Parcel) : this(
+        TODO("injector"),
+        TODO("aapsLogger"),
+        TODO("rh"),
+        TODO("commandQueue"),
+        TODO("context"),
+        TODO("rxBus"),
+        TODO("constraintChecker"),
+        TODO("sp"),
+        TODO("pumpSync"),
+        TODO("dateUtil"),
+        TODO("uiInteraction"),
+        TODO("androidPermission"),
+        TODO("config"),
+        TODO("decimalFormatter")
+    ) {
+        initializationChangedEventSent = parcel.readByte() != 0.toByte()
+        lastConnectionTimestamp = parcel.readLong()
+        pumpErrorObserved = parcel.readByte() != 0.toByte()
+        disconnectRequestPending = parcel.readByte() != 0.toByte()
+        unpairing = parcel.readByte() != 0.toByte()
+        pumpIsSuspended = parcel.readByte() != 0.toByte()
+        lastActiveBasalProfileNumber = parcel.readValue(Int::class.java.classLoader) as? Int
+        _reservoirLevel = parcel.readValue(Double::class.java.classLoader) as? Double
+        _batteryLevel = parcel.readValue(Int::class.java.classLoader) as? Int
+    }
 
     /*** Misc private functions ***/
 
@@ -2440,4 +2495,31 @@ class ComboV2Plugin @Inject constructor(
 
             else                     -> false
         }
+
+    // override fun writeToParcel(parcel: Parcel, flags: Int) {
+    //     parcel.writeByte(if (initializationChangedEventSent) 1 else 0)
+    //     parcel.writeLong(lastConnectionTimestamp)
+    //     parcel.writeByte(if (pumpErrorObserved) 1 else 0)
+    //     parcel.writeByte(if (disconnectRequestPending) 1 else 0)
+    //     parcel.writeByte(if (unpairing) 1 else 0)
+    //     parcel.writeByte(if (pumpIsSuspended) 1 else 0)
+    //     parcel.writeValue(lastActiveBasalProfileNumber)
+    //     parcel.writeValue(_reservoirLevel)
+    //     parcel.writeValue(_batteryLevel)
+    // }
+    //
+    // override fun describeContents(): Int {
+    //     return 0
+    // }
+
+    companion object CREATOR : Parcelable.Creator<ComboV2Plugin> {
+
+        override fun createFromParcel(parcel: Parcel): ComboV2Plugin {
+            return ComboV2Plugin(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ComboV2Plugin?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

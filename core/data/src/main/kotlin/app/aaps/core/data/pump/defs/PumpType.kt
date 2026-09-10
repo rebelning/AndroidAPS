@@ -392,6 +392,61 @@ enum class PumpType(
         source = Source.DiaconnG8
     ),
 
+    APEX(
+        description = "Apex",
+        manufacturer = ManufacturerType.G2e,
+        model = "Apex",
+        bolusSize = 0.025,
+        specialBolusSize = null,
+        extendedBolusSettings = DoseSettings(0.025, 15, 15 * 32, 0.025),
+        pumpTempBasalType = PumpTempBasalType.Absolute,
+        tbrSettings = DoseSettings(0.025, 15, 15 * 32, 0.0, 15.0),
+        // specialBasalDurations = PumpCapability.BasalRate_Duration30minAllowed,
+        specialBasalDurations= arrayOf(Capability.BasalRate_Duration30minAllowed),
+        baseBasalMinValue = 0.1,
+        baseBasalMaxValue = 3.0,
+        baseBasalStep = 0.025,
+        baseBasalSpecialSteps = null,
+        pumpCapability = PumpCapability.ApexCapabilities,
+        source = Source.Apex,
+        // useHardwareLink = true
+    ),
+    EMBECTA(
+        description = "Embecta",
+        manufacturer = ManufacturerType.G2e,
+        model = "Embecta",
+        bolusSize = 0.01,
+        specialBolusSize = null,
+        extendedBolusSettings = DoseSettings(0.05, 10, 5 * 60, 0.05),
+        pumpTempBasalType = PumpTempBasalType.Absolute,
+        tbrSettings = DoseSettings(0.01, 30, 24 * 60, 0.0, 15.0),
+        specialBasalDurations = arrayOf(Capability.BasalRate_Duration30minAllowed),
+        baseBasalMinValue = 0.01,
+        baseBasalMaxValue = 3.0,
+        baseBasalStep = 0.01,
+        baseBasalSpecialSteps = null,
+        pumpCapability = PumpCapability.EmbectaCapabilities,
+        source = Source.Embecta
+    ),
+    LENOMED(
+        description = "Lenomed",
+        manufacturer = ManufacturerType.G2e,
+        model = "Lenomed",
+        bolusSize = 0.01,
+        specialBolusSize = null,
+        extendedBolusSettings = DoseSettings(0.05, 10, 5 * 60, 0.05),
+        pumpTempBasalType = PumpTempBasalType.Absolute,
+        tbrSettings = DoseSettings(0.01, 30, 24 * 60, 0.0, 15.0),
+        specialBasalDurations = arrayOf(Capability.BasalRate_Duration30minAllowed),
+        baseBasalMinValue = 0.01,
+        baseBasalMaxValue = 3.0,
+        baseBasalStep = 0.01,
+        baseBasalSpecialSteps = null,
+        pumpCapability = PumpCapability.LenomedCapabilities,
+        source = Source.Lenomed
+    ),
+
+
     //EOPatch Pump
     EOFLOW_EOPATCH2(
         description = "Eoflow Eopatch2",
@@ -500,6 +555,9 @@ enum class PumpType(
         DanaRS,
         DanaI,
         DiaconnG8,
+        Apex,
+        Embecta,
+        Lenomed,
         Insight,
         Combo,
         Medtronic,

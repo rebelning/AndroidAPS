@@ -593,7 +593,7 @@ class EquilManager @Inject constructor(
         getTempBasal()?.let { equilTempBasalRecord ->
             val tempBasalStartTime = DateTime(equilTempBasalRecord.startTime)
             val tempBasalEndTime = tempBasalStartTime.plus(equilTempBasalRecord.duration.toLong())
-            return (time.isAfter(tempBasalStartTime) || time.isEqual(tempBasalStartTime)) && time.isBefore(tempBasalEndTime)
+            return (time!!.isAfter(tempBasalStartTime) || time.isEqual(tempBasalStartTime)) && time.isBefore(tempBasalEndTime)
         }
         return false
     }

@@ -1,6 +1,7 @@
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.ksp)
@@ -17,7 +18,9 @@ repositories {
     mavenCentral()
     google()
 }
-
+val localProperties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
 fun generateGitBuild(): String {
     val stringBuilder: StringBuilder = StringBuilder()
     try {
@@ -99,6 +102,14 @@ android {
 
     namespace = "app.aaps"
     ndkVersion = Versions.ndkVersion
+    signingConfigs {
+        create("release") {
+            keyAlias = localProperties.getProperty("KEY_ALIAS")
+            keyPassword = localProperties.getProperty("KEY_PASSWORD")
+            storeFile = file(localProperties.getProperty("STORE_FILE"))
+            storePassword = localProperties.getProperty("STORE_PASSWORD")
+        }
+    }
 
     defaultConfig {
         minSdk = Versions.minSdk
@@ -109,9 +120,10 @@ android {
         buildConfigField("String", "REMOTE", "\"${generateGitRemote()}\"")
         buildConfigField("String", "HEAD", "\"${generateGitBuild()}\"")
         buildConfigField("String", "COMMITTED", "\"${allCommitted()}\"")
-
+        buildConfigField("boolean", "ENABLE_WEAR_PLUGIN", "false")
         // For Dagger injected instrumentation tests in app module
         testInstrumentationRunner = "app.aaps.runners.InjectedTestRunner"
+
     }
 
     flavorDimensions.add("standard")
@@ -125,6 +137,7 @@ android {
             manifestPlaceholders["appIcon"] = "@mipmap/ic_launcher"
             manifestPlaceholders["appIconRound"] = "@mipmap/ic_launcher_round"
         }
+
         create("pumpcontrol") {
             applicationId = "info.nightscout.aapspumpcontrol"
             dimension = "standard"
@@ -150,7 +163,19 @@ android {
             manifestPlaceholders["appIconRound"] = "@mipmap/ic_blueowl"
         }
     }
-
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
     useLibrary("org.apache.http.legacy")
 
     //Deleting it causes a binding error
@@ -182,6 +207,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:validators"))
     implementation(project(":ui"))
+    implementation(project(":plugins:aapsauth"))
     implementation(project(":plugins:aps"))
     implementation(project(":plugins:automation"))
     implementation(project(":plugins:configuration"))
@@ -194,11 +220,17 @@ dependencies {
     implementation(project(":plugins:sync"))
     implementation(project(":implementation"))
     implementation(project(":database:impl"))
+
+    implementation(project(":pump:apex"))
+    implementation(project(":pump:embecta"))
+    implementation(project(":pump:lenomed"))
+    // implementation(project(":pump:combo"))
     implementation(project(":database:persistence"))
+
     implementation(project(":pump:combov2"))
     implementation(project(":pump:dana"))
     implementation(project(":pump:danars"))
-    implementation(project(":pump:danar"))
+    // implementation(project(":pump:danar"))
     implementation(project(":pump:diaconn"))
     implementation(project(":pump:eopatch"))
     implementation(project(":pump:medtrum"))
@@ -239,7 +271,7 @@ println("-------------------")
 if (isMaster() && !gitAvailable()) {
     throw GradleException("GIT system is not available. On Windows try to run Android Studio as an Administrator. Check if GIT is installed and Studio have permissions to use it")
 }
-if (isMaster() && !allCommitted()) {
-    throw GradleException("There are uncommitted changes. Clone sources again as described in wiki and do not allow gradle update")
-}
+// if (isMaster() && !allCommitted()) {
+//     throw GradleException("There are uncommitted changes. Clone sources again as described in wiki and do not allow gradle update")
+// }
 

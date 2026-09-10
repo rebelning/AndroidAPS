@@ -101,7 +101,7 @@ class EquilPumpPlugin @Inject constructor(
     private val bolusProfile: BolusProfile = BolusProfile()
 
     private val disposable = CompositeDisposable()
-    private var statusChecker: Runnable
+    private var statusChecker: Runnable?=null
 
     init {
         preferences.registerPreferences(EquilIntKey::class.java)
@@ -112,7 +112,7 @@ class EquilPumpPlugin @Inject constructor(
     override fun onStart() {
         super.onStart()
         equilManager.init()
-        handler?.postDelayed(statusChecker, STATUS_CHECK_INTERVAL_MILLIS)
+        handler?.postDelayed(statusChecker!!, STATUS_CHECK_INTERVAL_MILLIS)
         disposable += rxBus
             .toObservable(EventEquilDataChanged::class.java)
             .observeOn(aapsSchedulers.io)
@@ -201,7 +201,7 @@ class EquilPumpPlugin @Inject constructor(
                     "Skipping Pod status check because command queue is not empty"
                 )
             }
-            handler?.postDelayed(statusChecker, STATUS_CHECK_INTERVAL_MILLIS)
+            handler?.postDelayed(statusChecker!!, STATUS_CHECK_INTERVAL_MILLIS)
         }
         PumpEvent.init(rh)
     }
@@ -510,6 +510,22 @@ class EquilPumpPlugin @Inject constructor(
             pumpEnactResult.absolute = insulin
         }
         return pumpEnactResult
+    }
+
+    override fun setSquareWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setDoubleWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setSyncPumpTime(): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setPauseResumePump(type: Int): PumpEnactResult {
+        TODO("Not yet implemented")
     }
 
     override fun cancelExtendedBolus(): PumpEnactResult {

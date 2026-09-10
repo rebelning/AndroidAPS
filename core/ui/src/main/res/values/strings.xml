@@ -511,6 +511,7 @@
     <string name="connecting">Connecting</string>
     <string name="clicked_connect_to_pump" comment="26 characters max for translation">Clicked connect to pump</string>
     <string name="reservoir_value">%1$.0f / %2$d U</string>
+    <string name="reservoir_1_value">%1$.0f U</string>
     <string name="daily_units">Daily units</string>
     <string name="pump_icon">Pump icon</string>
     <string name="view_profile">View profile</string>
@@ -636,7 +637,11 @@
 
     <!--    DecimalFormatterImpl -->
     <string name="format_insulin_units1">%1$.1f U</string>
-    <string name="format_insulin_units">%1$.2f U</string>
+
+    <string name="format_insulin_units">%1$.3f U</string>
+    <string name="preferences_import_success">preferences import completed</string>
+    <string name="insulin_dialog_close">Dismiss</string>
+<!--    <string name="format_insulin_units">%1$.2f U</string>-->
     <string name="percent_rate_duration">Rate: %1$.2f%% (%2$.2f U/h) Duration: %3$d min</string>
     <string name="rate_percent_duration">Rate: %1$.2f U/h (%2$.2f%%) Duration: %3$d min</string>
     <string name="percent_rate_duration_formatted"><![CDATA[<b>Rate</b>: %1$.2f%% (%2$.2f U/h)<br><b>Duration</b>: %3$d min<br>]]></string>

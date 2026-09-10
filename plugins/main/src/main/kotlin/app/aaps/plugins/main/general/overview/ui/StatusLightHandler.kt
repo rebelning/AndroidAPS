@@ -14,6 +14,7 @@ import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.keys.IntKey
 import app.aaps.core.keys.Preferences
+import app.aaps.plugins.main.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -87,7 +88,26 @@ class StatusLightHandler @Inject constructor(
             val erosBatteryLinkAvailable = pump.model() == PumpType.OMNIPOD_EROS && pump.isUseRileyLinkBatteryLevel()
 
             if (pump.model().supportBatteryLevel || erosBatteryLinkAvailable) {
-                handleLevel(batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning, pump.batteryLevel.toDouble(), "%")
+
+                if (pump.model() == PumpType.APEX) {
+                    handleApexLevel(
+                        batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning,
+                        pump.batteryLevel,
+                    )
+                } else {
+                    // handleLevel(
+                    //     batteryLevel, R.string.key_statuslights_bat_critical,
+                    //     26.0, R.string.key_statuslights_bat_warning,
+                    //     51.0,
+                    //     pump.batteryLevel.toDouble(),
+                    //     "%"
+                    // )
+                    handleLevel(batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning, pump.batteryLevel.toDouble(), "%")
+                }
+
+
+                // handleLevel(batteryLevel, IntKey.OverviewBattCritical, IntKey.OverviewBattWarning, pump.batteryLevel.toDouble(), "%")
+
             } else {
                 batteryLevel?.text = rh.gs(app.aaps.core.ui.R.string.value_unavailable_short)
                 batteryLevel?.setTextColor(rh.gac(batteryLevel.context, app.aaps.core.ui.R.attr.defaultTextColor))
@@ -114,6 +134,34 @@ class StatusLightHandler @Inject constructor(
         if (level > 0) view?.text = " " + decimalFormatter.to0Decimal(level, units)
         else view?.text = ""
         warnColors.setColorInverse(view, level, resWarn, resUrgent)
+    }
+
+    private fun handleApexLevel(view: TextView?, criticalSetting: IntKey,warnSetting: IntKey, level: Int) {
+        // val resUrgent = sp.getDouble(criticalSetting, criticalDefaultValue)
+        // val resWarn = sp.getDouble(warnSetting, warnDefaultValue)
+        val resUrgent = preferences.get(criticalSetting)
+        val resWarn = preferences.get(warnSetting)
+        var levelBattery = "(≥75%)"
+        var levelBat = 100
+        if (level == 4) {
+            levelBattery = "(≥75%)"
+            levelBat = 100
+        } else if (level == 3) {
+            levelBattery = "(50-75%)"
+            levelBat = 60
+        } else if (level == 2) {
+            levelBattery = "(25-50%)"
+            levelBat = 40
+        } else if (level == 1) {
+            levelBattery = "(1-25%)"
+            levelBat = 15
+        } else {
+            levelBattery = "(≤1%)"
+            levelBat = 1
+        }
+        if (level > 0) view?.text = levelBattery
+        else view?.text = ""
+        warnColors.setColorInverse(view, levelBat.toDouble(), resWarn, resUrgent)
     }
 
     // Omnipod only reports reservoir level when it's 50 units or less, so we display "50+U" for any value > 50

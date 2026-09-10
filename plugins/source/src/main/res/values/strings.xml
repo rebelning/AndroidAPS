@@ -7,6 +7,11 @@
     <string name="ns_client_bg">NSClient BG</string>
     <string name="ns_client_bg_short">NS BG</string>
     <string name="description_source_ns_client">Downloads BG data from Nightscout</string>
+
+    <string name="wt_client_bg">WTClient BG</string>
+    <string name="wt_client_bg_short">WT BG</string>
+    <string name="description_source_wt_client">Downloads BG data from WTScout</string>
+
     <string name="source_xdrip">xDrip+ BG</string>
     <string name="description_source_xdrip">Receive BG values from xDrip+.</string>
     <string name="dexcom_app_patched">BYODA</string>
@@ -33,11 +38,17 @@
     <string name="dexcom_log_ns_sensor_change_title">Log sensor change to NS</string>
     <string name="dexcom_log_ns_sensor_change_summary">Create event \"Sensor Change\" in NS automatically on sensor start</string>
     <string name="direction">direction</string>
+
+
+    <!-- Patched Ottai App -->
+    <string name="patched_ottai_app">Patched Ottai App</string>
+    <string name="description_source_patched_ottai_app">Receive BG values from Ottai App.</string>
     <string name="bg_generation_interval_minutes">BG generation interval minutes</string>
     <!-- Patched Ottai App -->
     <string name="ottai_app">Ottai</string>
-    <string name="description_source_patched_ottai_app">Receive glucose data from Ottai App.</string>
+
     <!-- Patched Syai Tag App -->
     <string name="syai_tag_app">Syai Tag</string>
     <string name="description_source_patched_syai_tag_app">Receive glucose data from Syai Tag App.</string>
+
 </resources>

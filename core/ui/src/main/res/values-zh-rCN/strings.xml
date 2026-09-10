@@ -420,6 +420,7 @@
     <string name="connecting">正在连接</string>
     <string name="clicked_connect_to_pump" comment="26 characters max for translation">单击连接到泵</string>
     <string name="reservoir_value">%1$.0f / %2$d U</string>
+    <string name="reservoir_1_value">%1$.0f U</string>
     <string name="daily_units">每日单位数</string>
     <string name="pump_icon">泵图标</string>
     <string name="view_profile">查看配置文件</string>
@@ -502,4 +503,11 @@
     <string name="saturday_short">周六</string>
     <string name="sunday_short">周日</string>
     <!--    DecimalFormatterImpl -->
+    <string name="preferences_import_success">配置选项导入完成</string>
+    <string name="insulin_dialog_close">关闭</string>
+    <string name="cgm_sensor_insert">CGM 传感器插入</string>
+    <string name="pump_battery_change">泵电池更换</string>
+    <string name="temporary_target">临时目标</string>
+    <string name="prime_fill">充盈</string>
+    <string name="format_insulin_units">%1$.3f U</string>
 </resources>

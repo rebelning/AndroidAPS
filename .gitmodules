@@ -1,0 +1,18 @@
+[submodule "pump/apex"]
+	path = pump/apex
+	url = https://github.com/rebelning/apex.git
+[submodule "plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient"]
+	path = plugins/sync/src/main/kotlin/app/aaps/plugins/sync/wtclient
+	url = https://github.com/rebelning/wtclient.git
+[submodule "AAPSKeystore"]
+	path = AAPSKeystore
+	url = https://github.com/rebelning/AAPSKeystore.git
+[submodule "plugins/aapsauth"]
+	path = plugins/aapsauth
+	url = https://github.com/rebelning/aapsauth.git
+[submodule "pump/embecta"]
+	path = pump/embecta
+	url = https://github.com/rebelning/embecta.git
+[submodule "pump/lenomed"]                                                                                                                                                 
+        path = pump/lenomed                                                                                                                                                
+        url = https://github.com/rebelning/lenomed.git

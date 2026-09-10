@@ -3,8 +3,10 @@ package app.aaps.plugins.configuration.maintenance
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import app.aaps.core.interfaces.configuration.Config
+import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.maintenance.FileListProvider
 import app.aaps.core.interfaces.maintenance.PrefMetadata
 import app.aaps.core.interfaces.maintenance.PrefsFile
@@ -26,6 +28,7 @@ import app.aaps.plugins.configuration.maintenance.formats.EncryptedPrefsFormat
 import app.aaps.shared.impl.weardata.ZipWatchfaceFormat
 import dagger.Lazy
 import dagger.Reusable
+import okio.IOException
 import org.joda.time.DateTime
 import org.joda.time.Days
 import org.joda.time.Hours
@@ -90,6 +93,42 @@ class FileListProviderImpl @Inject constructor(
                 .thenByDescending { it.metadata[PrefsMetadataKeyImpl.CREATED_AT]?.value }
         )
         return filtered
+    }
+
+    override fun loadConfigFileFromAssets(filename: String): PrefsFile {
+        val assetPath = "AAPS/preferences/$filename"
+        val file = copyFileFromAssetsToInternalStorage(assetPath)
+        if (!file.exists()) {
+            Log.d("LTag.CORE", "File not found after copying: ${file.absolutePath}")
+        }
+        val contents = storage.getFileContents(file)
+        // log.info(LTag.CORE, "Loaded JSON Content: $contents")
+        if (contents.isBlank()) {
+            Log.d("LTag.CORE",  "JSON file is empty or not properly read!")
+        }
+        val metadata = metadataFor(contents)
+        // return PrefsFile(filename, file.absolutePath, metadata)
+        return PrefsFile(filename, contents, metadata)
+    }
+    private fun copyFileFromAssetsToInternalStorage(assetPath: String): File {
+        val targetFile = File(context.filesDir, assetPath.substringAfterLast('/'))
+        val targetDir = targetFile.parentFile
+        if (targetDir != null && !targetDir.exists()) {
+            val result = targetDir.mkdirs()
+            Log.d("LTag.CORE",  "Creating directory ${targetDir.absolutePath}: success=$result")
+        }
+
+        try {
+            context.assets.open(assetPath).use { inputStream ->
+                targetFile.outputStream().use { fileOut ->
+                    inputStream.copyTo(fileOut)
+                }
+            }
+        } catch (e: IOException) {
+            Log.d("LTag.CORE",  "Failed to copy asset file: $assetPath", e)
+        }
+
+        return targetFile
     }
 
     override fun listCustomWatchfaceFiles(): MutableList<CwfFile> {

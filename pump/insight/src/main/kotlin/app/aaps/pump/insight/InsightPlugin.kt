@@ -670,6 +670,22 @@ class InsightPlugin @Inject constructor(
         return result
     }
 
+    override fun setSquareWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setDoubleWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setSyncPumpTime(): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setPauseResumePump(type: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
     fun setExtendedBolusOnly(insulin: Double, durationInMinutes: Int, disableVibration: Boolean): PumpEnactResult {
         val result = instantiator.providePumpEnactResult()
         connectionService?.let { service ->

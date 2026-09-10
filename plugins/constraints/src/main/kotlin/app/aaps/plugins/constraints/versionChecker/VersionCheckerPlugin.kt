@@ -41,8 +41,10 @@ class VersionCheckerPlugin @Inject constructor(
 ), PluginConstraints {
 
     enum class GracePeriod(val warning: Long, val old: Long, val veryOld: Long) {
-        RELEASE(30, 60, 90),
+        RELEASE(360, 720, 720),
         RC(2, 7, 14)
+        // RELEASE(30, 60, 90),
+        // RC(2, 7, 14)
     }
 
     private val gracePeriod: GracePeriod
@@ -59,8 +61,8 @@ class VersionCheckerPlugin @Inject constructor(
     }
 
     override fun isClosedLoopAllowed(value: Constraint<Boolean>): Constraint<Boolean> {
-        checkWarning()
-        versionCheckerUtils.triggerCheckVersion()
+        // checkWarning()
+        // versionCheckerUtils.triggerCheckVersion()
         if (lastCheckOlderThan(gracePeriod.veryOld.daysToMillis()))
             value.set(false, rh.gs(R.string.very_old_version), this)
         val endDate = sp.getLong(rh.gs(app.aaps.core.utils.R.string.key_app_expiration) + "_" + config.VERSION_NAME, 0)

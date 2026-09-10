@@ -154,6 +154,14 @@ class DanaRKoreanPlugin @Inject constructor(
     override fun isHandshakeInProgress(): Boolean =
         executionService?.isHandshakeInProgress == true
 
+    override fun setSyncPumpTime(): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setDoubleWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
     override fun finishHandshaking() {
         executionService?.finishHandshaking()
     }
@@ -318,6 +326,14 @@ class DanaRKoreanPlugin @Inject constructor(
         val result = instantiator.providePumpEnactResult()
         result.success(true).enacted(false).comment(app.aaps.core.ui.R.string.ok).isTempCancel(true)
         return result
+    }
+
+    override fun setSquareWaveBolus(insulin: Double, durationInMinutes: Int, durationBloodInMinutes: Int): PumpEnactResult {
+        TODO("Not yet implemented")
+    }
+
+    override fun setPauseResumePump(type: Int): PumpEnactResult {
+        TODO("Not yet implemented")
     }
 
     override fun model(): PumpType = PumpType.DANA_R_KOREAN
