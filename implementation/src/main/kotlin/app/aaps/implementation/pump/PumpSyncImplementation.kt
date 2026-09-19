@@ -80,6 +80,10 @@ class PumpSyncImplementation @Inject constructor(
      * @return true if data is allowed
      */
     private fun confirmActivePump(timestamp: Long, type: PumpType, serialNumber: String, showNotification: Boolean = true): Boolean {
+        if (serialNumber.isBlank()) {
+            aapsLogger.error(LTag.PUMP, "Ignoring pump history record: empty serial for type=${type.description}")
+            return false
+        }
         val storedType = preferences.get(StringNonKey.ActivePumpType)
         val storedSerial = preferences.get(StringNonKey.ActivePumpSerialNumber)
         val storedTimestamp = preferences.get(LongNonKey.ActivePumpChangeTimestamp)
@@ -102,9 +106,10 @@ class PumpSyncImplementation @Inject constructor(
             rxBus.send(EventNewNotification(Notification(Notification.WRONG_PUMP_DATA, rh.gs(R.string.wrong_pump_data), Notification.URGENT)))
         aapsLogger.error(
             LTag.PUMP,
-            "Ignoring pump history record  Allowed: ${dateUtil.dateAndTimeAndSecondsString(storedTimestamp)} $storedType $storedSerial Received: $timestamp ${
+            "Ignoring pump history record Allowed: ${dateUtil.dateAndTimeAndSecondsString(storedTimestamp)} " +
+                "type=$storedType serial='$storedSerial' Received: $timestamp ${
                 dateUtil.dateAndTimeAndSecondsString(timestamp)
-            } ${type.description} $serialNumber"
+            } type=${type.description} serial='$serialNumber'"
         )
         return false
     }

@@ -87,7 +87,7 @@ fun allCommitted(): Boolean {
 android {
 
     namespace = "app.aaps"
-    ndkVersion = Versions.ndkVersion
+    // ndkVersion = Versions.ndkVersion
     signingConfigs {
         create("release") {
             keyAlias = localProperties.getProperty("KEY_ALIAS")

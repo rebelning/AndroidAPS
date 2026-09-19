@@ -10,6 +10,15 @@ import kotlin.math.min
  */
 class EventOverviewBolusProgress(status: String, val id: Long? = null, percent: Int? = null, wearStatus: String? = null) : Event() {
 
+    /** Compatibility data used by legacy pump drivers during bolus delivery. */
+    data class Treatment(var insulin: Double, var percent: Int, val isSMB: Boolean, val id: Long?)
+
+    var t: Treatment = Treatment(0.0, 0, false, id)
+    var status: String = status
+    var percent: Int = percent ?: 0
+
+    constructor() : this("")
+
     init {
         if (id == BolusProgressData.id || id == null) {
             BolusProgressData.status = status

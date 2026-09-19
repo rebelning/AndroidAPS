@@ -938,7 +938,7 @@ class ImportExportPrefsImpl @Inject constructor(
         ///
         try {
             val importFile = prefFileList.loadConfigFileFromAssets(prefName)
-            log.info(LTag.CORE,"importFile:"+importFile.content)
+            aapsLogger.info(LTag.CORE, "importFile:" + importFile.content)
             // val prefsAttempted = format.loadPreferences(importFile.file, predefinedPassword)
             val prefsAttempted = format.loadPreferences(importFile.content, predefinedPassword)
             prefsAttempted.metadata = prefFileList.checkMetadata(prefsAttempted.metadata)
@@ -982,7 +982,7 @@ class ImportExportPrefsImpl @Inject constructor(
 
                     }
                     index += 1
-                    log.debug(LTag.CORE, "index--->$index  key--->$key --->$value")
+                    aapsLogger.debug(LTag.CORE, "index--->$index  key--->$key --->$value")
                     val percent = index.toDouble() / length.toDouble() * 100.0
 //                    log.debug(LTag.CORE,"percent--->$percent")
                     rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_importing), percent.toInt(), result = 0))
@@ -999,13 +999,13 @@ class ImportExportPrefsImpl @Inject constructor(
                 return true
             } else {
 
-                log.error(LTag.CORE, "Import impossible")
+                aapsLogger.error(LTag.CORE, "Import impossible")
                 rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_fail), 20, result = -1))
                 return false
             }
         } catch (e: Exception) {
 
-            log.error(LTag.CORE, "Error during import", e)
+            aapsLogger.error(LTag.CORE, "Error during import", e)
             rxBus.send(EventImportPrefsStatus(rh.gs(R.string.preferences_import_fail), 20, result = -1))
 
         }

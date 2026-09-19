@@ -19,24 +19,24 @@ class WTAlarmObject(private var data: JSONObject) : NSAlarm {
     }
      */
 
-    override fun level(): Int =
-        JsonHelper.safeGetInt(data, "level", 0)
+    override val level: Int
+        get() = JsonHelper.safeGetInt(data, "level", 0)
 
-    override fun group(): String =
-        JsonHelper.safeGetString(data, "group", "N/A")
+    override val group: String
+        get() = JsonHelper.safeGetString(data, "group", "N/A")
 
-    override fun title(): String =
-        JsonHelper.safeGetString(data, "title", "N/A")
+    override val title: String
+        get() = JsonHelper.safeGetString(data, "title", "N/A")
 
-    override fun message(): String =
-        JsonHelper.safeGetString(data, "message", "N/A")
+    override val message: String
+        get() = JsonHelper.safeGetString(data, "message", "N/A")
 
-    override fun low(): Boolean =
-        JsonHelper.safeGetString(data, "eventName", "") == "low"
+    override val low: Boolean
+        get() = JsonHelper.safeGetString(data, "eventName", "") == "low"
 
-    override fun high(): Boolean =
-        JsonHelper.safeGetString(data, "eventName", "") == "high"
+    override val high: Boolean
+        get() = JsonHelper.safeGetString(data, "eventName", "") == "high"
 
-    override fun timeago(): Boolean =
-        JsonHelper.safeGetString(data, "eventName", "") == "timeago"
+    override val timeAgo: Boolean
+        get() = JsonHelper.safeGetString(data, "eventName", "") == "timeago"
 }

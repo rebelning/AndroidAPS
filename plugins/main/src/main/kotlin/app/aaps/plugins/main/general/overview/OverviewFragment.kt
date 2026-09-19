@@ -97,6 +97,7 @@ import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.interfaces.utils.DecimalFormatter
 import app.aaps.core.interfaces.utils.TrendCalculator
 import app.aaps.core.interfaces.utils.fabric.FabricPrivacy
+import app.aaps.core.interfaces.sharedPreferences.SP
 import app.aaps.core.keys.BooleanKey
 import app.aaps.core.keys.BooleanNonKey
 import app.aaps.core.keys.DoubleKey
@@ -150,6 +151,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var aapsSchedulers: AapsSchedulers
     @Inject lateinit var preferences: Preferences
+    @Inject lateinit var sharedPreferences: SP
     @Inject lateinit var rxBus: RxBus
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var profileFunction: ProfileFunction
@@ -446,8 +448,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
 
                                 },
                                 cancel = {
-                                    sp.putBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import,false)
-                                    sp.apply {  }
+                                    sharedPreferences.putBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import, false)
                                 }
                             )
 
@@ -1023,7 +1024,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     }
     ///
     private fun isAutoImport(): Boolean {
-        return sp.getBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import, true)
+        return sharedPreferences.getBoolean(app.aaps.core.utils.R.string.key_aaps_is_auto_import, true)
     }
 
     private  fun importAPSPref()  {
@@ -1381,30 +1382,29 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     private fun updateApexPump() {
         aapsLogger.debug("Entering updateApexPump method...")
 
-        val authCode = sp.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
-        val phoneNumber = sp.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
+        val authCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
+        val phoneNumber = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
 
         var pumpCode =""
         val pump = activePlugin.activePump
         if(pump is Embecta){
-            pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_embecta_name, "")
+            pumpCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_pump_embecta_name, "")
         }else if(pump is Apex){
-            pumpCode = sp.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
+            pumpCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
         }
         // pumpCode="APEX31320061"
         aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber, pumpCode=$pumpCode")
 
         activity?.let { activityContext ->
-            val authHelper = AuthHelper(activityContext, sp, authorizeduploader, aapsLogger, object : AuthCallback {
+            val authHelper = AuthHelper(activityContext, sharedPreferences, authorizeduploader, aapsLogger, object : AuthCallback {
                 override fun onSuccess() {
                     aapsLogger.debug("Authorization successful.")
                 }
 
                 override fun onFailure(errorInfo: String) {
                     aapsLogger.debug("Authorization failed: $errorInfo")
-                    sp.putLong(app.aaps.core.utils.R.string.key_aaps_expired_time,-1)
-                    sp.putString(app.aaps.core.utils.R.string.key_aaps_auth_code,"")
-                    sp.apply {  }
+                    sharedPreferences.putLong(app.aaps.core.utils.R.string.key_aaps_expired_time, -1)
+                    sharedPreferences.putString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
                     OKDialog.show(
                         activityContext,
                         rh.gs(R.string.overview_auth_message_label),

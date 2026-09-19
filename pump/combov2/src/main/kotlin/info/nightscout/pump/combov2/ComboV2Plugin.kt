@@ -2,6 +2,7 @@ package info.nightscout.pump.combov2
 
 import android.content.Context
 import android.content.Intent
+import android.os.Parcel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.repeatOnLifecycle

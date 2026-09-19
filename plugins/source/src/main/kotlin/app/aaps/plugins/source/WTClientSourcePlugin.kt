@@ -47,9 +47,7 @@ class WTClientSourcePlugin @Inject constructor(
             isAdvancedFilteringEnabled = arrayOf(
                 SourceSensor.DEXCOM_NATIVE_UNKNOWN,
                 SourceSensor.DEXCOM_G6_NATIVE,
-                SourceSensor.DEXCOM_G5_NATIVE,
                 SourceSensor.DEXCOM_G6_NATIVE_XDRIP,
-                SourceSensor.DEXCOM_G5_NATIVE_XDRIP,
                 SourceSensor.WT_NET
             ).any { it == glucoseValue.sourceSensor }
             lastBGTimeStamp = glucoseValue.timestamp

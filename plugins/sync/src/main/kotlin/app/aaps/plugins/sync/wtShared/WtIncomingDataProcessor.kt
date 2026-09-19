@@ -25,7 +25,7 @@ import app.aaps.core.interfaces.utils.DateUtil
 import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.ui.UiInteraction
 import app.aaps.core.keys.BooleanKey
-import app.aaps.core.keys.Preferences
+import app.aaps.core.keys.interfaces.Preferences
 import app.aaps.core.nssdk.localmodel.food.NSFood
 import app.aaps.core.nssdk.localmodel.treatment.NSBolus
 import app.aaps.core.nssdk.localmodel.treatment.NSBolusWizard
@@ -50,7 +50,7 @@ import app.aaps.plugins.sync.nsclientV3.extensions.toCarbs
 import app.aaps.plugins.sync.nsclientV3.extensions.toEffectiveProfileSwitch
 import app.aaps.plugins.sync.nsclientV3.extensions.toExtendedBolus
 import app.aaps.plugins.sync.nsclientV3.extensions.toFood
-import app.aaps.plugins.sync.nsclientV3.extensions.toOfflineEvent
+import app.aaps.plugins.sync.nsclientV3.extensions.toRunningMode
 import app.aaps.plugins.sync.nsclientV3.extensions.toProfileSwitch
 import app.aaps.plugins.sync.nsclientV3.extensions.toTemporaryBasal
 import app.aaps.plugins.sync.nsclientV3.extensions.toTemporaryTarget
@@ -212,9 +212,9 @@ class WtIncomingDataProcessor @Inject constructor(
                             }
 
                     is NSOfflineEvent           ->
-                        if (preferences.get(BooleanKey.NsClientAcceptOfflineEvent) && config.isEngineeringMode() || config.AAPSCLIENT || doFullSync)
-                            treatment.toOfflineEvent().let { offlineEvent ->
-                                storeDataForDb.addToOfflineEvents(offlineEvent)
+                        if (preferences.get(BooleanKey.NsClientAcceptRunningMode) && config.isEngineeringMode() || config.AAPSCLIENT || doFullSync)
+                            treatment.toRunningMode().let { offlineEvent ->
+                                storeDataForDb.addToRunningModes(offlineEvent)
                             }
 
                     is NSExtendedBolus          ->

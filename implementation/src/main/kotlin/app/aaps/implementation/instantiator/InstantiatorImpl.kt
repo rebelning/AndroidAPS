@@ -1,6 +1,7 @@
 package app.aaps.implementation.instantiator
 
 import app.aaps.core.interfaces.aps.AutosensData
+import app.aaps.core.interfaces.aps.APSResult
 import app.aaps.core.interfaces.aps.RT
 import app.aaps.core.interfaces.objects.Instantiator
 import app.aaps.core.interfaces.profile.ProfileStore

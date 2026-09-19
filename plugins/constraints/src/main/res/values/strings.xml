@@ -15,6 +15,8 @@
 
     <!-- Version Checker -->
     <string name="version_checker" translatable="false">Version Checker</string>
+    <string name="old_version">Old version</string>
+    <string name="very_old_version">Very old version</string>
     <string name="application_expired">Application expired</string>
     <string name="running_invalid_version">We have detected that you are running an invalid version. Loop disabled!</string>
     <string name="versionavailable">Version %1$s available</string>
