@@ -19,6 +19,8 @@ import androidx.preference.size
 import app.aaps.R
 import app.aaps.core.data.plugin.PluginType
 import app.aaps.core.interfaces.configuration.Config
+import app.aaps.core.interfaces.logging.AAPSLogger
+import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.overview.Overview
 import app.aaps.core.interfaces.plugin.ActivePlugin
 import app.aaps.core.interfaces.plugin.PluginBase
@@ -66,6 +68,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
     private var filter = ""
 
     @Inject lateinit var rxBus: RxBus
+    @Inject lateinit var aapsLogger: AAPSLogger
     @Inject lateinit var rh: ResourceHelper
     @Inject lateinit var preferences: Preferences
     @Inject lateinit var activePlugin: ActivePlugin
@@ -158,7 +161,11 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
         try {
             initSummary(preferenceScreen, pluginName != null)
         } catch (e: Exception) {
-            throw Exception("Error in onCreatePreferences pluginName=$pluginName customPreference=$customPreference rootKey=$rootKey filter=$filter", e)
+            aapsLogger.error(
+                LTag.UI,
+                "Unable to initialize preference summaries pluginName=$pluginName customPreference=$customPreference rootKey=$rootKey filter=$filter",
+                e
+            )
         }
         preprocessPreferences()
         if (filter != "") updateFilterVisibility(filter, preferenceScreen)
@@ -203,7 +210,13 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
     private fun preprocessPreferences() {
         // Do plugin overrides
         for (plugin in activePlugin.getPluginsList()) {
-            if (plugin.isEnabled()) plugin.preprocessPreferences(this)
+            if (plugin.isEnabled()) {
+                try {
+                    plugin.preprocessPreferences(this)
+                } catch (e: Exception) {
+                    aapsLogger.error(LTag.UI, "Unable to preprocess preferences for ${plugin.javaClass.name}", e)
+                }
+            }
         }
     }
 
@@ -235,10 +248,20 @@ class MyPreferenceFragment : PreferenceFragmentCompat(), OnSharedPreferenceChang
 
     private fun addPreferencesIfEnabled(p: PluginBase, rootKey: String?, enabled: Boolean = true) {
         if (preferences.simpleMode && !p.pluginDescription.preferencesVisibleInSimpleMode && !config.isDev()) return
-        if (enabled && p.isEnabled() && p.preferencesId == PluginDescription.PREFERENCE_SCREEN)
-            addPreferencesFromScreen(p, rootKey)
-        if (enabled && p.isEnabled() && p.preferencesId > 0)
-            addPreferencesFromResource(p.preferencesId, rootKey)
+        if (!enabled || !p.isEnabled()) return
+
+        try {
+            if (p.preferencesId == PluginDescription.PREFERENCE_SCREEN)
+                addPreferencesFromScreen(p, rootKey)
+            if (p.preferencesId > 0)
+                addPreferencesFromResource(p.preferencesId, rootKey)
+        } catch (e: Exception) {
+            aapsLogger.error(
+                LTag.UI,
+                "Unable to load preferences for ${p.javaClass.name} preferencesId=${p.preferencesId} rootKey=$rootKey",
+                e
+            )
+        }
     }
 
     @SuppressLint("RestrictedApi")

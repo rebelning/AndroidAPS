@@ -15,7 +15,26 @@ class EventOverviewBolusProgress(status: String, val id: Long? = null, percent: 
 
     var t: Treatment = Treatment(0.0, 0, false, id)
     var status: String = status
+        set(value) {
+            field = value
+            if (id == BolusProgressData.id || id == null) {
+                BolusProgressData.status = value
+            }
+        }
     var percent: Int = percent ?: 0
+        set(value) {
+            field = value
+            if (id == BolusProgressData.id || id == null) {
+                BolusProgressData.percent = value
+            }
+        }
+    var wearStatus: String? = wearStatus
+        set(value) {
+            field = value
+            if (id == BolusProgressData.id || id == null) {
+                BolusProgressData.wearStatus = value.orEmpty()
+            }
+        }
 
     constructor() : this("")
 

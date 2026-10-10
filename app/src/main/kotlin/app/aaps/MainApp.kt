@@ -60,6 +60,7 @@ import app.aaps.receivers.KeepAliveWorker
 import app.aaps.receivers.TimeDateOrTZChangeReceiver
 import app.aaps.ui.activityMonitor.ActivityMonitor
 import app.aaps.ui.widget.Widget
+import app.aaps.utils.AapsUncaughtExceptionHandler
 import app.aaps.utils.configureLeakCanary
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
@@ -117,6 +118,7 @@ class MainApp : DaggerApplication() {
         super.onCreate()
 
         // Here should be everything injected
+        installGlobalExceptionHandler()
         aapsLogger.debug("onCreate")
         ProcessLifecycleOwner.get().lifecycle.addObserver(processLifecycleListener.get())
         // Configure LeakCanary with Firebase reporting
@@ -137,6 +139,13 @@ class MainApp : DaggerApplication() {
         scope.launch { doInit() }
     }
 
+    private fun installGlobalExceptionHandler() {
+        val currentHandler = Thread.getDefaultUncaughtExceptionHandler()
+        if (currentHandler is AapsUncaughtExceptionHandler) return
+
+        Thread.setDefaultUncaughtExceptionHandler(AapsUncaughtExceptionHandler(aapsLogger, currentHandler))
+        aapsLogger.debug(LTag.CORE, "Global uncaught exception logger installed")
+    }
 
     private fun doInit() {
         aapsLogger.debug("doInit")

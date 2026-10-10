@@ -1385,14 +1385,22 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val authCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
         val phoneNumber = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
 
-        var pumpCode =""
         val pump = activePlugin.activePump
-        if(pump is Embecta){
-            pumpCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_pump_embecta_name, "")
-        }else if(pump is Apex){
-            pumpCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_pump_apex_name, "")
+        val pumpCode = when (pump) {
+            is Embecta -> sharedPreferences.getString(
+                app.aaps.core.utils.R.string.key_pump_embecta_name,
+                ""
+            ).trim()
+            is Apex -> sharedPreferences.getString(
+                app.aaps.core.utils.R.string.key_pump_apex_name,
+                ""
+            ).trim()
+            else -> ""
         }
-        // pumpCode="APEX31320061"
+        if (pumpCode.isEmpty()) {
+            aapsLogger.debug("Skipping pump authorization: runtime pump serial is not available yet")
+            return
+        }
         aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber, pumpCode=$pumpCode")
 
         activity?.let { activityContext ->
@@ -1421,7 +1429,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             })
 
             aapsLogger.debug("Attempting to authorize with AuthHelper...")
-            authHelper.authorized(authCode, phoneNumber,pumpCode=pumpCode)
+            authHelper.authorizedWithPumpCode(authCode, phoneNumber, pumpCode)
         } ?: run {
             aapsLogger.debug("Activity context is null, cannot proceed with updateApexPump.")
         }

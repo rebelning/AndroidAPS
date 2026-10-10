@@ -1,6 +1,5 @@
 package app.aaps.plugins.constraints.versionChecker
 
-import android.os.Build
 import app.aaps.core.data.time.T
 import app.aaps.core.interfaces.configuration.Config
 import app.aaps.core.interfaces.logging.AAPSLogger
@@ -34,6 +33,9 @@ class VersionCheckerUtilsImpl @Inject constructor(
     var definition: JSONObject = versionDefinition.invoke()
 
     override fun triggerCheckVersion() {
+        // Version checks are intentionally disabled for this custom build.
+        // Keep the original implementation below so it can be restored easily if needed.
+        /*
         val version: String? = AllowedVersions.findByApi(definition, Build.VERSION.SDK_INT)
         val newVersionByApi = compareWithCurrentVersion(newVersion = version, currentVersion = config.get().VERSION_NAME)
 
@@ -48,7 +50,7 @@ class VersionCheckerUtilsImpl @Inject constructor(
             }
             if (endDate != 0L) onExpireDateDetected(config.get().VERSION_NAME, endDate)
         }
-
+        */
     }
 
     @Suppress("SameParameterValue")

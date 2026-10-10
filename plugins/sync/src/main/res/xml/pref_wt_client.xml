@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:validate="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="@string/key_wt_client_settings"
@@ -10,24 +9,21 @@
 
 <!--          android:defaultValue="https://{YOUR-SITE}.azurewebsites.net/"
             android:dialogMessage="@string/ns_client_url_dialog_message"-->
-        <app.aaps.core.validators.ValidatingEditTextPreference
-
+        <androidx.preference.EditTextPreference
             android:inputType="textUri"
             android:key="@string/key_wtclientinternal_url"
             android:selectAllOnFocus="true"
             android:title="@string/wt_client_url_title"
             android:enabled="false"
-            validate:testType="httpsUrl" />
+            app:useSimpleSummaryProvider="true" />
         <!--            android:dialogMessage="@string/ns_client_secret_dialog_message"-->
         <!--            android:dialogTitle="@string/ns_client_secret_dialog_title"-->
-        <app.aaps.core.validators.ValidatingEditTextPreference
-
+        <androidx.preference.EditTextPreference
             android:inputType="phone"
             android:key="@string/key_wtclientinternal_api_phone"
             android:title="@string/wt_client_phone_title"
-            validate:minLength="12"
             android:enabled="false"
-            validate:testType="minLength"/>
+            app:useSimpleSummaryProvider="true" />
 
 <!--        <androidx.preference.PreferenceScreen-->
 <!--            android:key="@string/ns_sync_options"-->
