@@ -53,6 +53,9 @@ interface Intents {
         // Patched SI App -> AAPS
         const val SI_APP = "cn.diyaps.sharing.SI_APP"
 
+        // Sibionics App -> AAPS
+        const val SIB_APP = "com.diyaps.sharing.SIBIO_APP"
+
         // Patched Sino App -> AAPS
         const val SINO_APP = "cn.diyaps.sharing.SINO_APP"
         // Patched Syai Tag App -> AAPS

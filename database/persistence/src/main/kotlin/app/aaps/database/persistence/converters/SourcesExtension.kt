@@ -43,8 +43,9 @@ fun UserEntry.Sources.fromDb(): Sources =
         UserEntry.Sources.Xdrip               -> Sources.Xdrip
         UserEntry.Sources.Ottai    -> Sources.Ottai
         UserEntry.Sources.SyaiTag  -> Sources.SyaiTag
-        UserEntry.Sources.SiBionic -> Sources.SiBionic
-        UserEntry.Sources.Sino     -> Sources.Sino
+        UserEntry.Sources.SiBionic  -> Sources.SiBionic
+        UserEntry.Sources.Sibionics -> Sources.Sibionics
+        UserEntry.Sources.Sino      -> Sources.Sino
         UserEntry.Sources.LocalProfile        -> Sources.LocalProfile
         UserEntry.Sources.Loop                -> Sources.Loop
         UserEntry.Sources.Maintenance         -> Sources.Maintenance
@@ -129,8 +130,9 @@ fun Sources.toDb(): UserEntry.Sources =
         Sources.Xdrip               -> UserEntry.Sources.Xdrip
         Sources.Ottai    -> UserEntry.Sources.Ottai
         Sources.SyaiTag  -> UserEntry.Sources.SyaiTag
-        Sources.SiBionic -> UserEntry.Sources.SiBionic
-        Sources.Sino     -> UserEntry.Sources.Sino
+        Sources.SiBionic  -> UserEntry.Sources.SiBionic
+        Sources.Sibionics -> UserEntry.Sources.Sibionics
+        Sources.Sino      -> UserEntry.Sources.Sino
         Sources.LocalProfile        -> UserEntry.Sources.LocalProfile
         Sources.Loop                -> UserEntry.Sources.Loop
         Sources.Maintenance         -> UserEntry.Sources.Maintenance

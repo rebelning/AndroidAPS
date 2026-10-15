@@ -99,6 +99,7 @@ data class GlucoseValue(
         UNKNOWN,
         OTTAI,
         SIBIONIC,
+        SIBIONICS,
         SINO,
         SYAI_TAG,
 

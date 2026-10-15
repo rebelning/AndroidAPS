@@ -28,6 +28,7 @@ enum class SourceSensor(val text: String) {
     MM_600_SERIES("MM600Series"),
     OTTAI("Ottai"),
     SIBIONIC("SI App"),
+    SIBIONICS("Sibionics"),
     SINO("Sino App"),
     EVERSENSE("Eversense"),
     AIDEX("GlucoRx Aidex"),
