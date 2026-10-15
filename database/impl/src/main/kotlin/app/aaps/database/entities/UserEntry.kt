@@ -197,6 +197,7 @@ data class UserEntry(
         SyaiTag,            //From Syai Tag plugin
         WTClient,
         SiBionic,
+        Sibionics,
         Sino,
         Stats,              //From Stat Activity
         Aaps,               // MainApp

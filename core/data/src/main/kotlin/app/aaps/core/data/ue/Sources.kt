@@ -40,6 +40,7 @@ enum class Sources {
     Ottai,              //From Ottai Plugin
     SyaiTag,
     SiBionic,
+    Sibionics,
     Sino,
     LocalProfile,       //From LocalProfile plugin
     Loop,               //From Loop plugin
