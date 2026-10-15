@@ -61,8 +61,6 @@ import app.aaps.core.interfaces.plugin.PluginBase
 import app.aaps.core.interfaces.profile.ProfileFunction
 import app.aaps.core.interfaces.profile.ProfileUtil
 import app.aaps.core.interfaces.protection.ProtectionCheck
-import app.aaps.core.interfaces.pump.Apex
-import app.aaps.core.interfaces.pump.Embecta
 import app.aaps.core.interfaces.pump.BolusProgressData
 import app.aaps.core.interfaces.pump.defs.determineCorrectBolusStepSize
 import app.aaps.core.interfaces.queue.CommandQueue
@@ -1385,14 +1383,17 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         val authCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
         val phoneNumber = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
 
-        val pump = activePlugin.activePump
-        val pumpCode = when (pump) {
-            is Embecta -> sharedPreferences.getString(
+        val pumpCode = when (activePlugin.activePump.model()) {
+            PumpType.EMBECTA -> sharedPreferences.getString(
                 app.aaps.core.utils.R.string.key_pump_embecta_name,
                 ""
             ).trim()
-            is Apex -> sharedPreferences.getString(
+            PumpType.APEX -> sharedPreferences.getString(
                 app.aaps.core.utils.R.string.key_pump_apex_name,
+                ""
+            ).trim()
+            PumpType.LENOMED -> sharedPreferences.getString(
+                app.aaps.core.utils.R.string.key_pump_lenomed_name,
                 ""
             ).trim()
             else -> ""
@@ -1401,7 +1402,7 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             aapsLogger.debug("Skipping pump authorization: runtime pump serial is not available yet")
             return
         }
-        aapsLogger.debug("AuthCode: $authCode, PhoneNumber: $phoneNumber, pumpCode=$pumpCode")
+        aapsLogger.debug("Pump authorization data ready (pumpCodePresent=true)")
 
         activity?.let { activityContext ->
             val authHelper = AuthHelper(activityContext, sharedPreferences, authorizeduploader, aapsLogger, object : AuthCallback {

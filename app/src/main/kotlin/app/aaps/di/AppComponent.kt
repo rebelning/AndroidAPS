@@ -8,6 +8,7 @@ import app.aaps.database.persistence.di.PersistenceModule
 import app.aaps.implementation.di.ImplementationModule
 import app.aaps.plugins.aps.di.ApsModule
 import app.aaps.plugins.auth.di.AuthModule
+import app.aaps.plugins.wtconnect.di.WTConnectModule
 import app.aaps.plugins.automation.di.AutomationModule
 import app.aaps.plugins.configuration.di.ConfigurationModule
 import app.aaps.plugins.constraints.di.PluginsConstraintsModule
@@ -74,6 +75,7 @@ import javax.inject.Singleton
         SourceModule::class,
         SyncModule::class,
         AuthModule::class,
+        WTConnectModule::class,
         WorkflowModule::class,
 
         // pumps

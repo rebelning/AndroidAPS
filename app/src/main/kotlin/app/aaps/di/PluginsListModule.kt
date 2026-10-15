@@ -61,6 +61,7 @@ import app.aaps.plugins.sync.tizen.TizenPlugin
 import app.aaps.plugins.sync.wear.WearPlugin
 
 import app.aaps.plugins.sync.xdrip.XdripPlugin
+import app.aaps.plugins.wtconnect.WTConnectPlugin
 
 import app.aaps.pump.danars.DanaRSPlugin
 
@@ -352,6 +353,12 @@ abstract class PluginsListModule {
     @IntoMap
     @IntKey(352)
     abstract fun bindWTClientPlugin(plugin: WTClientPlugin): PluginBase
+
+    @Binds
+    @APS
+    @IntoMap
+    @IntKey(354)
+    abstract fun bindWTConnectPlugin(plugin: WTConnectPlugin): PluginBase
 
     @Binds
     @AllConfigs
