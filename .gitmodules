@@ -16,3 +16,7 @@
 [submodule "pump/lenomed"]                                                                                                                                                 
         path = pump/lenomed                                                                                                                                                
         url = https://github.com/rebelning/lenomed.git
+[submodule "plugins/wtconnect"]
+	path = plugins/wtconnect
+	url = https://github.com/rebelning/wtconnect.git
+	branch = master
