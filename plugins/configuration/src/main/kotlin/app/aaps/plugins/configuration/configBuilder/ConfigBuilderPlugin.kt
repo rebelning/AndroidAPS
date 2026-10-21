@@ -36,6 +36,7 @@ import app.aaps.core.interfaces.rx.bus.RxBus
 import app.aaps.core.interfaces.rx.events.EventAppExit
 import app.aaps.core.interfaces.rx.events.EventAppInitialized
 import app.aaps.core.interfaces.rx.events.EventConfigBuilderChange
+import app.aaps.core.interfaces.rx.events.EventPumpIdentityChanged
 import app.aaps.core.interfaces.rx.events.EventRebuildTabs
 import app.aaps.core.interfaces.smoothing.Smoothing
 import app.aaps.core.interfaces.source.BgSource
@@ -226,6 +227,7 @@ class ConfigBuilderPlugin @Inject constructor(
         storeSettings("RemoteConfiguration")
         rxBus.send(EventRebuildTabs())
         rxBus.send(EventConfigBuilderChange())
+        if (type == PluginType.PUMP) rxBus.send(EventPumpIdentityChanged())
         rxBus.send(EventConfigBuilderUpdateGui())
         logPluginStatus()
     }

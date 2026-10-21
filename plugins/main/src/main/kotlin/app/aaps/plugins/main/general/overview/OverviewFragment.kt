@@ -11,9 +11,6 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.AnimationDrawable
 
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -112,10 +109,6 @@ import app.aaps.core.ui.UIRunnable
 import app.aaps.core.ui.dialogs.OKDialog
 import app.aaps.core.ui.elements.SingleClickButton
 
-import app.aaps.plugins.auth.api.AuthCallback
-import app.aaps.plugins.auth.api.AuthHelper
-import app.aaps.plugins.auth.api.AuthorizedRetrofit
-
 import app.aaps.core.ui.extensions.runOnUiThread
 import app.aaps.core.ui.extensions.toVisibility
 import app.aaps.core.ui.extensions.toVisibilityKeepSpace
@@ -129,7 +122,6 @@ import app.aaps.plugins.main.general.overview.ui.StatusLightHandler
 import app.aaps.plugins.main.skins.SkinProvider
 import com.jjoe64.graphview.GraphView
 import dagger.android.support.DaggerFragment
-import info.nightscout.pump.apex.events.EventApexDeviceChange
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import kotlinx.coroutines.CoroutineScope
@@ -142,7 +134,6 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.math.abs
 import kotlin.math.min
-import kotlin.system.exitProcess
 
 class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickListener {
 
@@ -183,7 +174,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var decimalFormatter: DecimalFormatter
     @Inject lateinit var importExportPrefs: ImportExportPrefs
-    @Inject lateinit var authorizeduploader: AuthorizedRetrofit
     @Inject lateinit var graphDataProvider: Provider<GraphData>
     @Inject lateinit var commandQueue: CommandQueue
 
@@ -385,14 +375,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
             .observeOn(aapsSchedulers.io)
             .subscribe({ processAps() }, fabricPrivacy::logException)
 
-        disposable += rxBus
-            .toObservable(EventApexDeviceChange::class.java)
-            .observeOn(aapsSchedulers.io)
-            .subscribe({
-                activity?.takeIf { activityContext -> isNetworkConnected(activityContext) }
-                ?.let {
-                    updateApexPump()
-                }}, fabricPrivacy::logException)
         refreshLoop = Runnable {
             refreshAll()
             handler.postDelayed(refreshLoop, 60 * 1000L)
@@ -402,11 +384,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
         handler.post { refreshAll() }
         updatePumpStatus()
         updateCalcProgress()
-        activity?.takeIf { activityContext -> isNetworkConnected(activityContext) }
-            ?.let {
-                updateApexPump()
-            }
-
         popupBolusDialogIfRunning(onClick = false)
     }
 
@@ -1375,79 +1352,6 @@ class OverviewFragment : DaggerFragment(), View.OnClickListener, OnLongClickList
     private fun updateNotification() {
         _binding ?: return
         binding.notifications.let { notificationStore.updateNotifications(it) }
-    }
-
-    private fun updateApexPump() {
-        aapsLogger.debug("Entering updateApexPump method...")
-
-        val authCode = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
-        val phoneNumber = sharedPreferences.getString(app.aaps.core.utils.R.string.key_aaps_phone_number, "")
-
-        val pumpCode = when (activePlugin.activePump.model()) {
-            PumpType.EMBECTA -> sharedPreferences.getString(
-                app.aaps.core.utils.R.string.key_pump_embecta_name,
-                ""
-            ).trim()
-            PumpType.APEX -> sharedPreferences.getString(
-                app.aaps.core.utils.R.string.key_pump_apex_name,
-                ""
-            ).trim()
-            PumpType.LENOMED -> sharedPreferences.getString(
-                app.aaps.core.utils.R.string.key_pump_lenomed_name,
-                ""
-            ).trim()
-            else -> ""
-        }
-        if (pumpCode.isEmpty()) {
-            aapsLogger.debug("Skipping pump authorization: runtime pump serial is not available yet")
-            return
-        }
-        aapsLogger.debug("Pump authorization data ready (pumpCodePresent=true)")
-
-        activity?.let { activityContext ->
-            val authHelper = AuthHelper(activityContext, sharedPreferences, authorizeduploader, aapsLogger, object : AuthCallback {
-                override fun onSuccess() {
-                    aapsLogger.debug("Authorization successful.")
-                }
-
-                override fun onFailure(errorInfo: String) {
-                    aapsLogger.debug("Authorization failed: $errorInfo")
-                    sharedPreferences.putLong(app.aaps.core.utils.R.string.key_aaps_expired_time, -1)
-                    sharedPreferences.putString(app.aaps.core.utils.R.string.key_aaps_auth_code, "")
-                    OKDialog.show(
-                        activityContext,
-                        rh.gs(R.string.overview_auth_message_label),
-                        SpannedString(errorInfo)
-                    ) {
-                        aapsLogger.debug("Exiting app due to authorization failure.")
-
-
-                        activityContext.finish()
-                        System.runFinalization()
-                        exitProcess(0)
-                    }
-                }
-            })
-
-            aapsLogger.debug("Attempting to authorize with AuthHelper...")
-            authHelper.authorizedWithPumpCode(authCode, phoneNumber, pumpCode)
-        } ?: run {
-            aapsLogger.debug("Activity context is null, cannot proceed with updateApexPump.")
-        }
-
-        aapsLogger.debug("Exiting updateApexPump method.")
-    }
-    private fun isNetworkConnected(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork ?: return false
-        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-        return when {
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)     -> true
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else                                                               -> false
-        }
     }
 
     fun popupBolusDialogIfRunning(onClick: Boolean) {

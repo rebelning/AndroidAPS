@@ -44,6 +44,7 @@ import app.aaps.core.interfaces.protection.ExportPasswordDataStore
 import app.aaps.core.interfaces.protection.ProtectionCheck
 import app.aaps.core.interfaces.rx.AapsSchedulers
 import app.aaps.core.interfaces.rx.events.EventAppInitialized
+import app.aaps.core.interfaces.rx.events.EventAapsPumpAuthorizationFailed
 import app.aaps.core.interfaces.rx.events.EventPreferenceChange
 import app.aaps.core.interfaces.rx.events.EventRebuildTabs
 import app.aaps.core.interfaces.smsCommunicator.SmsCommunicator
@@ -65,6 +66,7 @@ import app.aaps.plugins.configuration.activities.SingleFragmentActivity
 import app.aaps.plugins.configuration.maintenance.MaintenancePlugin
 import app.aaps.plugins.configuration.setupwizard.SetupWizardActivity
 import app.aaps.plugins.constraints.signatureVerifier.SignatureVerifierPlugin
+import app.aaps.plugins.auth.api.PumpAuthCoordinator
 import app.aaps.ui.activities.ProfileHelperActivity
 import app.aaps.ui.activities.StatsActivity
 import app.aaps.ui.activities.TreatmentsActivity
@@ -101,12 +103,14 @@ class MainActivity : DaggerAppCompatActivityWithResult() {
     @Inject lateinit var exportPasswordDataStore: ExportPasswordDataStore
     @Inject lateinit var uiInteraction: UiInteraction
     @Inject lateinit var configBuilder: ConfigBuilder
+    @Inject lateinit var pumpAuthCoordinator: PumpAuthCoordinator
 
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private var pluginPreferencesMenuItem: MenuItem? = null
     private var menu: Menu? = null
     private var menuOpen = false
     private var isProtectionCheckActive = false
+    private var isPumpAuthorizationFailureDialogActive = false
     private lateinit var binding: ActivityMainBinding
     private var mainMenuProvider: MenuProvider? = null
 
@@ -147,6 +151,11 @@ class MainActivity : DaggerAppCompatActivityWithResult() {
                            // 1st run of app
                            start()
                        }, fabricPrivacy::logException)
+        disposable += rxBus
+            .toObservable(EventAapsPumpAuthorizationFailed::class.java)
+            .observeOn(aapsSchedulers.main)
+            .subscribe({ showPumpAuthorizationFailure(it.errorInfo) }, fabricPrivacy::logException)
+        pumpAuthCoordinator.start()
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (binding.mainDrawerLayout.isDrawerOpen(GravityCompat.START))
@@ -346,6 +355,7 @@ class MainActivity : DaggerAppCompatActivityWithResult() {
 
     override fun onResume() {
         super.onResume()
+        pumpAuthCoordinator.validateCurrentPump(reason = "app_foreground", force = true)
         if (config.appInitialized) binding.splash.visibility = View.GONE
         if (!isProtectionCheckActive) {
             isProtectionCheckActive = true
@@ -353,6 +363,16 @@ class MainActivity : DaggerAppCompatActivityWithResult() {
                                             UIRunnable { OKDialog.show(this, "", rh.gs(R.string.authorizationfailed), true) { isProtectionCheckActive = false; finish() } },
                                             UIRunnable { OKDialog.show(this, "", rh.gs(R.string.authorizationfailed), true) { isProtectionCheckActive = false; finish() } }
             )
+        }
+    }
+
+    private fun showPumpAuthorizationFailure(errorInfo: String) {
+        if (isPumpAuthorizationFailureDialogActive || isFinishing) return
+        isPumpAuthorizationFailureDialogActive = true
+        OKDialog.show(this, rh.gs(R.string.authorizationfailed), errorInfo, true) {
+            isPumpAuthorizationFailureDialogActive = false
+            finish()
+            configBuilder.exitApp("PumpAuthorization", Sources.Aaps, false)
         }
     }
 
