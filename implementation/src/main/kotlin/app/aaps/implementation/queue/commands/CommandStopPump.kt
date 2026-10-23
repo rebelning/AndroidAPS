@@ -1,5 +1,6 @@
 package app.aaps.implementation.queue.commands
 
+import app.aaps.core.data.pump.defs.PumpType
 import app.aaps.core.interfaces.logging.AAPSLogger
 import app.aaps.core.interfaces.logging.LTag
 import app.aaps.core.interfaces.plugin.ActivePlugin
@@ -30,10 +31,16 @@ class CommandStopPump(
 
     override fun execute() {
         val pump = activePlugin.activePump
-        if (pump is Insight) {
-            val result = pump.stopPump()
-            callback?.result(result)?.run()
+        val result = when {
+            pump is Insight -> pump.stopPump()
+            pump.model() == PumpType.EMBECTA -> pump.setPauseResumePump(0)
+            pump.model() == PumpType.APEX -> pump.setPauseResumePump(1)
+            else -> pumpEnactResultProvider.get()
+                .success(false)
+                .enacted(false)
+                .comment("Pump stop is not supported by ${pump.model().description}")
         }
+        callback?.result(result)?.run()
     }
 
     override fun status(): String = rh.gs(app.aaps.core.ui.R.string.stop_pump)
